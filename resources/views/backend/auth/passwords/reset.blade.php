@@ -45,7 +45,7 @@ signup-page
                         <i class="material-icons">lock</i>
                     </span>
                     <div class="form-line">
-                        <input type="password" class="form-control" name="confirm" minlength="6" placeholder="Confirm Password">
+                        <input type="password" class="form-control" name="password_confirmation" minlength="6" placeholder="Confirm Password">
                     </div>
                 </div>
 

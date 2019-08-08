@@ -33,7 +33,7 @@ signup-page
                         <i class="material-icons">email</i>
                     </span>
                     <div class="form-line @error('email') error @enderror">
-                        <input type="email" class="form-control" name="email" placeholder="Email Address">
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" value="{{ old('name') }}" placeholder="Email Address">
                     </div>
                     @error('email')
                     <label id="email-error" class="error" for="username">{{ $message }}</label>
@@ -55,7 +55,7 @@ signup-page
                         <i class="material-icons">lock</i>
                     </span>
                     <div class="form-line">
-                        <input type="password" class="form-control" name="confirm" minlength="6" placeholder="Confirm Password">
+                        <input type="password" class="form-control" name="password_confirmation" minlength="6" placeholder="Confirm Password">
                     </div>
                 </div>
                 <div class="form-group">
