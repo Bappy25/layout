@@ -43,6 +43,6 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 	Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('back.verification.verify');
 	Route::get('email/resend', 'Auth\VerificationController@resend')->name('back.verification.resend');
 
-	Route::get('/home', 'HomeController@index')->name('admin.home');
+	Route::get('/home', 'HomeController@index')->name('back.home');
 
 });

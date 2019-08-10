@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Auth;
 
 use Auth;
+use Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -26,7 +27,11 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'back/home';
+    protected function redirectTo()
+    {
+        Session::flash('success', array('Login successful!'=>''));
+        return route('back.home');
+    }
 
     /**
      * Create a new controller instance.
@@ -45,14 +50,6 @@ class LoginController extends Controller
 
     public function showLoginForm() {
         return view('backend.auth.login');
-    }
-
-    public function authenticate()
-    {
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            // Authentication passed...
-            return "okay"; //redirect()->intended('admin.home');
-        }
     }
 
 }

@@ -1,6 +1,4 @@
 <!-- Left Sidebar -->
-
-<!-- Left Sidebar -->
 <aside id="leftsidebar" class="sidebar">
     <!-- User Info -->
     <div class="user-info">
@@ -50,7 +48,7 @@
         <ul class="list">
             <li class="header">MAIN NAVIGATION</li>
             <li class="active">
-                <a href="{{ route('admin.home') }}">
+                <a href="{{ route('back.home') }}">
                     <i class="material-icons">home</i>
                     <span>Home</span>
                 </a>
