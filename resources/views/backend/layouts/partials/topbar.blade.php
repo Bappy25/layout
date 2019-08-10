@@ -6,7 +6,6 @@
             <a href="javascript:void(0);" class="bars"></a> <a class="navbar-brand" href="{{ route('back.home') }}">MDB Admin Panel</a> </div>
             <div class="collapse navbar-collapse js-sweetalert" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    @guest
                     <!--log out-->
                     <li class="dropdown">
                         <a href="{{ route('logout') }}" class="dropdown-toggle" onclick="logout()" role="button" data-type="logout">
@@ -39,7 +38,6 @@
                         @csrf
                     </form>
                     <!--log out-->
-                    @endguest
                 </ul>
             </div>
         </div>

@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
-
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
@@ -16,9 +14,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        \Log::info(json_encode(Auth::user()));
-
-        if (! $request->expectsJson()) {
+        if (!$request->expectsJson()) {
             if ($request->is('back/*')) {
                 return route('back.login');
             }
