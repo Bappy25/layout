@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 
-@section('content')
+@section('title')
 MDB Admin Panel
 @endsection
 
@@ -18,7 +18,7 @@ MDB Admin Panel
                     </div>
                     @endif
 
-                    You are logged in!
+                    You are logged in, {{ Auth::guard('admin')->user()->name }}!
                 </div>
             </div>
         </div>
