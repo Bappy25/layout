@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend\Auth;
 use Auth;
 use Session;
 use App\Models\Admin;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
