@@ -3,7 +3,7 @@
     <!-- User Info -->
     <div class="user-info">
         <div class="image">
-            <img src="images/user.png" width="48" height="48" alt="User" />
+            <img src="{{url('images/backend/user.png')}}" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
             <div class="info-container">
@@ -25,12 +25,12 @@
         function logout(){
             event.preventDefault();
             swal({
-                title: 'ログアウトしますか？',
+                title: 'Are you sure you want to logout？',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: "#d9534f",
-                confirmButtonText: 'ログアウト',
-                cancelButtonText: '戻る',
+                confirmButtonText: 'Logout Now!',
+                cancelButtonText: 'Cancel',
                 closeOnConfirm: false,
                 closeOnCancel: true
             },
@@ -38,9 +38,9 @@
                 if (isConfirm) {
                     document.getElementById('logout-form').submit();
                 } else {
-                                    // swal('Cancelled', 'You are still signed in!', 'info');
-                                }
-                            });
+                    // swal('Cancelled', 'You are still signed in!', 'info');
+                }
+            });
         }
     </script>
     <!-- Menu -->

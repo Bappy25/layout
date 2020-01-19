@@ -13,7 +13,7 @@
     <title>@yield('title')</title>
 
     <!-- Favicon-->
-    <link rel="icon" href="{{{ asset('favicon.ico') }}}" type="image/x-icon">
+    <link rel="icon" href="{{{ asset('images/adminbsb/favicon.ico') }}}" type="image/x-icon">
 
     <!-- CSS-->
     @include('backend.layouts.partials.styles')
