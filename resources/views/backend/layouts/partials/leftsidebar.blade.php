@@ -3,7 +3,7 @@
     <!-- User Info -->
     <div class="user-info">
         <div class="image">
-            <img src="{{url('images/backend/user.png')}}" width="48" height="48" alt="User" />
+            <img src="{{url('images/adminbsb/user.png')}}" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
             <div class="info-container">
