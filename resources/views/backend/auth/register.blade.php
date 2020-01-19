@@ -22,7 +22,7 @@ signup-page
                         <i class="material-icons">person</i>
                     </span>
                     <div class="form-line @error('name') error @enderror">
-                        <input type="text" class="form-control" name="name" placeholder="Name" autofocus>
+                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name" autofocus>
                     </div>
                     @error('name')
                     <label id="name-error" class="error" for="username">{{ $message }}</label>
@@ -33,7 +33,7 @@ signup-page
                         <i class="material-icons">email</i>
                     </span>
                     <div class="form-line @error('email') error @enderror">
-                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" value="{{ old('name') }}" placeholder="Email Address">
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email Address">
                     </div>
                     @error('email')
                     <label id="email-error" class="error" for="username">{{ $message }}</label>
