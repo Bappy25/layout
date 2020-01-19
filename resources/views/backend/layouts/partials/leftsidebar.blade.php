@@ -1,15 +1,14 @@
 <!-- Left Sidebar -->
 <aside id="leftsidebar" class="sidebar">
     <!-- User Info -->
+    
     <div class="user-info">
         <div class="image">
-            <img src="{{url('images/adminbsb/user.png')}}" width="48" height="48" alt="User" />
+            <img src="{{url('images/backend/user.png')}}" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
-            <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{{ isset(Auth::user()->name) ? Auth::user()->name : ' ' }}}</div>
-                <div class="email">{{{ isset(Auth::user()->email) ? Auth::user()->email : ' ' }}}</div>
-            </div>
+            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{{ Auth::guard('admin')->user()->name }}}</div>
+            <div class="email">{{{ Auth::guard('admin')->user()->email }}}</div>
             <div class="btn-group user-helper-dropdown">
                 <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                 <ul class="dropdown-menu pull-right">
