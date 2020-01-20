@@ -29,6 +29,6 @@ MDB Admin Panel
 @section('custom-script')
 
 <!-- Demo Js -->
-{{Html::script('js/adminbsb/script.js')}}
+{{Html::script('js/backend/script.js')}}
 
 @endsection

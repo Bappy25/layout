@@ -25,7 +25,7 @@
     {{ Html::style('plugins/animate-css/animate.css') }}
 
     <!-- Custom Css -->
-    {{ Html::style('css/adminbsb/style.min.css') }}
+    {{ Html::style('css/backend/style.min.css') }}
 </head>
 
 <body class="@yield('content-class')">
@@ -44,7 +44,7 @@
     {{Html::script('plugins/jquery-validation/jquery.validate.js')}}
 
     <!-- Custom Js -->
-    {{Html::script('js/adminbsb/admin.js')}}
+    {{Html::script('js/backend/admin.js')}}
 
     @yield('custom-script')
 </body>

@@ -13,7 +13,7 @@
     <title>@yield('title')</title>
 
     <!-- Favicon-->
-    <link rel="icon" href="{{{ asset('images/adminbsb/favicon.ico') }}}" type="image/x-icon">
+    <link rel="icon" href="{{{ asset('images/backend/favicon.ico') }}}" type="image/x-icon">
 
     <!-- CSS-->
     @include('backend.layouts.partials.styles')
@@ -21,10 +21,10 @@
     @yield('extra-css')
 
     <!-- Custom Css -->
-    {{ Html::style('css/adminbsb/style.min.css') }}
+    {{ Html::style('css/backend/style.min.css') }}
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    {{ Html::style('css/adminbsb/themes/all-themes.css') }}
+    {{ Html::style('css/backend/themes/all-themes.css') }}
 
     @yield('custom-css')
 
@@ -34,21 +34,7 @@
 <body class="theme-red main-body">
 
     <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Loading..</p>
-        </div>
-    </div>
+    @include('backend.layouts.partials.loader')
     <!-- #END# Page Loader -->
 
     <!-- Overlay For Sidebars -->
@@ -73,11 +59,6 @@
 </section>
 <!-- #ENDS# Content Section -->
 
-<!-- Page alerts -->
-<!-- @include('backend.layouts.partials.alerts') -->
-<!-- #END# Page alerts -->
-
-
 <!-- View Alerts -->
 @include('backend.layouts.partials.alerts')
 <!-- #END# Alerts -->
@@ -86,18 +67,18 @@
 @include('backend.layouts.partials.scrolltotop')
 <!-- #END# Scroll to top -->
 
-<!-- Javascript -->
+<!-- Scripts -->
 @include('backend.layouts.partials.scripts')
 
 @yield('extra-script')
 
 <!-- Custom Js -->
-{{Html::script('js/adminbsb/admin.js')}}
+{{Html::script('js/backend/admin.js')}}
 
 @yield('custom-script')
 
 <!-- Demo Js -->
-{{Html::script('js/adminbsb/demo.js')}}
+{{Html::script('js/backend/demo.js')}}
 
 <!-- #ENDS# Javascript -->
 

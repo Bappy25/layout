@@ -22,7 +22,7 @@ signup-page
                         <i class="material-icons">person</i>
                     </span>
                     <div class="form-line @error('name') error @enderror">
-                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name" autofocus>
+                        <input type="text" class="form-control" name="name" placeholder="Name" value="{{ old('name') }}" autofocus>
                     </div>
                     @error('name')
                     <label id="name-error" class="error" for="username">{{ $message }}</label>
