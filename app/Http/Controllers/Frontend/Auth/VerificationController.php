@@ -39,7 +39,7 @@ class VerificationController extends Controller
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 
-    public function showVerificationForm() {
+    public function show() {
         return view('frontend.auth.verify');
     }
 }
