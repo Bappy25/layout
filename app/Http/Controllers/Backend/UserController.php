@@ -67,6 +67,7 @@ class UserController extends Controller
     {
         Log::info('UserController.index Request=User_show called user_id='.$id);
 
+
         $user = $this->user->findOrFail($id);
         return view('backend.users.show', compact('user'));
     }

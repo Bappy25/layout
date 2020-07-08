@@ -55,6 +55,12 @@ All Users || {{ $user->name }}
                         <img class="img-responsive thumbnail" src="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" alt="{{ $user->name }}">
                     </a>
                 </div>
+                <p><strong>Username:</strong> {{ $user->username }}</p>
+                <p><strong>Email:</strong> {{ $user->email }}</p>
+                <p><strong>Date of Birth:</strong> {{ empty($user->user_details->dob) ? '' : $user->user_details->dob->format('d/m/y') }}</p>
+                <p><strong>Contact:</strong> {{ empty($user->user_details->contact) ? '' : $user->user_details->contact }}</p>
+                <p><strong>Gender:</strong> {{ empty($user->user_details->gender) ? '' : config('gender.'.$user->user_details->gender) }}</p>
+                <p><strong>Address:</strong> {{ empty($user->user_details->address) ? '' : $user->user_details->address }}</p>
             </div>
         </div>
     </div>
