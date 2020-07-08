@@ -43,7 +43,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('back.users.index');
     }
 
     /**

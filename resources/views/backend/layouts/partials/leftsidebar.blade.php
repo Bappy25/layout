@@ -52,25 +52,33 @@
                     <span>Home</span>
                 </a>
             </li>
+            <li {{ Route::is('back.users*')? 'class=active':'' }}>
+                <a href="{{ route('back.users.index') }}">
+                    <i class="material-icons">people</i>
+                    <span>Users</span>
+                </a>
+                <ul class="ml-menu">
+                    <li {{ Route::is('back.users.index') || Route::is('back.users.show') || Route::is('back.users.edit') ? 'class=active':'' }}>
+                        <a href="{{ route('back.users.index') }}">All Users</a>
+                    </li>
+                    <li {{ Route::is('back.users.create') ? 'class=active':'' }}>
+                        <a href="{{ route('back.users.create') }}">Add New User</a>
+                    </li>
+                </ul>
+            </li>
             <li {{ Route::is('back.admins*')? 'class=active':'' }}>
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">verified_user</i>
                     <span>Administrators</span>
                 </a>
                 <ul class="ml-menu">
-                    <li {{ Route::is('back.admins.index')? 'class=active':'' }}>
+                    <li {{ Route::is('back.admins.index') || Route::is('back.admins.edit')? 'class=active':'' }}>
                         <a href="{{ route('back.admins.index') }}">All Administrators</a>
                     </li>
-                    <li {{ Route::is('back.admins.create') || Route::is('back.admins.edit') ? 'class=active':'' }}>
+                    <li {{ Route::is('back.admins.create') ? 'class=active':'' }}>
                         <a href="{{ route('back.admins.create') }}">Add New Administrator</a>
                     </li>
                 </ul>
-            </li>
-            <li {{ Route::is('back.users*')? 'class=active':'' }}>
-                <a href="{{ route('back.users.index') }}">
-                    <i class="material-icons">people</i>
-                    <span>Users</span>
-                </a>
             </li>
             <li>
                 <a href="javascript:void(0);" class="menu-toggle">

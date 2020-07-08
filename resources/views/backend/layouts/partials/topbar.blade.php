@@ -16,12 +16,12 @@
                         function logout(){
                             event.preventDefault();
                             swal({
-                                title: 'ログアウトしますか？',
+                                title: 'Are you sure you want to logout？',
                                 type: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: "#d9534f",
-                                confirmButtonText: 'ログアウト',
-                                cancelButtonText: '戻る',
+                                confirmButtonText: 'Yes, I do!',
+                                cancelButtonText: 'Cancel',
                                 closeOnConfirm: false,
                                 closeOnCancel: true
                             },

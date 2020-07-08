@@ -53,7 +53,7 @@ All Users
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td><a href="mailto:{{ $user->email }}" class="nav-link text-muted">{{ $user->email }}</a></td>
                             <td>{{ $user->created_at->format('d/m/y, h:m a') }}</td>
                             <td>
                                 {!! Form::open(['route' => ['back.users.destroy', $user->id], 'method'=>'delete']) !!}
