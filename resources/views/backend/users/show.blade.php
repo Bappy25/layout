@@ -55,6 +55,7 @@ All Users || {{ $user->name }}
                         <img class="img-responsive thumbnail" src="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" alt="{{ $user->name }}">
                     </a>
                 </div>
+                <button type="button" class="btn bg-red waves-effect m-b-15" data-toggle="modal" data-target="#avatar_update_modal">Update Profile Picture</button>
                 <p><strong>Username:</strong> {{ $user->username }}</p>
                 <p><strong>Email:</strong> {{ $user->email }}</p>
                 <p><strong>Date of Birth:</strong> {{ empty($user->user_detail->dob) ? '' : $user->user_detail->dob->format('d/m/y') }}</p>
@@ -65,7 +66,37 @@ All Users || {{ $user->name }}
         </div>
     </div>
 </div>
-<!-- Show User -->
+<!-- #END# Show User -->
+
+<!-- Update User Image -->
+<div class="modal fade" id="avatar_update_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Update Avatar</h4>
+            </div>
+            <div class="modal-body">
+                {!! Form::open([ 'method' => 'put', 'route' => ['back.users.update.image', $user->id], 'id'=>'avatar_update_form', 'enctype' => 'multipart/form-data']) !!}
+                    <div class="thumbnail">
+                        <img src="http://via.placeholder.com/300x300?text=Preview+Selected+Image" alt="avatar update preview" class="img-responsive preview_input">
+                        <div class="caption">
+                            <div class="button-demo">
+                                <label class="btn btn-primary waves-effect" data-toggle="tooltip" data-placement="bottom" title="Click here to select an image">
+                                    CHOOSE IMAGE {!! Form::file("image", ['class'=>'input_image', 'accept'=>'image/jpeg', 'style'=>'display: none;']) !!}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                {!! Form::close() !!}
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-link waves-effect avatar_update_button" type="submit" form="avatar_update_form" disabled>SAVE CHANGES</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #END# Update User Image -->
 
 @endsection
 
@@ -73,6 +104,9 @@ All Users || {{ $user->name }}
 
 <!-- Light Gallery Plugin Js -->
 {{Html::script('plugins/light-gallery/js/lightgallery-all.js')}}
+
+<!-- Jquery Form Plugin Js -->
+{{Html::script('plugins/jquery-form/jquery.form.js')}}
 
 @endsection
 
@@ -83,6 +117,41 @@ All Users || {{ $user->name }}
 {{Html::script('js/backend/script.js')}}
 
 <script>
+
+        //  Show profile image preview
+    $('.input_image').change(function() {
+        readURL(this, $(this).index());
+        $('.avatar_update_button').prop('disabled', false);
+    });
+
+        //  Refresh preview on modal close
+    $('#avatar_update_modal').on('hidden.bs.modal', function (e) {
+        $('.preview_input').attr('src', 'http://via.placeholder.com/250x300?text=Preview+Selected+Image');
+        $('.input_image').empty().val('');
+        $('.avatar_update_button').prop('disabled', true);
+    });
+
+      //  Jquery form for uploading profile image and showing progress
+    (function() {
+        $('#avatar_update_form').ajaxForm({
+          beforeSend: function() {
+            $('.avatar_update_button').prop('disabled', true);
+          },
+          uploadProgress: function() {
+            $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'>The Photo is being uploaded</h5><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>");
+          },
+          success: function() {
+            $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'><i class='fa fa-check-circle'></i> The photo has been uploaded</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
+          },
+          error: function() {
+           $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-orange'><i class='fa fa-warning'></i> Problem while uploading image!</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
+          },
+          complete: function(xhr) {
+            location.reload();
+          }
+        }); 
+    })();
+
     function deleteUser(){
         event.preventDefault();
         swal({

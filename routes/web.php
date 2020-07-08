@@ -59,5 +59,6 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 
 	// Users
 	Route::resource('users', 'UserController', ['as' => 'back']);
+	Route::put('users/{id}/update/image', 'UserController@updateImage')->name('back.users.update.image');
 
 });

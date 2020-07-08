@@ -27,13 +27,10 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        Log::info('AdminController.index Request=Admin_list called');
+        Log::info('Req=AdminController@index called');
 
         $search = $request->search;
         $admins = $this->admin->search($search)->orderBy('created_at', 'desc')->paginate(10);
-
-        Log::info('AdminController.index Success=Admin_list created OK');
-
         return view('backend.admins.index', compact('admins', 'search'));
     }
 
@@ -44,7 +41,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        Log::info('AdminController.index Request=Admin_create called');
+        Log::info('Req=AdminController@index called');
 
         $admin = $this->admin;
         return view('backend.admins.form', compact('admin'));
@@ -62,7 +59,7 @@ class AdminController extends Controller
         $input['password'] = bcrypt($request->password);
         $this->admin->create($input);
 
-        \Log::info('AdminController.store Success=Admin added OK');
+        \Log::info('Req=AdminController@store Success=Admin added OK');
 
         return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
     }
@@ -75,7 +72,7 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        Log::info('AdminController.index Request=Admin_show called admin_id='.$id);
+        Log::info('Req=AdminController@index called admin_id='.$id);
 
         $admin = $this->admin->findOrFail($id);
         return view('backend.admins.form', compact('admin'));
@@ -89,7 +86,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        Log::info('AdminController.index Request=Admin_edit called admin_id='.$id);
+        Log::info('Req=AdminController@index called admin_id='.$id);
 
         $admin = $this->admin->findOrFail($id);
         return view('backend.admins.form', compact('admin'));
@@ -112,7 +109,7 @@ class AdminController extends Controller
         }
         $admin->update($input);
 
-        \Log::info('AdminController.update Success=Admin updated OK');
+        \Log::info('Req=AdminController@update Success=Admin updated OK');
 
         return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'Admin has been updated!' ]);
     }
@@ -127,7 +124,7 @@ class AdminController extends Controller
     {
         $this->admin->findOrFail($id)->delete();
 
-        \Log::info('AdminController.delete Success=Admin deleted OK');
+        \Log::info('Req=AdminController@delete Success=Admin deleted OK');
 
         return redirect()->route('back.admins.index')->with('warning', array('Admin has been removed!'=>''));
     }
