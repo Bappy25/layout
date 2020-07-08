@@ -15,7 +15,7 @@ Route::group(['namespace' => 'Frontend'], function(){
 
 	Route::get('/', 'HomeController@index')->name('welcome');
 
-	Auth::routes('verify' => true);
+	Auth::routes(['verify' => true]);
 
 	Route::get('/home', 'HomeController@home')->name('home');
 
