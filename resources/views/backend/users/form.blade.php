@@ -38,7 +38,7 @@
                 </h2>
             </div>
             <div class="body">
-                {!! Form::model($user, [ 'method' => $user->exists ? 'put' : 'post', 'route' => $user->exists ? ['back.users.update', $user->id] : ['back.user.store'], 'name'=>'check_edit', 'class' => 'demo-masked-input']) !!}
+                {!! Form::model($user, [ 'method' => $user->exists ? 'put' : 'post', 'route' => $user->exists ? ['back.users.update', $user->id] : ['back.users.store'], 'name'=>'check_edit', 'class' => 'demo-masked-input']) !!}
 
                 @include('backend.layouts.partials.errors')
 
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::select('gender', config('genders'), $user->user_detail->gender, [ 'class' => 'form-control show-tick', 'placeholder' => '-- Select Gender --']); !!}
+                    {!! Form::select('gender', config('genders'), empty($user->user_detail->gender) ? null  : $user->user_detail->gender, [ 'class' => 'form-control show-tick', 'placeholder' => '-- Select Gender --']); !!}
                 </div>
 
                 <div class="form-group">

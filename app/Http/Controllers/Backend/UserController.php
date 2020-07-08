@@ -43,7 +43,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return redirect()->route('back.users.index');
+        $user = $this->user;
+        return view('backend.users.form', compact('user'));
     }
 
     /**
