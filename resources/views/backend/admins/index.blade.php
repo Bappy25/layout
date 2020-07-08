@@ -35,7 +35,7 @@ All Administrators
                         {!! Form::open(['url' => route('back.admins.index'), 'method'=>'get']) !!}
                             <div class="form-group">
                                 <div class="form-line">
-                                    {!! Form::text("search", null, ['class'=>'form-control', 'placeholder'=>'Search']) !!}
+                                    {!! Form::text("search", $search, ['class'=>'form-control', 'placeholder'=>'Search']) !!}
                                 </div>
                             </div>
                         {!! Form::close() !!}

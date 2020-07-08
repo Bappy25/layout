@@ -35,7 +35,7 @@ All Users
                         {!! Form::open(['url' => route('back.users.index'), 'method'=>'get']) !!}
                             <div class="form-group">
                                 <div class="form-line">
-                                    {!! Form::text("search", null, ['class'=>'form-control', 'placeholder'=>'Search']) !!}
+                                    {!! Form::text("search", $search, ['class'=>'form-control', 'placeholder'=>'Search']) !!}
                                 </div>
                             </div>
                         {!! Form::close() !!}

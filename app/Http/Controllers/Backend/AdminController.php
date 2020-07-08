@@ -29,11 +29,12 @@ class AdminController extends Controller
     {
         Log::info('AdminController.index Request=Admin_list called');
 
-        $admins = $this->admin->search($request->search)->orderBy('created_at', 'desc')->paginate(10);
+        $search = $request->search;
+        $admins = $this->admin->search($search)->orderBy('created_at', 'desc')->paginate(10);
 
         Log::info('AdminController.index Success=Admin_list created OK');
 
-        return view('backend.admins.index', compact('admins'));
+        return view('backend.admins.index', compact('admins', 'search'));
     }
 
     /**

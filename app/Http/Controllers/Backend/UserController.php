@@ -32,11 +32,12 @@ class UserController extends Controller
     {
         Log::info('UserController.index Request=User_list called');
 
-        $users = $this->user->search($request->search)->orderBy('created_at', 'desc')->paginate(10);
+        $search = $request->search;
+        $users = $this->user->search($search)->orderBy('created_at', 'desc')->paginate(10);
 
         Log::info('UserController.index Success=User_list created OK');
 
-        return view('backend.users.index', compact('users'));
+        return view('backend.users.index', compact('users', 'search'));
     }
 
     /**
