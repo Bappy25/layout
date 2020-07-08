@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            {!! Form::label("Contact") !!}<span class="caution">*</span>
+                            {!! Form::label("Contact") !!}
                             <div class="form-line @error('contact') error focused @enderror">
                                 {!! Form::text("contact", empty($user->user_detail->contact) ? null : $user->user_detail->contact, ['class'=>'form-control '.($errors->has("contact") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                             </div>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            {!! Form::label("Date Of Birth") !!}<span class="caution">*</span>
+                            {!! Form::label("Date Of Birth") !!}
                             <div class="form-line @error('contact') error focused @enderror">
                                 {!! Form::text("dob", empty($user->user_detail->dob) ? null  : $user->user_detail->dob->format('d/m/yy'), ['class'=>'form-control date '.($errors->has("dob") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                             </div>
@@ -108,6 +108,7 @@
                 </div>
 
                 <div class="form-group">
+                    {!! Form::label("Adress") !!}
                     <div class="form-line">
                         {!! Form::textarea("address", empty($user->user_detail->address) ? null : $user->user_detail->address, ['class'=>'form-control no-resize auto-growth '.($errors->has("dob") ? "is-invalid" : ""), 'rows'=>1, 'autocomplete'=>'off']) !!}
                     </div>
