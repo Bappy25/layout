@@ -26,7 +26,13 @@ Route::group(['namespace' => 'Frontend'], function(){
 
 	Auth::routes(['verify' => true]);
 
-	Route::get('/home', 'HomeController@home')->name('home');
+	Route::get('home', 'HomeController@home')->name('home');
+
+	// Account Routes...
+	Route::get('account', 'AccountController@index')->name('account.index');
+	Route::get('account/edit', 'AccountController@edit')->name('account.edit');
+	Route::put('account/{id}/update', 'AccountController@update')->name('account.update');
+	Route::put('account/update/image', 'AccountController@updateImage')->name('account.update.image');
 
 });
 
@@ -52,7 +58,7 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 	Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('back.verification.verify');
 	Route::get('email/resend', 'Auth\VerificationController@resend')->name('back.verification.resend');
 
-	Route::get('/home', 'HomeController@index')->name('back.home');
+	Route::get('home', 'HomeController@index')->name('back.home');
 
 	// Administrators
 	Route::resource('admins', 'AdminController', ['as' => 'back']);

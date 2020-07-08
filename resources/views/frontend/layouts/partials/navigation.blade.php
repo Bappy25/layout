@@ -31,7 +31,7 @@
                         <img src="{{ file_exists(Auth::user()->user_detail->avatar) ? asset(Auth::user()->user_detail->avatar) : 'http://via.placeholder.com/30x30' }}" class="img-fluid rounded-circle" alt="Responsive image" width="30" height="30">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="fas fa-user mr-2"></i>{{ Auth::user()->name }}</a>
+                        <a class="dropdown-item" href="{{ route('account.index') }}"><i class="fas fa-user mr-2"></i>{{ Auth::user()->name }}</a>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fas fa-sign-out-alt mr-2"></i>{{ __('Logout') }}
                         </a>

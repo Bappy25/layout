@@ -101,7 +101,7 @@ class UserController extends Controller
         try {
 
             $user = $this->detail->where('user_id', $id)->firstOrFail();
-            $path = $this->uploadImage($request->file('image'), 'all_images/user_images/', 240, 320);
+            $path = $this->uploadImage($request->file('image'), 'all_images/user_images/', 300, 300);
             $user->avatar = $path;
             $user->save();
             return $this->api->success('Image has been successfully updated!');
