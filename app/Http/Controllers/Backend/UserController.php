@@ -25,7 +25,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         Log::info('UserController.index Request=User_list called');
 
@@ -65,7 +65,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        Log::info('UserController.index Request=User_show called user_id='.$id);
+
+        $user = $this->user->findOrFail($id);
+        return view('backend.users.show', compact('user'));
     }
 
     /**

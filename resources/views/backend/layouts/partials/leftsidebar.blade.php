@@ -66,6 +66,12 @@
                     </li>
                 </ul>
             </li>
+            <li {{ Route::is('back.users*')? 'class=active':'' }}>
+                <a href="{{ route('back.users.index') }}">
+                    <i class="material-icons">people</i>
+                    <span>Users</span>
+                </a>
+            </li>
             <li>
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">trending_down</i>

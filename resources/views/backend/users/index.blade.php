@@ -6,7 +6,7 @@ All Users
 
 @section('content')
 <div class="block-header">
-    <h2>ADMINISTRATORS</h2>
+    <h2>USERS</h2>
 </div>
 <!-- Basic Table -->
 <div class="row clearfix">
@@ -27,7 +27,7 @@ All Users
                         </a>
                     </div>
                     <div class="col-md-2 pull-right">
-                        {!! Form::open(['url' => route('users.index'), 'method'=>'get']) !!}
+                        {!! Form::open(['url' => route('back.users.index'), 'method'=>'get']) !!}
                             <div class="form-group">
                                 <div class="form-line">
                                     {!! Form::text("search", null, ['class'=>'form-control', 'placeholder'=>'Search']) !!}
@@ -41,29 +41,31 @@ All Users
                         <tr>
                             <th>#</th>
                             <th>NAME</th>
+                            <th>USERNAME</th>
                             <th>EMAIL</th>
                             <th>CREATED AT</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($admins as $admin)
+                        @foreach ($users as $user)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $admin->name }}</td>
-                            <td>{{ $admin->email }}</td>
-                            <td>{{ $admin->created_at->format('d/m/y, h:m a') }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->username }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->created_at->format('d/m/y, h:m a') }}</td>
                             <td>
-                                {!! Form::open(['route' => ['admins.destroy', $admin->id], 'method'=>'delete']) !!}
-                                <a class="btn btn-warning" href="{{route('admins.edit', $admin->id)}}" title="Show/Edit Subsidy"><i class="material-icons">edit</i></a>
-                                {!! Form::button('<i class="material-icons">delete</i>', array('class' => 'btn btn-danger form_warning_sweet_alert', (Auth::guard('admin')->user()->id == $admin->id || $admin->first()->id == $admin->id ) ? 'disabled' : '', 'title'=>'Delete Administrator', 'text'=>'Once deleted the administrator cannot be restored', 'confirmButtonText'=>'Yes!', 'type'=>'submit')) !!}
+                                {!! Form::open(['route' => ['back.users.destroy', $user->id], 'method'=>'delete']) !!}
+                                <a class="btn btn-primary" href="{{route('back.users.show', $user->id)}}" title="Show User"><i class="material-icons">open_in_browser</i></a>
+                                {!! Form::button('<i class="material-icons">delete</i>', array('class' => 'btn btn-danger form_warning_sweet_alert', 'title'=>'Delete User', 'text'=>'are you sure?', 'confirmButtonText'=>'Yes!', 'type'=>'submit')) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                {{ $admins->links() }}
+                {{ $users->links() }}
             </div>
         </div>
     </div>

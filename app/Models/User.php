@@ -44,6 +44,23 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_login_at' => 'datetime'
     ];
 
+    public function scopeSearch($query, $search='')
+    {
+        if (empty($search)) {
+            return $query;
+        } else {
+            return $query->where('name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('username', 'LIKE', '%' . $search . '%')
+                    ->orWhere('email', 'LIKE', '%' . $search . '%')
+                    ->orWhereHas('user_detail', function ($query) use($search){
+                        $query->where('address', 'LIKE', '%' . $search . '%');
+                    })
+                    ->orWhereHas('user_detail', function ($query) use($search){
+                        $query->where('contact', '=', $search );
+                    });
+        }
+    }
+
         // each user has a user detail
     public function user_detail()
     {

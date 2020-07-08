@@ -55,7 +55,7 @@ All Administrators
                             <td>{{ $admin->created_at->format('d/m/y, h:m a') }}</td>
                             <td>
                                 {!! Form::open(['route' => ['back.admins.destroy', $admin->id], 'method'=>'delete']) !!}
-                                <a class="btn btn-warning" href="{{route('back.admins.edit', $admin->id)}}" title="Show/Edit Subsidy"><i class="material-icons">edit</i></a>
+                                <a class="btn btn-warning" href="{{route('back.admins.edit', $admin->id)}}" title="Edit Administrator"><i class="material-icons">edit</i></a>
                                 {!! Form::button('<i class="material-icons">delete</i>', array('class' => 'btn btn-danger form_warning_sweet_alert', (Auth::guard('admin')->user()->id == $admin->id || $admin->first()->id == $admin->id ) ? 'disabled' : '', 'title'=>'Delete Administrator', 'text'=>'Once deleted the administrator cannot be restored', 'confirmButtonText'=>'Yes!', 'type'=>'submit')) !!}
                                 {!! Form::close() !!}
                             </td>
