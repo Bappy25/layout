@@ -4,6 +4,13 @@
 {{ $user->exists ? "All Users || $user->name || Edit User" : "Add New User" }}
 @endsection
 
+@section('extra-css')
+
+<!-- Light Gallery Plugin Js -->
+{{ Html::style('plugins/bootstrap-select/css/bootstrap-select.css') }}
+
+@endsection
+
 @section('content')
 
 <div class="block-header">
@@ -68,42 +75,65 @@
                 <div class="form-group">
                     {!! Form::label("Contact") !!}<span class="caution">*</span>
                     <div class="form-line @error('contact') error focused @enderror">
-                        {!! Form::text("contact", empty($user->user_detail)->exists ? $user->user_detail->contact : null, ['class'=>'form-control '.($errors->has("contact") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                        {!! Form::text("contact", empty($user->user_detail->contact) ? null : $user->user_detail->contact, ['class'=>'form-control '.($errors->has("contact") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                     </div>
                     @if($errors->has('contact'))
                     <label class="error" for="contact">{{ $errors->first('contact')}}</label>
                     @endif
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control show-tick">
+                        <option value="">-- Select Gender --</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     {!! Form::label("Date Of Birth") !!}<span class="caution">*</span>
                     <div class="form-line @error('contact') error focused @enderror">
-                        {!! Form::text("contact", $user->user_detail->exists ? $user->user_detail->dob : null, ['class'=>'form-control '.($errors->has("dob") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                        {!! Form::text("contact", empty($user->user_detail->dob) ? null  : $user->user_detail->dob, ['class'=>'form-control '.($errors->has("dob") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                     </div>
                     @if($errors->has('contact'))
                     <label class="error" for="contact">{{ $errors->first('contact')}}</label>
                     @endif
                 </div>
 
-                <div class="form-group">
-                    {!! Form::label("Password") !!}<span class="caution">*</span>
-                    <div class="form-line @error('password') error focused @enderror">
-                        {!! Form::password("password", ['class'=>'form-control '.($errors->has("name") ? "is-invalid" : "")]) !!}
-                    </div>
-                    @if($errors->has('password'))
-                    <label class="error" for="password">{{ $errors->first('password')}}</label>
-                    @endif
-                </div>
 
                 <div class="form-group">
-                    {!! Form::label('Password Confirmation') !!}<span class="caution">*</span>
-                    <div class="form-line @error('password_confirmation') error focused @enderror">
-                    {!! Form::password('password_confirmation', ['class'=>'form-control'. ($errors->has('password_confirmation') ? ' is-invalid' : '')]) !!}
+                    <div class="form-line">
+                        {!! Form::textarea("address", empty($user->user_detail->address) ? null : $user->user_detail->address, ['class'=>'form-control no-resize auto-growth '.($errors->has("dob") ? "is-invalid" : ""), 'rows'=>1, 'autocomplete'=>'off']) !!}
                     </div>
-                    @if($errors->has('password_confirmation'))
-                    <label class="error" for="password_confirmation">{{ $errors->first('password_confirmation')}}</label>
-                    @endif
                 </div>
+
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {!! Form::label("Password") !!}<span class="caution">*</span>
+                            <div class="form-line @error('password') error focused @enderror">
+                                {!! Form::password("password", ['class'=>'form-control '.($errors->has("password") ? "is-invalid" : "")]) !!}
+                            </div>
+                            @if($errors->has('password'))
+                            <label class="error" for="password">{{ $errors->first('password') }}</label>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {!! Form::label('Password Confirmation') !!}<span class="caution">*</span>
+                            <div class="form-line @error('password_confirmation') error focused @enderror">
+                            {!! Form::password('password_confirmation', ['class'=>'form-control'. ($errors->has('password_confirmation') ? ' is-invalid' : '')]) !!}
+                            </div>
+                            @if($errors->has('password_confirmation'))
+                            <label class="error" for="password_confirmation">{{ $errors->first('password_confirmation')}}</label>
+                            @endif
+                        </div>
+                    </div>
+                </div>                
 
                 {!! Form::submit($user->exists ? "Update" : "Store", ['class'=>'btn btn-primary waves-effect']) !!}
 
@@ -117,9 +147,23 @@
 
 @endsection
 
+@section('extra-script')
+
+<!-- Demo Js -->
+{{Html::script('plugins/autosize/autosize.js')}}
+
+<!-- Input Mask Plugin Js -->
+{{Html::script('plugins/jquery-inputmask/jquery.inputmask.bundle.js')}}
+
+@endsection
+
 @section('custom-script')
 
 <!-- Demo Js -->
 {{Html::script('js/backend/script.js')}}
+
+<script type="text/javascript">
+    autosize($('textarea.auto-growth'));
+</script>
 
 @endsection

@@ -61,7 +61,7 @@
                 <div class="form-group">
                     {!! Form::label("Password") !!}<span class="caution">*</span>
                     <div class="form-line @error('password') error focused @enderror">
-                        {!! Form::password("password", ['class'=>'form-control '.($errors->has("name") ? "is-invalid" : "")]) !!}
+                        {!! Form::password("password", ['class'=>'form-control '.($errors->has("password") ? "is-invalid" : "")]) !!}
                     </div>
                     @if($errors->has('password'))
                     <label class="error" for="password">{{ $errors->first('password')}}</label>
