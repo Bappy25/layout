@@ -46,10 +46,6 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
     ],
 
     /*
@@ -72,12 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\User::class,
         ],
 
         // 'users' => [
@@ -104,15 +95,23 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'user_password_resets',
+            'table' => 'password_resets',
             'expire' => 60,
-        ],
-        'admins' => [
-            'provider' => 'admins',
-            'table' => 'admin_password_resets',
-            'email' => 'auth.emails.password',
-            'expire' => 60,
+            'throttle' => 60,
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Password Confirmation Timeout
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the amount of seconds before a password confirmation
+    | times out and the user is prompted to re-enter their password via the
+    | confirmation screen. By default, the timeout lasts for three hours.
+    |
+    */
+
+    'password_timeout' => 10800,
 
 ];
