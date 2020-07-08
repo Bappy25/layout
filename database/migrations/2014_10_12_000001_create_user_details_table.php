@@ -20,7 +20,6 @@ class CreateUserDetailsTable extends Migration
             $table->text('address')->nullable();
             $table->tinyInteger('gender')->default(0);
             $table->string('avatar')->nullable();
-            $table->text('extra')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

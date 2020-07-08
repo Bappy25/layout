@@ -46,6 +46,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        Log::info('UserController.index Request=User_create called');
+
         $user = $this->user;
         return view('backend.users.form', compact('user'));
     }
@@ -60,6 +62,7 @@ class UserController extends Controller
     {
         $input = $request->all();
         $input['password'] = bcrypt($request->password);
+        $input['email_verified_at'] = date('Y-m-d H:i:s');
         $input['user_id'] = $this->user->create($input)->id;
         $this->detail->create($input);
 
@@ -90,7 +93,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        Log::info('UserController.edit Request=User_show called user_id='.$id);
+        Log::info('UserController.edit Request=User_edit called user_id='.$id);
 
         $user = $this->user->findOrFail($id);
         return view('backend.users.form', compact('user'));
@@ -134,7 +137,7 @@ class UserController extends Controller
     {
         $this->user->findOrFail($id)->delete();
 
-        \Log::info('AdminController.delete Success=User deleted OK');
+        \Log::info('UserController.delete Success=User deleted OK');
 
         return redirect()->route('back.users.index')->with('warning', array('User has been removed!'=>''));
     }

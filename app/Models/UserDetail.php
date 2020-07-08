@@ -13,7 +13,7 @@ class UserDetail extends Model
     protected $table = "user_details";
 
     protected $fillable = [
-        'address', 'dob', 'contact', 'gender', 'avatar', 'extra', 'user_id',
+        'address', 'dob', 'contact', 'gender', 'avatar', 'user_id',
     ];
 
     /**

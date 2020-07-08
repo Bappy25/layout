@@ -43,7 +43,7 @@ All Users || {{ $user->name }}
                         <ul class="dropdown-menu pull-right">
                             <li><a href="{{ route('back.users.edit', $user->id) }}">Edit User</a></li>
                             <li><a href="javascript:void(0);" onclick="deleteUser()">Delete User</a></li>
-                            {!! Form::open(['route' => ['back.users.destroy', $user->id], 'method'=>'delete', 'style'=>'display: none;']) !!}
+                            {!! Form::open(['route' => ['back.users.destroy', $user->id], 'method'=>'delete', 'id' => 'delete-user-form', 'style'=>'display: none;']) !!}
                             {!! Form::close() !!}
                         </ul>
                     </li>
