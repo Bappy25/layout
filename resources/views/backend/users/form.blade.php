@@ -38,71 +38,74 @@
                 </h2>
             </div>
             <div class="body">
-                {!! Form::model($user, [ 'method' => $user->exists ? 'put' : 'post', 'route' => $user->exists ? ['back.users.update', $user->id] : ['back.user.store'], 'name'=>'check_edit']) !!}
+                {!! Form::model($user, [ 'method' => $user->exists ? 'put' : 'post', 'route' => $user->exists ? ['back.users.update', $user->id] : ['back.user.store'], 'name'=>'check_edit', 'class' => 'demo-masked-input']) !!}
 
                 @include('backend.layouts.partials.errors')
 
-                <div class="form-group">
-                    {!! Form::label("Name") !!}<span class="caution">*</span>
-                    <div class="form-line @error('name') error focused @enderror">
-                        {!! Form::text("name", $user->exists ? $user->name : null, ['class'=>'form-control '.($errors->has("name") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {!! Form::label("Name") !!}<span class="caution">*</span>
+                            <div class="form-line @error('name') error focused @enderror">
+                                {!! Form::text("name", null, ['class'=>'form-control '.($errors->has("name") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                            </div>
+                            @if($errors->has('name'))
+                            <label class="error" for="name">{{ $errors->first('name')}}</label>
+                            @endif
+                        </div>
                     </div>
-                    @if($errors->has('name'))
-                    <label class="error" for="name">{{ $errors->first('name')}}</label>
-                    @endif
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label("Username") !!}<span class="caution">*</span>
-                    <div class="form-line @error('username') error focused @enderror">
-                        {!! Form::text("username", $user->exists ? $user->username : null, ['class'=>'form-control '.($errors->has("username") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {!! Form::label("Username") !!}<span class="caution">*</span>
+                            <div class="form-line @error('username') error focused @enderror">
+                                {!! Form::text("username", null, ['class'=>'form-control '.($errors->has("username") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                            </div>
+                            @if($errors->has('username'))
+                            <label class="error" for="username">{{ $errors->first('username')}}</label>
+                            @endif
+                        </div>
                     </div>
-                    @if($errors->has('username'))
-                    <label class="error" for="username">{{ $errors->first('username')}}</label>
-                    @endif
                 </div>
-
-                <div class="form-group">
-                    {!! Form::label("Email") !!}<span class="caution">*</span>
-                    <div class="form-line @error('email') error focused @enderror">
-                        {!! Form::text("email", $user->exists ? $user->email : null, ['class'=>'form-control '.($errors->has("email") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                <div class="row clearfix">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            {!! Form::label("Email") !!}<span class="caution">*</span>
+                            <div class="form-line @error('email') error focused @enderror">
+                                {!! Form::text("email", null, ['class'=>'form-control '.($errors->has("email") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                            </div>
+                            @if($errors->has('email'))
+                            <label class="error" for="email">{{ $errors->first('email')}}</label>
+                            @endif
+                        </div>
                     </div>
-                    @if($errors->has('email'))
-                    <label class="error" for="email">{{ $errors->first('email')}}</label>
-                    @endif
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label("Contact") !!}<span class="caution">*</span>
-                    <div class="form-line @error('contact') error focused @enderror">
-                        {!! Form::text("contact", empty($user->user_detail->contact) ? null : $user->user_detail->contact, ['class'=>'form-control '.($errors->has("contact") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            {!! Form::label("Contact") !!}<span class="caution">*</span>
+                            <div class="form-line @error('contact') error focused @enderror">
+                                {!! Form::text("contact", empty($user->user_detail->contact) ? null : $user->user_detail->contact, ['class'=>'form-control '.($errors->has("contact") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                            </div>
+                            @if($errors->has('contact'))
+                            <label class="error" for="contact">{{ $errors->first('contact')}}</label>
+                            @endif
+                        </div>
                     </div>
-                    @if($errors->has('contact'))
-                    <label class="error" for="contact">{{ $errors->first('contact')}}</label>
-                    @endif
-                </div>
-
-                <div class="form-group">
-                    <select class="form-control show-tick">
-                        <option value="">-- Select Gender --</option>
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="50">50</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label("Date Of Birth") !!}<span class="caution">*</span>
-                    <div class="form-line @error('contact') error focused @enderror">
-                        {!! Form::text("contact", empty($user->user_detail->dob) ? null  : $user->user_detail->dob, ['class'=>'form-control '.($errors->has("dob") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            {!! Form::label("Date Of Birth") !!}<span class="caution">*</span>
+                            <div class="form-line @error('contact') error focused @enderror">
+                                {!! Form::text("dob", empty($user->user_detail->dob) ? null  : $user->user_detail->dob->format('d/m/yy'), ['class'=>'form-control date '.($errors->has("dob") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                            </div>
+                            @if($errors->has('contact'))
+                            <label class="error" for="contact">{{ $errors->first('contact')}}</label>
+                            @endif
+                        </div>
                     </div>
-                    @if($errors->has('contact'))
-                    <label class="error" for="contact">{{ $errors->first('contact')}}</label>
-                    @endif
                 </div>
 
+                <div class="form-group">
+                    {!! Form::select('gender', config('genders'), $user->user_detail->gender, [ 'class' => 'form-control show-tick', 'placeholder' => '-- Select Gender --']); !!}
+                </div>
 
                 <div class="form-group">
                     <div class="form-line">
@@ -163,7 +166,18 @@
 {{Html::script('js/backend/script.js')}}
 
 <script type="text/javascript">
-    autosize($('textarea.auto-growth'));
+
+        // Initialize Date Input Mask
+    var $demoMaskedInput = $('.demo-masked-input');
+
+    $(function () {
+
+        autosize($('textarea.auto-growth'));
+
+        $demoMaskedInput.find('.date').inputmask('dd/mm/yyyy', { placeholder: '__/__/____' });
+
+    });
+
 </script>
 
 @endsection

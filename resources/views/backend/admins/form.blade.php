@@ -41,7 +41,7 @@
                 <div class="form-group">
                     {!! Form::label("Name") !!}<span class="caution">*</span>
                     <div class="form-line @error('name') error focused @enderror">
-                        {!! Form::text("name", $admin->exists ? $admin->name : null, ['class'=>'form-control '.($errors->has("name") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                        {!! Form::text("name", null, ['class'=>'form-control '.($errors->has("name") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                     </div>
                     @if($errors->has('name'))
                     <label class="error" for="name">{{ $errors->first('name')}}</label>
@@ -51,7 +51,7 @@
                 <div class="form-group">
                     {!! Form::label("Email") !!}<span class="caution">*</span>
                     <div class="form-line @error('email') error focused @enderror">
-                        {!! Form::text("email", $admin->exists ? $admin->email : null, ['class'=>'form-control '.($errors->has("email") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                        {!! Form::text("email", null, ['class'=>'form-control '.($errors->has("email") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                     </div>
                     @if($errors->has('email'))
                     <label class="error" for="email">{{ $errors->first('email')}}</label>
