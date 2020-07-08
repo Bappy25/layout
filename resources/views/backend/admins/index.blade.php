@@ -17,60 +17,43 @@ MDB Admin Panel
                     ALL ADMINISTRATORS
                     <small>View all administrators</small>
                 </h2>
-                <ul class="header-dropdown m-r--5">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);">Action</a></li>
-                            <li><a href="javascript:void(0);">Another action</a></li>
-                            <li><a href="javascript:void(0);">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
             <div class="body table-responsive">
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="{{ URL::current() }}" class="btn btn-primary waves-effect">
+                            <i class="material-icons">refresh</i>
+                            <span>Refresh</span>
+                        </a>
+                    </div>
+                    <div class="col-md-2 pull-right">
+                        {!! Form::open(['url' => route('admins.index'), 'method'=>'get']) !!}
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {!! Form::text("search", null, ['class'=>'form-control', 'placeholder'=>'Search']) !!}
+                                </div>
+                            </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>FIRST NAME</th>
-                            <th>LAST NAME</th>
-                            <th>USERNAME</th>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>CREATED AT</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($admins as $admin)
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
+                            <th scope="row">{{ $loop->iteration }}</th>
+                            <td>{{ $admin->name }}</td>
+                            <td>{{ $admin->email }}</td>
+                            <td>{{ $admin->created_at }}</td>
                         </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Larry</td>
-                            <td>Jellybean</td>
-                            <td>@lajelly</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Larry</td>
-                            <td>Kikat</td>
-                            <td>@lakitkat</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -2,19 +2,37 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
+use Log;
+use Auth;
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+
+    protected $admin;
+
+    function __construct(Admin $admin)
+    {
+        $this->middleware('auth.back');
+        $this->admin = $admin;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('backend.admins.index');
+        Log::info('AdminController.index Request=Admin_list called admin_id='.Auth::guard('admin')->user()->id);
+
+        $admins = $this->admin->search($request->search)->get();
+
+        Log::info('AdminController.index Success=Admin_list created OK');
+
+        return view('backend.admins.index', compact('admins'));
     }
 
     /**
