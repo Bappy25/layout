@@ -110,18 +110,16 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $user = $this->user->findOrFail($id);
+        $detail = $this->detail->where('user_id', $id)->first();
+
         $input = $request->all();
+        $input['dob'] = date('Y-m-d', strtotime(str_replace('/', '-', $request->dob)));
         if($request->password){
             $input['password'] = bcrypt($request->password);
         }
+        
         $user->update($input);
-
-        $detail = $this->detail->where('user_id', $id)->first();
-        $detail->contact = $request->contact;
-        $detail->gender = $request->gender;
-        $detail->dob = date('Y-m-d', strtotime($request->dob));
-        $detail->address = $request->address;
-        $detail->save();   
+        $detail->update($input);   
 
         \Log::info('UserController.update Success=User updated OK');
 

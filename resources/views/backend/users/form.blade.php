@@ -94,7 +94,7 @@
                         <div class="form-group">
                             {!! Form::label("Date Of Birth") !!}
                             <div class="form-line @error('dob') error focused @enderror">
-                                {!! Form::text("dob", empty($user->user_detail->dob) ? null  : $user->user_detail->dob->format('d/m/yy'), ['class'=>'form-control date '.($errors->has("dob") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
+                                {!! Form::text("dob", empty($user->user_detail->dob) ? null  : $user->user_detail->dob->format('d/m/Y'), ['class'=>'form-control date '.($errors->has("dob") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                             </div>
                             @if($errors->has('dob'))
                             <label class="error" for="dob">{{ $errors->first('dob')}}</label>
