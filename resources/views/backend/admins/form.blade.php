@@ -5,9 +5,25 @@
 @endsection
 
 @section('content')
+
 <div class="block-header">
     <h2>ADMINISTRATORS</h2>
 </div>
+
+<div class="block-header">
+    <div class="block-header">
+        <ol class="breadcrumb breadcrumb-col-teal">
+            <li><i class="material-icons">verified_user</i> Administrators</li>
+            @if($admin->exists)
+            <li><a href="{{ route('back.admins.index') }}"><i class="material-icons">list</i> All Administrators</a></li>
+            <li class="active"><i class="material-icons">edit</i> Edit Administrator</li>
+            @else
+            <li class="active"><i class="material-icons">playlist_add</i> Add New Administrator</li>
+            @endif
+        </ol>
+    </div>
+</div>
+
 <!-- Basic Table -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

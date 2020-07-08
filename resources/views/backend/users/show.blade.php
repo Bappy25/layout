@@ -4,10 +4,25 @@
 All Users || {{ $user->name }}
 @endsection
 
+@section('extra-css')
+
+<!-- Light Gallery Plugin Js -->
+{{ Html::style('plugins/light-gallery/css/lightgallery.css') }}
+
+@endsection
+
 @section('content')
+
 <div class="block-header">
-    <h2>USERS</h2>
+    <div class="block-header">
+        <ol class="breadcrumb breadcrumb-col-teal">
+            <li><i class="material-icons">people</i> Users</li>
+            <li><a href="{{ route('back.users.index') }}"><i class="material-icons">list</i> All Users</a></li>
+            <li class="active"><i class="material-icons">open_in_browser</i> Show User</li>
+        </ol>
+    </div>
 </div>
+
 <!-- Basic Table -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -15,7 +30,10 @@ All Users || {{ $user->name }}
             <div class="header">
                 <h2>
                     {{ $user->name }}
-                    <small><strong>Craeted At:</strong> {{ $user->created_at->format('d/m/y, h:m a') }}</small>
+                    <small>
+                        <strong>Created At:</strong> {{ $user->created_at->format('d/m/y, h:m a') }}
+                        <strong class="p-l-10">Verified at: </strong> {{ empty($user->email_verified_at) ? 'Not yet verified!' : $user->email_verified_at->format('d/m/y, h:m a') }}
+                    </small>
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -32,6 +50,11 @@ All Users || {{ $user->name }}
                 </ul>
             </div>
             <div class="body">
+                <div id="aniimated-thumbnials">
+                    <a href="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" data-sub-html="{{ $user->name }}">
+                        <img class="img-responsive thumbnail" src="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" alt="{{ $user->name }}">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -39,9 +62,17 @@ All Users || {{ $user->name }}
 <!-- #END# Basic Table -->
 @endsection
 
+@section('extra-script')
+
+<!-- Light Gallery Plugin Js -->
+{{Html::script('plugins/light-gallery/js/lightgallery-all.js')}}
+
+@endsection
+
 @section('custom-script')
 
 <!-- Demo Js -->
+{{Html::script('js/backend/pages/medias/image-gallery.js')}}
 {{Html::script('js/backend/script.js')}}
 
 <script>

@@ -5,9 +5,14 @@ All Administrators
 @endsection
 
 @section('content')
+
 <div class="block-header">
-    <h2>ADMINISTRATORS</h2>
+    <ol class="breadcrumb breadcrumb-col-teal">
+        <li><i class="material-icons">verified_user</i> Administrators</li>
+        <li class="active"><i class="material-icons">list</i> All Administrators</li>
+    </ol>
 </div>
+
 <!-- Basic Table -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

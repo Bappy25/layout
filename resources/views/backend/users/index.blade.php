@@ -5,9 +5,14 @@ All Users
 @endsection
 
 @section('content')
+
 <div class="block-header">
-    <h2>USERS</h2>
+    <ol class="breadcrumb breadcrumb-col-teal">
+        <li><i class="material-icons">people</i> Users</li>
+        <li class="active"><i class="material-icons">list</i> All Users</li>
+    </ol>
 </div>
+
 <!-- Basic Table -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -43,6 +48,7 @@ All Users
                             <th>NAME</th>
                             <th>USERNAME</th>
                             <th>EMAIL</th>
+                            <th>STATUS</th>
                             <th>CREATED AT</th>
                             <th>ACTION</th>
                         </tr>
@@ -54,6 +60,9 @@ All Users
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td><a href="mailto:{{ $user->email }}" class="nav-link text-muted">{{ $user->email }}</a></td>
+                            <td>
+                                {!! empty($user->email_verified_at) ? '<span class="label label-danger">Not Verified</span>' : '<span class="label label-success">Verified</span>' !!}
+                            </td>
                             <td>{{ $user->created_at->format('d/m/y, h:m a') }}</td>
                             <td>
                                 {!! Form::open(['route' => ['back.users.destroy', $user->id], 'method'=>'delete']) !!}
