@@ -76,11 +76,10 @@
 
             @else
             <a href="{{ route('login') }}">Login</a>
-            <a href="{{ route('back.login') }}">Admin Login</a>
-
             @if (Route::has('register'))
-            <a href="{{ route('register') }}">User Register</a>
+            <a href="{{ route('register') }}">Register</a>
             @endif
+            <a href="{{ route('back.login') }}">Admin Login</a>
             @if (Route::has('back.register'))
             <a href="{{ route('back.register') }}">Admin Register</a>
             @endif
@@ -91,7 +90,7 @@
 
         <div class="content">
             <div class="title m-b-md">
-                Laravel
+                Laravel Layout
             </div>
 
             <div class="links">

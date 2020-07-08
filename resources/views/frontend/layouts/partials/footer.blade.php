@@ -28,6 +28,9 @@
 
           <ul class="list-unstyled">
             <li>
+              <a href="{{ route('welcome') }}">Front Page</a>
+            </li>
+            <li>
               <a href="{{ route('about_us') }}">About Us</a>
             </li>
             <li>
@@ -35,9 +38,6 @@
             </li>
             <li>
               <a href="{{ route('privacy_policy') }}">Privacy Policy</a>
-            </li>
-            <li>
-              <a href="javascript:void(0);">Link 4</a>
             </li>
           </ul>
 
@@ -78,7 +78,7 @@
 
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">© {{ date('Y') }} Copyright:
-    <a href="http://mhasan.amarneta.com"> Mahadi Hasan</a>
+    <a href="http://mhasan.amrameghnabasi.org"> Mahadi Hasan</a>
   </div>
   <!-- Copyright -->
 
