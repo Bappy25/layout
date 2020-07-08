@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified'])->except('index');
+        $this->middleware(['auth', 'verified'])->only('home');
     }
 
     /**
@@ -35,5 +35,35 @@ class HomeController extends Controller
     public function home()
     {
         return view('frontend.home');
+    }
+
+    /**
+     * About Us
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function about()
+    {
+        return view('frontend.about_us');
+    }
+
+    /**
+     * Privacy Policy
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function privacyPolicy()
+    {
+        return view('frontend.privacy_policy');
+    }
+
+    /**
+     * Terms of Use
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function termsOfUse()
+    {
+        return view('frontend.terms_of_use');
     }
 }
