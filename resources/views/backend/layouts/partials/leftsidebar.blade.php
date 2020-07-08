@@ -52,6 +52,20 @@
                     <span>Home</span>
                 </a>
             </li>
+            <li {{ Route::is('admins*')? 'class=active':'' }}>
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">verified_user</i>
+                    <span>Administrators</span>
+                </a>
+                <ul class="ml-menu">
+                    <li {{ Route::is('admins.index')? 'class=active':'' }}>
+                        <a href="{{ route('admins.index') }}">All Administrators</a>
+                    </li>
+                    <li {{ Route::is('admins.create') || Route::is('admins.edit') ? 'class=active':'' }}>
+                        <a href="{{ route('admins.create') }}">Add New Administrator</a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">trending_down</i>
