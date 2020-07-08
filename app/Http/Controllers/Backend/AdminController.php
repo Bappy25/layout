@@ -27,7 +27,7 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        Log::info('AdminController.index Request=Admin_list called admin_id='.Auth::guard('admin')->user()->id);
+        Log::info('AdminController.index Request=Admin_list called');
 
         $admins = $this->admin->search($request->search)->orderBy('created_at', 'desc')->paginate(20);
 
@@ -43,7 +43,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        Log::info('AdminController.index Request=Admin_create called admin_id='.Auth::guard('admin')->user()->id);
+        Log::info('AdminController.index Request=Admin_create called');
 
         $admin = $this->admin;
         return view('backend.admins.form', compact('admin'));
@@ -57,7 +57,13 @@ class AdminController extends Controller
      */
     public function store(AdminRequest $request)
     {
-        //
+        $input = $request->all();
+        $input['password'] = bcrypt($request->password);
+        $this->admin->create($input);
+
+        \Log::info('AdminController.store Success=Admin added OK');
+
+        return redirect()->route('admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
     }
 
     /**
@@ -68,7 +74,10 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        Log::info('AdminController.index Request=Admin_show called admin_id='.$id);
+
+        $admin = $this->admin->findOrFail($id);
+        return view('backend.admins.form', compact('admin'));
     }
 
     /**
@@ -79,7 +88,10 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        return view('backend.admins.form');
+        Log::info('AdminController.index Request=Admin_edit called admin_id='.$id);
+
+        $admin = $this->admin->findOrFail($id);
+        return view('backend.admins.form', compact('admin'));
     }
 
     /**
@@ -91,7 +103,15 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, $id)
     {
-        //
+        $input = $request->all();
+        if($request->password){
+            $input['password'] = bcrypt($request->password);
+        }
+        $this->admin->update($input);
+
+        \Log::info('AdminController.store Success=Admin added OK');
+
+        return redirect()->route('admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
     }
 
     /**
@@ -102,6 +122,7 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->admin->findOrFail($id)->delete();
+        return redirect()->route('admins.index')->with('warning', array('Admin has been removed!'=>''));
     }
 }

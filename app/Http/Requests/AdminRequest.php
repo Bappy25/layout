@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Http\Request;
+use App\Models\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminRequest extends FormRequest
@@ -35,9 +35,10 @@ class AdminRequest extends FormRequest
             }
             case 'PUT':
             {
+                $admin = Admin::where('id', $this->route('admin'))->get()->first();
                 return [
                     'name' => 'required|string|min:3|max:255',
-                    'email' => 'required|string|email|max:50|unique:admin,email,'.\Request::instance()->admin.',id',
+                    'email' => 'required|string|email|max:50|unique:admins,email,'.$admin->id.',id',
                     'password' => 'sometimes|nullable|min:4|max:150|confirmed',
                 ];
             }
