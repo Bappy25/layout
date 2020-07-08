@@ -13,7 +13,7 @@ All Administrators
     </ol>
 </div>
 
-<!-- Basic Table -->
+<!-- Admins Table -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -73,7 +73,7 @@ All Administrators
         </div>
     </div>
 </div>
-<!-- #END# Basic Table -->
+<!-- #END# Admins Table -->
 @endsection
 
 @section('custom-script')

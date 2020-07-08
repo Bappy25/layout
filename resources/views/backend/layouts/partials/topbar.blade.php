@@ -6,7 +6,7 @@
             <a href="javascript:void(0);" class="bars"></a> <a class="navbar-brand" href="{{ route('back.home') }}">{{ config('app.name', 'Laravel') }} </a> </div>
             <div class="collapse navbar-collapse js-sweetalert" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <!--log out-->
+                    <!-- Logout -->
                     <li class="dropdown">
                         <a href="{{ route('logout') }}" class="dropdown-toggle" onclick="logout()" role="button" data-type="logout">
                             <i class="material-icons">input</i>
@@ -37,7 +37,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                    <!--log out-->
+                    <!-- #END# Logout -->
                 </ul>
             </div>
         </div>

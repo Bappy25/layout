@@ -29,7 +29,7 @@ class AdminController extends Controller
     {
         Log::info('AdminController.index Request=Admin_list called');
 
-        $admins = $this->admin->search($request->search)->orderBy('created_at', 'desc')->paginate(20);
+        $admins = $this->admin->search($request->search)->orderBy('created_at', 'desc')->paginate(10);
 
         Log::info('AdminController.index Success=Admin_list created OK');
 

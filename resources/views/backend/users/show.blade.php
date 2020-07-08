@@ -23,7 +23,7 @@ All Users || {{ $user->name }}
     </div>
 </div>
 
-<!-- Basic Table -->
+<!-- Show User -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -57,15 +57,16 @@ All Users || {{ $user->name }}
                 </div>
                 <p><strong>Username:</strong> {{ $user->username }}</p>
                 <p><strong>Email:</strong> {{ $user->email }}</p>
-                <p><strong>Date of Birth:</strong> {{ empty($user->user_details->dob) ? '' : $user->user_details->dob->format('d/m/y') }}</p>
-                <p><strong>Contact:</strong> {{ empty($user->user_details->contact) ? '' : $user->user_details->contact }}</p>
-                <p><strong>Gender:</strong> {{ empty($user->user_details->gender) ? '' : config('gender.'.$user->user_details->gender) }}</p>
-                <p><strong>Address:</strong> {{ empty($user->user_details->address) ? '' : $user->user_details->address }}</p>
+                <p><strong>Date of Birth:</strong> {{ empty($user->user_detail->dob) ? '' : $user->user_detail->dob->format('d/m/y') }}</p>
+                <p><strong>Contact:</strong> {{ empty($user->user_detail->contact) ? '' : $user->user_detail->contact }}</p>
+                <p><strong>Gender:</strong> {{ config('genders.'.$user->user_detail->gender) }}</p>
+                <p><strong>Address:</strong> {{ empty($user->user_detail->address) ? '' : $user->user_detail->address }}</p>
             </div>
         </div>
     </div>
 </div>
-<!-- #END# Basic Table -->
+<!-- Show User -->
+
 @endsection
 
 @section('extra-script')

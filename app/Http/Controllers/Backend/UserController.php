@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         Log::info('UserController.index Request=User_list called');
 
-        $users = $this->user->search($request->search)->orderBy('created_at', 'desc')->paginate(20);
+        $users = $this->user->search($request->search)->orderBy('created_at', 'desc')->paginate(10);
 
         Log::info('UserController.index Success=User_list created OK');
 
@@ -67,7 +67,6 @@ class UserController extends Controller
     {
         Log::info('UserController.index Request=User_show called user_id='.$id);
 
-
         $user = $this->user->findOrFail($id);
         return view('backend.users.show', compact('user'));
     }
@@ -80,7 +79,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        Log::info('UserController.edit Request=User_show called user_id='.$id);
+
+        $user = $this->user->findOrFail($id);
+        return view('backend.users.form', compact('user'));
     }
 
     /**
@@ -103,6 +105,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->user->findOrFail($id)->delete();
+
+        \Log::info('AdminController.delete Success=User deleted OK');
+
+        return redirect()->route('back.users.index')->with('warning', array('User has been removed!'=>''));
     }
 }

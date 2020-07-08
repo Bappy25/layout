@@ -13,7 +13,7 @@ All Users
     </ol>
 </div>
 
-<!-- Basic Table -->
+<!-- Users Table -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -79,7 +79,7 @@ All Users
         </div>
     </div>
 </div>
-<!-- #END# Basic Table -->
+<!-- #END# Users Table -->
 @endsection
 
 @section('custom-script')
