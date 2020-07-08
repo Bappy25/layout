@@ -123,6 +123,9 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $this->admin->findOrFail($id)->delete();
+
+        \Log::info('AdminController.delete Success=Admin deleted OK');
+
         return redirect()->route('admins.index')->with('warning', array('Admin has been removed!'=>''));
     }
 }

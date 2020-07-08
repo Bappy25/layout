@@ -22,7 +22,7 @@ signup-page
                     <span class="input-group-addon">
                         <i class="material-icons">email</i>
                     </span>
-                    <div class="form-line @error('email') error @enderror">
+                    <div class="form-line @error('email') error focused @enderror">
                         <input type="email" class="form-control" name="email" value="{{ $email ?? old('email') }}" placeholder="Email Address">
                     </div>
                     @error('email')
@@ -33,7 +33,7 @@ signup-page
                     <span class="input-group-addon">
                         <i class="material-icons">lock</i>
                     </span>
-                    <div class="form-line @error('password') error @enderror">
+                    <div class="form-line @error('password') error focused @enderror">
                         <input type="password" class="form-control" name="password" minlength="6" placeholder="Password">
                     </div>
                     @error('password')

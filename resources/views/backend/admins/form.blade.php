@@ -24,7 +24,7 @@
 
                 <div class="form-group">
                     {!! Form::label("Name") !!}<span class="caution">*</span>
-                    <div class="form-line {{ $errors->has('name') ? 'error focused' : '' }}">
+                    <div class="form-line @error('name') error focused @enderror">
                         {!! Form::text("name", $admin->exists ? $admin->name : null, ['class'=>'form-control '.($errors->has("name") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                     </div>
                     @if($errors->has('name'))
@@ -34,7 +34,7 @@
 
                 <div class="form-group">
                     {!! Form::label("Email") !!}<span class="caution">*</span>
-                    <div class="form-line {{ $errors->has('email') ? 'error focused' : '' }}">
+                    <div class="form-line @error('email') error focused @enderror">
                         {!! Form::text("email", $admin->exists ? $admin->email : null, ['class'=>'form-control '.($errors->has("email") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                     </div>
                     @if($errors->has('email'))
@@ -44,7 +44,7 @@
 
                 <div class="form-group">
                     {!! Form::label("Password") !!}<span class="caution">*</span>
-                    <div class="form-line {{ $errors->has('password') ? 'error focused' : '' }}">
+                    <div class="form-line @error('password') error focused @enderror">
                         {!! Form::password("password", ['class'=>'form-control '.($errors->has("name") ? "is-invalid" : "")]) !!}
                     </div>
                     @if($errors->has('password'))
@@ -54,7 +54,7 @@
 
                 <div class="form-group">
                     {!! Form::label('Password Confirmation') !!}<span class="caution">*</span>
-                    <div class="form-line {{ $errors->has('password_confirmation') ? 'error focused' : '' }}"">
+                    <div class="form-line @error('password_confirmation') error focused @enderror">
                     {!! Form::password('password_confirmation', ['class'=>'form-control'. ($errors->has('password_confirmation') ? ' is-invalid' : '')]) !!}
                     </div>
                     @if($errors->has('password_confirmation'))
