@@ -14,6 +14,15 @@
 Route::group(['namespace' => 'Frontend'], function(){
 
 	Route::get('/', 'HomeController@index')->name('welcome');
+	Route::get('about_us', 'HomeController@about')->name('about_us');
+	Route::get('terms_of_use', 'HomeController@termsOfUse')->name('terms_of_use');
+	Route::get('privacy_policy', 'HomeController@privacyPolicy')->name('privacy_policy');
+
+		// Social media signin
+	Route::get('google/redirect', 'Auth\LoginController@redirectToGoogleProvider')->name('google.redirect');
+	Route::get('google/callback', 'Auth\LoginController@handleGoogleProviderCallback')->name('google.callback');
+	Route::get('facebook/redirect', 'Auth\LoginController@redirectToFacebookProvider')->name('facebook.redirect');
+	Route::get('facebook/callback', 'Auth\LoginController@handleFacebookProviderCallback')->name('facebook.callback');
 
 	Auth::routes(['verify' => true]);
 
