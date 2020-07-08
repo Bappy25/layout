@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Log;
 use Auth;
 use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
@@ -13,11 +14,13 @@ class UserController extends Controller
 {
 
     protected $user;
+    protected $detail;
 
-    function __construct(User $user)
+    function __construct(User $user, UserDetail $detail)
     {
         $this->middleware('auth.back');
         $this->user = $user;
+        $this->detail = $detail;
     }
 
     /**
@@ -53,9 +56,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $input = $request->all();
+        $input['password'] = bcrypt($request->password);
+        $input['user_id'] = $this->user->create($input)->id;
+        $this->detail->create($input);
+
+        \Log::info('UserController.store Success=User added OK');
+
+        return redirect()->route('back.users.show', $input['user_id'])->with('success', [ 'Success' => 'New user has been added!' ]);
     }
 
     /**
@@ -93,9 +103,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $user = $this->user->findOrFail($id);
+        $input = $request->all();
+        if($request->password){
+            $input['password'] = bcrypt($request->password);
+        }
+        $user->update($input);
+
+        $detail = $this->detail->where('user_id', $id)->first();
+        $detail->contact = $request->contact;
+        $detail->gender = $request->gender;
+        $detail->dob = date('Y-m-d', strtotime($request->dob));
+        $detail->address = $request->address;
+        $detail->save();   
+
+        \Log::info('UserController.update Success=User updated OK');
+
+        return redirect()->route('back.users.show', $id)->with('success', [ 'Success' => 'User has been updated!' ]);
     }
 
     /**

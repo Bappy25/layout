@@ -93,25 +93,31 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             {!! Form::label("Date Of Birth") !!}
-                            <div class="form-line @error('contact') error focused @enderror">
+                            <div class="form-line @error('dob') error focused @enderror">
                                 {!! Form::text("dob", empty($user->user_detail->dob) ? null  : $user->user_detail->dob->format('d/m/yy'), ['class'=>'form-control date '.($errors->has("dob") ? "is-invalid" : ""),'autocomplete'=>'off']) !!}
                             </div>
-                            @if($errors->has('contact'))
-                            <label class="error" for="contact">{{ $errors->first('contact')}}</label>
+                            @if($errors->has('dob'))
+                            <label class="error" for="dob">{{ $errors->first('dob')}}</label>
                             @endif
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    {!! Form::select('gender', config('genders'), empty($user->user_detail->gender) ? null  : $user->user_detail->gender, [ 'class' => 'form-control show-tick', 'placeholder' => '-- Select Gender --']); !!}
+                    {!! Form::select('gender', config('genders'), !empty($user->user_detail->gender) ? $user->user_detail->gender : 0, [ 'class' => 'form-control show-tick', 'placeholder' => '-- Select Gender --']); !!}
+                    @if($errors->has('gender'))
+                    <label class="error" for="gender">{{ $errors->first('gender')}}</label>
+                    @endif
                 </div>
 
                 <div class="form-group">
                     {!! Form::label("Adress") !!}
                     <div class="form-line">
-                        {!! Form::textarea("address", empty($user->user_detail->address) ? null : $user->user_detail->address, ['class'=>'form-control no-resize auto-growth '.($errors->has("dob") ? "is-invalid" : ""), 'rows'=>1, 'autocomplete'=>'off']) !!}
+                        {!! Form::textarea("address", empty($user->user_detail->address) ? null : $user->user_detail->address, ['class'=>'form-control no-resize auto-growth '.($errors->has("address") ? "is-invalid" : ""), 'rows'=>1, 'autocomplete'=>'off']) !!}
                     </div>
+                    @if($errors->has('address'))
+                    <label class="error" for="address">{{ $errors->first('address')}}</label>
+                    @endif
                 </div>
 
                 <div class="row clearfix">

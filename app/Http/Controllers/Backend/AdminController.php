@@ -103,15 +103,17 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, $id)
     {
+        $admin = $this->admin->findOrFail($id);
+
         $input = $request->all();
         if($request->password){
             $input['password'] = bcrypt($request->password);
         }
-        $this->admin->update($input);
+        $admin->update($input);
 
-        \Log::info('AdminController.store Success=Admin added OK');
+        \Log::info('AdminController.update Success=Admin updated OK');
 
-        return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
+        return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'Admin has been updated!' ]);
     }
 
     /**
