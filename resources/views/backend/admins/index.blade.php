@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 
 @section('title')
-MDB Admin Panel
+All Administrators
 @endsection
 
 @section('content')
@@ -14,8 +14,8 @@ MDB Admin Panel
         <div class="card">
             <div class="header">
                 <h2>
-                    ALL ADMINISTRATORS
-                    <small>View all administrators</small>
+                    All Administrators
+                    <small>Here is the list of all administrators</small>
                 </h2>
             </div>
             <div class="body table-responsive">
@@ -43,6 +43,7 @@ MDB Admin Panel
                             <th>NAME</th>
                             <th>EMAIL</th>
                             <th>CREATED AT</th>
+                            <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,11 +52,18 @@ MDB Admin Panel
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $admin->name }}</td>
                             <td>{{ $admin->email }}</td>
-                            <td>{{ $admin->created_at }}</td>
+                            <td>{{ $admin->created_at->format('d/m/y, h:m a') }}</td>
+                            <td>
+                                {!! Form::open(['route' => ['admins.destroy', $admin->id], 'method'=>'delete']) !!}
+                                <a class="btn btn-warning" href="{{route('admins.edit', $admin->id)}}" title="Show/Edit Subsidy"><i class="material-icons">edit</i></a>
+                                {!! Form::button('<i class="material-icons">delete</i>', array('class' => 'btn btn-danger form_warning_sweet_alert', (Auth::guard('admin')->user()->id == $admin->id || $admin->first()->id == $admin->id ) ? 'disabled' : '', 'title'=>'Delete Administrator', 'text'=>'Once deleted the administrator cannot be restored', 'confirmButtonText'=>'Yes!', 'type'=>'submit')) !!}
+                                {!! Form::close() !!}
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {{ $admins->links() }}
             </div>
         </div>
     </div>

@@ -46,7 +46,7 @@
     <div class="menu">
         <ul class="list">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active">
+            <li {{ Route::is('back.home')? 'class=active':'' }}>
                 <a href="{{ route('back.home') }}">
                     <i class="material-icons">home</i>
                     <span>Home</span>

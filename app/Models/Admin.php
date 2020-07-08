@@ -43,10 +43,9 @@ class Admin extends Authenticatable
     public function scopeSearch($query, $search='')
     {
         if (empty($search)) {
-            return $query->orderByRaw("created_at", 'DESC');
+            return $query;
         } else {      
-            return $query->orderByRaw("created_at", 'DESC')
-                         ->WhereRaw("name LIKE ? ", '%' . $search . '%')
+            return $query->WhereRaw("name LIKE ? ", '%' . $search . '%')
                          ->orWhere('email', 'LIKE', '%' . $search . '%');
         }
     }

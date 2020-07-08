@@ -42,7 +42,7 @@ $(document).ready(function(){
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: confirmButtonText,
-        cancelButtonText: '戻る',
+        cancelButtonText: 'Cancel',
         confirmButtonColor: '#ff9600',
         closeOnConfirm: false
       }, function(isConfirm){

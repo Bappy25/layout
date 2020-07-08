@@ -6,6 +6,7 @@ use Log;
 use Auth;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Http\Requests\AdminRequest;
 use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
@@ -28,7 +29,7 @@ class AdminController extends Controller
     {
         Log::info('AdminController.index Request=Admin_list called admin_id='.Auth::guard('admin')->user()->id);
 
-        $admins = $this->admin->search($request->search)->get();
+        $admins = $this->admin->search($request->search)->orderBy('created_at', 'desc')->paginate(20);
 
         Log::info('AdminController.index Success=Admin_list created OK');
 
@@ -42,7 +43,10 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('backend.admins.form');
+        Log::info('AdminController.index Request=Admin_create called admin_id='.Auth::guard('admin')->user()->id);
+
+        $admin = $this->admin;
+        return view('backend.admins.form', compact('admin'));
     }
 
     /**
@@ -51,7 +55,7 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminRequest $request)
     {
         //
     }
@@ -85,7 +89,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminRequest $request, $id)
     {
         //
     }
