@@ -18,7 +18,7 @@
                 </h2>
             </div>
             <div class="body">
-                {!! Form::model($admin, [ 'method' => $admin->exists ? 'put' : 'post', 'route' => $admin->exists ? ['admins.update', $admin->id] : ['admins.store'], 'name'=>'check_edit']) !!}
+                {!! Form::model($admin, [ 'method' => $admin->exists ? 'put' : 'post', 'route' => $admin->exists ? ['back.admins.update', $admin->id] : ['back.admins.store'], 'name'=>'check_edit']) !!}
 
                 @include('backend.layouts.partials.errors')
 

@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 
 @section('title')
-All Administrators
+All Users
 @endsection
 
 @section('content')
@@ -14,8 +14,8 @@ All Administrators
         <div class="card">
             <div class="header">
                 <h2>
-                    All Administrators
-                    <small>Here is the list of all administrators</small>
+                    All Users
+                    <small>Here is the list of all users</small>
                 </h2>
             </div>
             <div class="body table-responsive">
@@ -27,7 +27,7 @@ All Administrators
                         </a>
                     </div>
                     <div class="col-md-2 pull-right">
-                        {!! Form::open(['url' => route('back.admins.index'), 'method'=>'get']) !!}
+                        {!! Form::open(['url' => route('users.index'), 'method'=>'get']) !!}
                             <div class="form-group">
                                 <div class="form-line">
                                     {!! Form::text("search", null, ['class'=>'form-control', 'placeholder'=>'Search']) !!}
@@ -54,8 +54,8 @@ All Administrators
                             <td>{{ $admin->email }}</td>
                             <td>{{ $admin->created_at->format('d/m/y, h:m a') }}</td>
                             <td>
-                                {!! Form::open(['route' => ['back.admins.destroy', $admin->id], 'method'=>'delete']) !!}
-                                <a class="btn btn-warning" href="{{route('back.admins.edit', $admin->id)}}" title="Show/Edit Subsidy"><i class="material-icons">edit</i></a>
+                                {!! Form::open(['route' => ['admins.destroy', $admin->id], 'method'=>'delete']) !!}
+                                <a class="btn btn-warning" href="{{route('admins.edit', $admin->id)}}" title="Show/Edit Subsidy"><i class="material-icons">edit</i></a>
                                 {!! Form::button('<i class="material-icons">delete</i>', array('class' => 'btn btn-danger form_warning_sweet_alert', (Auth::guard('admin')->user()->id == $admin->id || $admin->first()->id == $admin->id ) ? 'disabled' : '', 'title'=>'Delete Administrator', 'text'=>'Once deleted the administrator cannot be restored', 'confirmButtonText'=>'Yes!', 'type'=>'submit')) !!}
                                 {!! Form::close() !!}
                             </td>

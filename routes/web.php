@@ -55,6 +55,9 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 	Route::get('/home', 'HomeController@index')->name('back.home');
 
 	// Administrators
-	Route::resource('admins', 'AdminController');
+	Route::resource('admins', 'AdminController', ['as' => 'back']);
+
+	// Users
+	Route::resource('users', 'UserController', ['as' => 'back']);
 
 });

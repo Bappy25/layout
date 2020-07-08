@@ -63,7 +63,7 @@ class AdminController extends Controller
 
         \Log::info('AdminController.store Success=Admin added OK');
 
-        return redirect()->route('admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
+        return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
     }
 
     /**
@@ -111,7 +111,7 @@ class AdminController extends Controller
 
         \Log::info('AdminController.store Success=Admin added OK');
 
-        return redirect()->route('admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
+        return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
     }
 
     /**
@@ -126,6 +126,6 @@ class AdminController extends Controller
 
         \Log::info('AdminController.delete Success=Admin deleted OK');
 
-        return redirect()->route('admins.index')->with('warning', array('Admin has been removed!'=>''));
+        return redirect()->route('back.admins.index')->with('warning', array('Admin has been removed!'=>''));
     }
 }
