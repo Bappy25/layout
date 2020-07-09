@@ -21,29 +21,27 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
-
+                <div class="card-header">{{ $user->name }}</div>
                 <div class="card-body">
-                    <h4>Welcome {{ $user->name }}!</h4><hr>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-md-6">
                             <div id="aniimated-thumbnials">
                                 <a href="{{ file_exists($user->user_detail->avatar) ? asset($user->user_detail->avatar) : 'http://via.placeholder.com/200x200' }}" data-sub-html="{{ $user->name }}">
                                     <img src="{{ file_exists($user->user_detail->avatar) ? asset($user->user_detail->avatar) : 'http://via.placeholder.com/200x200' }}" class="img-fluid rounded-circle mr-2" alt="Responsive image" width="200" height="200">
                                 </a>
                             </div>
-                            <button type="button" class="btn btn-secondary btn-sm my-3" data-toggle="modal" data-target="#updateimage">Update Profile Picture</button>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-md-6">
                             <p><strong>Username:</strong> {{ $user->username }}</p>
                             <p><strong>Email:</strong> {{ $user->email }}</p>
                             <p><strong>Date of Birth:</strong> {{ empty($user->user_detail->dob) ? '' : $user->user_detail->dob->format('d/m/y') }}</p>
                             <p><strong>Contact:</strong> {{ empty($user->user_detail->contact) ? '' : $user->user_detail->contact }}</p>
                             <p><strong>Gender:</strong> {{ config('genders.'.$user->user_detail->gender) }}</p>
                             <p><strong>Address:</strong> {{ empty($user->user_detail->address) ? '' : $user->user_detail->address }}</p>
-                            <a href="{{ route('account.edit') }}" class="btn btn-warning btn-sm mb-3">Update Information</a>
                         </div>
                     </div>
+                    <a href="{{ route('account.edit') }}" class="btn btn-warning btn-sm my-3">Update Information</a>
+                    <button type="button" class="btn btn-secondary btn-sm my-3" data-toggle="modal" data-target="#updateimage">Update Profile Picture</button>
                 </div>
             </div>
         </div>

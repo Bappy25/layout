@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -42,6 +43,9 @@ class UserRequest extends FormRequest
             case 'PUT':
             {
                 $user = User::where('id', $this->route('user'))->get()->first();
+                if(empty($user)){
+                    $user = Auth::user();
+                }
                 return [
                     'name' => 'required|string|min:3|max:255',
                     'username' => 'required|string|max:50|unique:users,username,'.$user->id.',id',
