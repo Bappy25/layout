@@ -24,8 +24,7 @@ class AccountController extends Controller
      */
     public function __construct(User $user, UserDetail $detail, ApiHelper $api)
     {
-        $this->middleware('auth');
-        $this->middleware('verified')->except('index');
+        $this->middleware(['auth', 'verified']);
         $this->api = $api;
         $this->user = $user;
         $this->detail = $detail;

@@ -30,18 +30,12 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    // protected $redirectTo = '/home';
     protected function redirectTo()
     {
             // Add a mail has been sent text under title
         Session::flash('success', array('Successfully regsitered!'=>'Thanks for registering to our website.', 'Check verification mail!'=>'A mail has been sent to your address. Please check the mail and varify your account.'));
-        return route('welcome');
+        return route('home');
     }
 
     /**
