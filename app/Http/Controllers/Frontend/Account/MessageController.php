@@ -195,23 +195,6 @@ class MessageController extends Controller
         }
     }  
 
-    /**
-     * Upload image.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function addImage(Request $request)
-    {
-        try {
-            $path = $this->uploadImage($request->file('upload_image'), 'all_images/message_images/', 400, 400);
-            echo json_encode(['response' => 'success', 'path' => $path]);
-        }
-        catch (\Exception $e) {
-            echo ['status'=>401, 'reason'=>$e->getMessage()];
-        }
-    }
-
     public function editSubject($id)
     {
         try {

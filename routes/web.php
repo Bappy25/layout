@@ -11,6 +11,10 @@
 |
 */
 
+// General routes
+Route::post('add_content_image', 'Controller@addContentImage')->name('contents.image.add');
+
+// Frontend page routes
 Route::group(['namespace' => 'Frontend'], function(){
 
 	Route::get('/', 'HomeController@index')->name('welcome');
@@ -53,7 +57,6 @@ Route::group(['namespace' => 'Frontend'], function(){
 			Route::get('create/{username}', 'MessageController@create')->name('messages.create');
 			Route::post('addSubject', 'MessageController@addMessageSubject')->name('messages.add.subject');
 			Route::post('status', 'MessageController@getStatus')->name('messages.get.status');
-			Route::post('image/add', 'MessageController@addImage')->name('messages.image.add');
 			Route::get('subject/{id}/edit', 'MessageController@editSubject')->name('messages.subject.edit');
 			Route::post('subject/{id}/update', 'MessageController@updateSubject')->name('messages.subject.update');
 			Route::post('users/search', 'MessageController@getUserList')->name('messages.users');
@@ -66,6 +69,7 @@ Route::group(['namespace' => 'Frontend'], function(){
 
 });
 
+// Backend page routes
 Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 
 	Route::group(['namespace' => 'Auth'], function(){

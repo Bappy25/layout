@@ -6,6 +6,7 @@ use Storage;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Content;
+use App\Helpers\ApiHelper;
 use App\Notifications\UserNotification;
 use App\Notifications\AdminNotification;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -55,6 +56,27 @@ class Controller extends BaseController
         for($i = 0; $i < count($receivers); $i++){
             $user = User::findOrFail($receivers[$i]);
             $user->notify(new UserNotification(['text' => $text, 'link' => $link]));
+        }
+    }
+
+    /**
+     * Upload contents images.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addContentImage(Request $request)
+    {
+        Log::info('Req=Controller@addContentImage called');
+
+        $api = new ApiHelper;
+        
+        try {
+            $path = $this->uploadImage($request->file('upload_image'), 'all_images/content_images/', 400, 400);
+            return $api->success('Image added successfully!');
+
+        }catch(\Exception $e){
+            return $api->fail($e->getMessage());
         }
     }
 }
