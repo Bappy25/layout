@@ -50,7 +50,7 @@ class LoginController extends Controller
     // protected $redirectTo = 'home';
     protected function redirectTo()
     {
-        Session::flash('success', array('Login successful!'=>''));
+        Session::flash('success', ['Login successful!'=>'']);
         return route('home');
     }
 
