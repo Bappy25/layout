@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Frontend\Account;
 
 use Log;
 use Auth;
@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 
 class AccountController extends Controller
 {
-    protected $api;
+	protected $api;
     protected $user;
     protected $detail;
 

@@ -16,6 +16,12 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Models\MessageSubject::class, function (Faker $faker) {
+    return [
+        'subject' => $faker->catchPhrase($maxNbChars = 5)
+    ];
+});
+
 $factory->define(App\Models\Admin::class, function (Faker $faker) {
     return [
         'name' => $faker->name,

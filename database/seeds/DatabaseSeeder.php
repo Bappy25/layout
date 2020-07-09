@@ -22,5 +22,17 @@ class DatabaseSeeder extends Seeder
             // Seed the user details
         $this->call(UserDetailsSeeder::class);
         $this->command->info('Seeded the user details!');
+
+            // Seed the message subjects
+        $this->call(MessageSubjectsTableSeeder::class);
+        $this->command->info('Seeded the message subjects!');
+
+            // Seed the messages
+        $this->call(MessagesTableSeeder::class);
+        $this->command->info('Seeded the messages!');
+
+            // Seed the message participants
+        $this->call(MessageParticipantsTableSeeder::class);
+        $this->command->info('Seeded the message participants!');
     }
 }
