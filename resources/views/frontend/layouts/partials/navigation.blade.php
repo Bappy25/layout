@@ -10,7 +10,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-
+                @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                </li>
+                @endguest
             </ul>
 
             <!-- Right Side Of Navbar -->
