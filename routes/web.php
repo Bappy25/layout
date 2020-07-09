@@ -53,11 +53,6 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 	Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('back.password.reset');
 	Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.password.update');
 
-	// Email Verification Routes...
-	Route::get('email/verify', 'Auth\VerificationController@show')->name('back.verification.notice');
-	Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('back.verification.verify');
-	Route::get('email/resend', 'Auth\VerificationController@resend')->name('back.verification.resend');
-
 	Route::get('home', 'HomeController@index')->name('back.home');
 
 	// Administrators
