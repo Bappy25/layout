@@ -96,7 +96,7 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $keyword = $request->search;
         $user = $this->user->find(Auth::user()->id);
@@ -111,7 +111,7 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($username)
     {
         $recipient = $this->user->where('username', $username)->first();
         return view('front.account.messaging.create', compact('recipient'));

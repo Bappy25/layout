@@ -52,6 +52,26 @@
                     <span>Home</span>
                 </a>
             </li>
+            <li {{ Route::is('back.contents*')? 'class=active':'' }}>
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">language</i>
+                    <span>Web Contents</span>
+                </a>
+                <ul class="ml-menu">
+                    <li {{ Route::is('back.contents.welcome') ? 'class=active':'' }}>
+                        <a href="{{ route('back.contents.welcome') }}">Front Page</a>
+                    </li>
+                    <li {{ Route::is('back.contents.about') ? 'class=active':'' }}>
+                        <a href="{{ route('back.contents.about') }}">About Us</a>
+                    </li>
+                    <li {{ Route::is('back.contents.terms') ? 'class=active':'' }}>
+                        <a href="{{ route('back.contents.terms') }}">Terms of Services</a>
+                    </li>
+                    <li {{ Route::is('back.contents.policy') ? 'class=active':'' }}>
+                        <a href="{{ route('back.contents.policy') }}">Privacy Policy</a>
+                    </li>
+                </ul>
+            </li>
             <li {{ Route::is('back.users*')? 'class=active':'' }}>
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">people</i>

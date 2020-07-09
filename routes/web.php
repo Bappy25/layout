@@ -38,7 +38,6 @@ Route::group(['namespace' => 'Frontend'], function(){
 
 		// Notification Routes
 		Route::group(['prefix' => 'notifications'], function(){
-			
 			Route::get('/', 'NotificationController@allNotifications')->name('notifications.index');
 			Route::get('new', 'NotificationController@newNotifications')->name('notifications.new');
 			Route::get('new/count', 'NotificationController@countNotifications')->name('notifications.new.count');
@@ -47,25 +46,19 @@ Route::group(['namespace' => 'Frontend'], function(){
 		});
 
 		// Message Routes
+		Route::resource('messages', 'MessageController', ['except' => ['create']]);
 		Route::group(['prefix' => 'messages'], function(){
-
 			Route::get('newmessages', 'MessageController@newMessages')->name('messages.new');
 			Route::get('newmessages/count', 'MessageController@newMessagesCount')->name('messages.new.count');
-			Route::get('/', 'MessageController@index')->name('messages.index');
 			Route::get('create/{username}', 'MessageController@create')->name('messages.create');
 			Route::post('addSubject', 'MessageController@addMessageSubject')->name('messages.add.subject');
-			Route::get('{id}', 'MessageController@show')->name('messages.show');
 			Route::post('status', 'MessageController@getStatus')->name('messages.get.status');
 			Route::post('image/add', 'MessageController@addImage')->name('messages.image.add');
-			Route::post('/', 'MessageController@store')->name('messages.store');
-			Route::get('{id}/edit', 'MessageController@edit')->name('messages.edit');
-			Route::put('{id}', 'MessageController@update')->name('messages.update');
 			Route::get('subject/{id}/edit', 'MessageController@editSubject')->name('messages.subject.edit');
 			Route::post('subject/{id}/update', 'MessageController@updateSubject')->name('messages.subject.update');
 			Route::post('users/search', 'MessageController@getUserList')->name('messages.users');
 			Route::post('users/add', 'MessageController@addParticipant')->name('messages.users.add');
 			Route::delete('users/{id}', 'MessageController@removeReceipent')->name('messages.users.remove');
-			Route::delete('{id}', 'MessageController@destroy')->name('messages.destroy');
 
 		});
 
@@ -75,20 +68,28 @@ Route::group(['namespace' => 'Frontend'], function(){
 
 Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 
-	// Authentication Routes
-	Route::get('login', 'Auth\LoginController@showLoginForm')->name('back.login');
-	Route::post('login', 'Auth\LoginController@login');
-	Route::post('logout', 'Auth\LoginController@logout')->name('back.logout');
+	Route::group(['namespace' => 'Auth'], function(){
 
-	// Registration Routes
-	Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('back.register');
-	Route::post('register', 'Auth\RegisterController@register');
+		// Authentication Routes
+		Route::get('login', 'LoginController@showLoginForm')->name('back.login');
+		Route::post('login', 'LoginController@login');
+		Route::post('logout', 'LoginController@logout')->name('back.logout');
 
-	// Password Reset Routes
-	Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('back.password.request');
-	Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('back.password.email');
-	Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('back.password.reset');
-	Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.password.update');
+		// Registration Routes
+		Route::group(['prefix' => 'register'], function(){
+			Route::get('/', 'RegisterController@showRegistrationForm')->name('back.register');
+			Route::post('/', 'RegisterController@register');
+		});
+
+		// Password Reset Routes
+		Route::group(['prefix' => 'password'], function(){
+			Route::get('reset', 'ForgotPasswordController@showLinkRequestForm')->name('back.password.request');
+			Route::post('email', 'ForgotPasswordController@sendResetLinkEmail')->name('back.password.email');
+			Route::get('reset/{token}', 'ResetPasswordController@showResetForm')->name('back.password.reset');
+			Route::post('reset', 'ResetPasswordController@reset')->name('back.password.update');
+		});
+
+	});
 
 	Route::get('home', 'HomeController@index')->name('back.home');
 
@@ -98,5 +99,14 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 	// Users
 	Route::resource('users', 'UserController', ['as' => 'back']);
 	Route::put('users/{id}/update/image', 'UserController@updateImage')->name('back.users.update.image');
+
+	// Webcontroller
+	Route::group(['prefix' => 'contents'], function(){
+		Route::get('welcome', 'ContentController@welcome')->name('back.contents.welcome');
+		Route::get('about_us', 'ContentController@aboutUs')->name('back.contents.about');
+		Route::get('terms_of_use', 'ContentController@termsOfUse')->name('back.contents.terms');
+		Route::get('privacy_policy', 'ContentController@privacyPolicy')->name('back.contents.policy');
+		Route::put('{id}', 'ContentController@update')->name('back.contents.update');
+	});
 
 });
