@@ -159,7 +159,7 @@
 
 @section('extra-script')
 
-<!-- Demo Js -->
+<!-- Autosize Js -->
 {{Html::script('plugins/autosize/autosize.js')}}
 
 <!-- Input Mask Plugin Js -->

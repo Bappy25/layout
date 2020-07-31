@@ -18,7 +18,8 @@ class ContentController extends Controller
 
     public function welcome()
     {
-        return view('backend.contents.welcome');
+        $content = $this->content->where('headline', 'welcome')->firstOrFail();
+        return view('backend.contents.welcome', compact('content'));
     }
 
     public function aboutUs()
@@ -36,8 +37,18 @@ class ContentController extends Controller
         return view('backend.contents.privacy_policy');
     }
 
-    public function update($id)
+    public function update(Request $request, $id)
     {
+        $content = $this->content->findOrFail($id);
+
+        $input = $request->all();
+        unset($input['_token']); unset($input['_method']);
+        $content->web_contents = json_encode($input);
+        $content->save();
+
+        \Log::info('Req=ContentController@update Success=Content updated OK');
+
+        return redirect()->back()->with('success', [ 'Success' => 'Content has been updated!' ]);
     	
     }
 }
