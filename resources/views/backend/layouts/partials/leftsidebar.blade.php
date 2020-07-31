@@ -46,11 +46,59 @@
     <div class="menu">
         <ul class="list">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active">
+            <li {{ Route::is('back.home')? 'class=active':'' }}>
                 <a href="{{ route('back.home') }}">
                     <i class="material-icons">home</i>
                     <span>Home</span>
                 </a>
+            </li>
+            <li {{ Route::is('back.contents*')? 'class=active':'' }}>
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">language</i>
+                    <span>Web Contents</span>
+                </a>
+                <ul class="ml-menu">
+                    <li {{ Route::is('back.contents.welcome') ? 'class=active':'' }}>
+                        <a href="{{ route('back.contents.welcome') }}">Front Page</a>
+                    </li>
+                    <li {{ Route::is('back.contents.about') ? 'class=active':'' }}>
+                        <a href="{{ route('back.contents.about') }}">About Us</a>
+                    </li>
+                    <li {{ Route::is('back.contents.terms') ? 'class=active':'' }}>
+                        <a href="{{ route('back.contents.terms') }}">Terms of Services</a>
+                    </li>
+                    <li {{ Route::is('back.contents.policy') ? 'class=active':'' }}>
+                        <a href="{{ route('back.contents.policy') }}">Privacy Policy</a>
+                    </li>
+                </ul>
+            </li>
+            <li {{ Route::is('back.users*')? 'class=active':'' }}>
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">people</i>
+                    <span>Users</span>
+                </a>
+                <ul class="ml-menu">
+                    <li {{ Route::is('back.users.index') || Route::is('back.users.show') || Route::is('back.users.edit') ? 'class=active':'' }}>
+                        <a href="{{ route('back.users.index') }}">All Users</a>
+                    </li>
+                    <li {{ Route::is('back.users.create') ? 'class=active':'' }}>
+                        <a href="{{ route('back.users.create') }}">Add New User</a>
+                    </li>
+                </ul>
+            </li>
+            <li {{ Route::is('back.admins*')? 'class=active':'' }}>
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">verified_user</i>
+                    <span>Administrators</span>
+                </a>
+                <ul class="ml-menu">
+                    <li {{ Route::is('back.admins.index') || Route::is('back.admins.edit')? 'class=active':'' }}>
+                        <a href="{{ route('back.admins.index') }}">All Administrators</a>
+                    </li>
+                    <li {{ Route::is('back.admins.create') ? 'class=active':'' }}>
+                        <a href="{{ route('back.admins.create') }}">Add New Administrator</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="javascript:void(0);" class="menu-toggle">

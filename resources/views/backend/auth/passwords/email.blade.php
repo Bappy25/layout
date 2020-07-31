@@ -28,7 +28,7 @@ fp-page
                     <span class="input-group-addon">
                         <i class="material-icons">email</i>
                     </span>
-                    <div class="form-line  @error('email') error @enderror">
+                    <div class="form-line  @error('email') error focused @enderror">
                         <input type="email" class="form-control" name="email" placeholder="Email" autofocus>
                     </div>
                     @error('email')

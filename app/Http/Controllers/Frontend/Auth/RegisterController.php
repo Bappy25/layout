@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Frontend\Auth;
 
+use Session;
 use App\Models\User;
+use App\Models\UserDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -31,16 +33,6 @@ class RegisterController extends Controller
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
-    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -48,11 +40,20 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = [
+            'condition.required' => 'You have to agree with the terms and conditions!',
+            // 'password.regex' => 'Please make sure your password contains at least one uppercase and one lowercase character, a special character and a number!',
+        ];
+
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:50|unique:users',
+            'email' => 'required|string|email|max:50|unique:users',
+            // 'password' => 'required|string|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/|confirmed',
+            'password' => 'required|string|min:8|confirmed',
+            'condition' => 'required',
+        ],
+        $messages);
     }
 
     /**
@@ -63,11 +64,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $userDetail = UserDetail::create([
+            'user_id' => $user->id
+        ]);
+ 
+        return $user;
     }
 
     public function showRegistrationForm() {

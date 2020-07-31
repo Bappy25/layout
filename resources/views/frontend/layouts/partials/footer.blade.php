@@ -28,16 +28,16 @@
 
           <ul class="list-unstyled">
             <li>
-              <a href="#!">Link 1</a>
+              <a href="{{ route('welcome') }}">Front Page</a>
             </li>
             <li>
-              <a href="#!">Link 2</a>
+              <a href="{{ route('about_us') }}">About Us</a>
             </li>
             <li>
-              <a href="#!">Link 3</a>
+              <a href="{{ route('terms_of_use') }}">Terms of Use</a>
             </li>
             <li>
-              <a href="#!">Link 4</a>
+              <a href="{{ route('privacy_policy') }}">Privacy Policy</a>
             </li>
           </ul>
 
@@ -52,16 +52,16 @@
 
           <ul class="list-unstyled">
             <li>
-              <a href="#!">Link 1</a>
+              <a href="javascript:void(0);">Link 1</a>
             </li>
             <li>
-              <a href="#!">Link 2</a>
+              <a href="javascript:void(0);">Link 2</a>
             </li>
             <li>
-              <a href="#!">Link 3</a>
+              <a href="javascript:void(0);">Link 3</a>
             </li>
             <li>
-              <a href="#!">Link 4</a>
+              <a href="javascript:void(0);">Link 4</a>
             </li>
           </ul>
 
@@ -78,7 +78,7 @@
 
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">© {{ date('Y') }} Copyright:
-    <a href="http://mhasan.amarneta.com"> Mahadi Hasan</a>
+    <a href="http://mhasan.amrameghnabasi.org"> Mahadi Hasan</a>
   </div>
   <!-- Copyright -->
 
