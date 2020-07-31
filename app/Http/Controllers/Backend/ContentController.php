@@ -24,17 +24,20 @@ class ContentController extends Controller
 
     public function aboutUs()
     {
-        return view('backend.contents.about_us');
+        $content = $this->content->where('headline', 'about_us')->firstOrFail();
+        return view('backend.contents.about_us', compact('content'));
     }
 
     public function termsOfUse()
     {
-        return view('backend.contents.terms_of_use');
+        $content = $this->content->where('headline', 'terms_of_use')->firstOrFail();
+        return view('backend.contents.terms_of_use', compact('content'));
     }
 
     public function privacyPolicy()
     {
-        return view('backend.contents.privacy_policy');
+        $content = $this->content->where('headline', 'privacy_policy')->firstOrFail();
+        return view('backend.contents.privacy_policy', compact('content'));
     }
 
     public function update(Request $request, $id)
