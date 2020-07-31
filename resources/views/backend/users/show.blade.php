@@ -25,16 +25,41 @@ All Users || {{ $user->name }}
 
 <!-- Show User -->
 <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
+    <div class="col-xs-12 col-sm-3">
+        <div class="card profile-card">
+            <div class="profile-header">&nbsp;</div>
+            <div class="profile-body">
+                <div class="image-area" id="aniimated-thumbnials">
+                    <a href="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" data-sub-html="{{ $user->name }}">
+                        <img src="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" alt="{{ $user->name }}" />
+                    </a>
+                </div>
+                <div class="content-area">
+                    <h3>{{ $user->name }}</h3>
+                    <p>Created At: {{ $user->created_at->format('d/m/y, h:m a') }}</p>
+                    <p>Verified at: {{ empty($user->email_verified_at) ? 'Not yet verified!' : $user->email_verified_at->format('d/m/y, h:m a') }}</p>
+                </div>
+            </div>
+            <div class="profile-footer">
+                <ul>
+                    <li>
+                        <span>Username</span>
+                        <span>{{ $user->username }}</span>
+                    </li>
+                    <li>
+                        <span>Email</span>
+                        <span>{{ $user->email }}</span>
+                    </li>
+                </ul>
+                <button class="btn btn-primary btn-lg waves-effect btn-block" data-toggle="modal" data-target="#avatar_update_modal">UPDATE PROFILE PICTURE</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-9">
+        <div class="card card-about-me">
             <div class="header">
-                <h2>
-                    {{ $user->name }}
-                    <small>
-                        <strong>Created At:</strong> {{ $user->created_at->format('d/m/y, h:m a') }}
-                        <strong class="p-l-10">Verified at: </strong> {{ empty($user->email_verified_at) ? 'Not yet verified!' : $user->email_verified_at->format('d/m/y, h:m a') }}
-                    </small>
-                </h2>
+                <h2>ABOUT {{ $user->name }}</h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -50,18 +75,44 @@ All Users || {{ $user->name }}
                 </ul>
             </div>
             <div class="body">
-                <div id="aniimated-thumbnials">
-                    <a href="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" data-sub-html="{{ $user->name }}">
-                        <img class="img-responsive thumbnail" src="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" alt="{{ $user->name }}">
-                    </a>
-                </div>
-                <button type="button" class="btn bg-red waves-effect m-b-15" data-toggle="modal" data-target="#avatar_update_modal">Update Profile Picture</button>
-                <p><strong>Username:</strong> {{ $user->username }}</p>
-                <p><strong>Email:</strong> {{ $user->email }}</p>
-                <p><strong>Date of Birth:</strong> {{ empty($user->user_detail->dob) ? '' : $user->user_detail->dob->format('d/m/y') }}</p>
-                <p><strong>Contact:</strong> {{ empty($user->user_detail->contact) ? '' : $user->user_detail->contact }}</p>
-                <p><strong>Gender:</strong> {{ config('genders.'.$user->user_detail->gender) }}</p>
-                <p><strong>Address:</strong> {{ empty($user->user_detail->address) ? '' : $user->user_detail->address }}</p>
+                <ul>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">event</i>
+                            Date of Birth
+                        </div>
+                        <div class="content">
+                            {{ empty($user->user_detail->dob) ? '' : $user->user_detail->dob->format('d/m/y') }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">sentiment_satisfied</i>
+                            Gender
+                        </div>
+                        <div class="content">
+                            {{ config('genders.'.$user->user_detail->gender) }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">call</i>
+                            Contact
+                        </div>
+                        <div class="content">
+                            {{ empty($user->user_detail->contact) ? '' : $user->user_detail->contact }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">location_on</i>
+                            Address
+                        </div>
+                        <div class="content">
+                            {{ empty($user->user_detail->address) ? '' : $user->user_detail->address }}
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
