@@ -36,19 +36,18 @@ All Users || {{ $user->name }}
                 </div>
                 <div class="content-area">
                     <h3>{{ $user->name }}</h3>
-                    <p>Created At: {{ $user->created_at->format('d/m/y, h:m a') }}</p>
-                    <p>Verified at: {{ empty($user->email_verified_at) ? 'Not yet verified!' : $user->email_verified_at->format('d/m/y, h:m a') }}</p>
+                    <p>{{ $user->username }}</p>
                 </div>
             </div>
             <div class="profile-footer">
                 <ul>
                     <li>
-                        <span>Username</span>
-                        <span>{{ $user->username }}</span>
+                        <span>Created At</span>
+                        <span>{{ $user->created_at->format('d/m/y, h:m a') }}</span>
                     </li>
                     <li>
-                        <span>Email</span>
-                        <span>{{ $user->email }}</span>
+                        <span>Verified at</span>
+                        <span>{{ empty($user->email_verified_at) ? 'Not yet verified!' : $user->email_verified_at->format('d/m/y, h:m a') }}</span>
                     </li>
                 </ul>
                 <button class="btn btn-primary btn-lg waves-effect btn-block" data-toggle="modal" data-target="#avatar_update_modal">UPDATE PROFILE PICTURE</button>
@@ -92,6 +91,15 @@ All Users || {{ $user->name }}
                         </div>
                         <div class="content">
                             {{ config('genders.'.$user->user_detail->gender) }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">email</i>
+                            Email
+                        </div>
+                        <div class="content">
+                            {{ $user->email }}
                         </div>
                     </li>
                     <li>
