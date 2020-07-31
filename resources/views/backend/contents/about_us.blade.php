@@ -43,6 +43,12 @@ About Us
                     </div>
                 </div>
 
+                <div class="form-group">
+                    {!! Form::label('details', "Details") !!}
+                    <div class="form-line">
+                        {!! Form::textarea("details", empty($about->details) ? null : $about->details, ['class'=>'tinymce']) !!}
+                    </div>
+                </div>
 
                 {!! Form::submit("Update", ['class'=>'btn btn-primary waves-effect']) !!}
 
@@ -59,8 +65,8 @@ About Us
 <!-- Bootstrap Tags Input Plugin Js -->
 {{Html::script('plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')}}
 
-<!-- Jquery Validation Plugin Css -->
-{{Html::script('plugins/jquery-validation/jquery.validate.js')}}
+<!-- TinyMCE -->
+{{Html::script('plugins/tinymce/tinymce.min.js')}}
 
 @endsection
 
@@ -69,7 +75,64 @@ About Us
 <!-- Demo Js -->
 {{Html::script('js/backend/script.js')}}
 
-<!-- Form Validation Js -->
-{{Html::script('js/backend/pages/forms/form-validation.js')}}
+<script type="text/javascript">
+
+        // Declare Tinymce
+        tinymce.init({
+
+            selector: "textarea.tinymce",
+            height: 800,
+            plugins: [
+                'advlist autolink lists image code charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table directionality',
+                'emoticons template paste textpattern imagetools',
+            ],
+            toolbar1: 'undo redo | image code| insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | print preview media | forecolor backcolor emoticons',
+            image_advtab: true,
+
+            images_upload_url: '/add_content_image',
+
+            images_upload_handler: function (blobInfo, success, failure) {
+
+                var xhr, formData;
+              
+                xhr = new XMLHttpRequest();
+                xhr.withCredentials = false;
+
+                xhr.open('POST', '/add_content_image');
+              
+                xhr.onload = function() {
+                    var json;
+                
+                    if (xhr.status != 200) {
+                        failure('HTTP Error: ' + xhr.status);
+                        return;
+                    }
+                
+                    json = JSON.parse(xhr.responseText);
+                
+                    if (!json || typeof json.data.path != 'string') {
+                        failure('Invalid JSON: ' + xhr.responseText);
+                        return;
+                    }
+                
+                    success(window.location.origin+'/'+json.data.path);
+                };
+              
+                formData = new FormData();
+                formData.append('upload_image', blobInfo.blob(), blobInfo.filename());
+                formData.append('folder','editors');
+                formData.append('size','500');
+                formData.append('_token', $('meta[name=csrf-token]').attr('content'));
+              
+                xhr.send(formData);
+            }
+
+        });
+
+        tinymce.suffix = ".min";
+        tinyMCE.baseURL = '../../plugins/tinymce';
+</script>
 
 @endsection

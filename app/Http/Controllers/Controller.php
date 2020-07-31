@@ -65,15 +65,15 @@ class Controller extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function addContentImage(Request $request)
+    public function addContentImage(\Illuminate\Http\Request $request)
     {
-        Log::info('Req=Controller@addContentImage called');
+        \Log::info('Req=Controller@addContentImage called');
 
         $api = new ApiHelper;
         
         try {
             $path = $this->uploadImage($request->file('upload_image'), 'all_images/content_images/', 400, 400);
-            return $api->success('Image added successfully!');
+            return $api->success('Image added successfully!', ['path' => $path]);
 
         }catch(\Exception $e){
             return $api->fail($e->getMessage());

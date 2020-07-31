@@ -11,9 +11,6 @@
 |
 */
 
-// General routes
-Route::post('add_content_image', 'Controller@addContentImage')->name('contents.image.add');
-
 // Frontend page routes
 Route::group(['namespace' => 'Frontend'], function(){
 
@@ -114,3 +111,6 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 	});
 
 });
+
+// General routes
+Route::post('add_content_image', 'Controller@addContentImage')->name('contents.image.add');
