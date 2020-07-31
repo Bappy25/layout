@@ -6,7 +6,7 @@ Privacy Policy ||
 
 @section('meta')
 
-@include('frontend.layouts.partials.meta', ['keywords' => '', 'description' => '', 'author' => '', 'title' => 'Privacy Policy', 'type' => '', 'image' => asset('favicon.png')])
+@include('frontend.layouts.partials.meta', ['keywords' => $privacy->keywords, 'description' => strip_tags($privacy->details), 'author' => config('app.name'), 'title' => 'Privacy Policy', 'type' => 'Site Info', 'image' => asset('favicon.png')])
 
 @endsection
 
@@ -16,6 +16,7 @@ Privacy Policy ||
 
   <h2><i class="fas fa-user-lock mr-3"></i>Privacy Policy</h2><hr>
 
+  {!! $privacy->details !!}
   
 </div>
 @endsection

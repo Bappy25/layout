@@ -7,11 +7,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @yield('meta')
+
+    <title>@yield('title') {{ config('app.name', 'Laravel') }}</title>
 
     <!-- System icon -->
     <link rel="icon" href="{{{ asset('images/frontend/favicon.ico') }}}" type="image/x-icon">
-
 
     <!-- CSS-->
     @include('frontend.layouts.partials.styles')

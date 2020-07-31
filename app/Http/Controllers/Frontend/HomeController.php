@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Content;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
+    protected $content;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Content $content)
     {
         $this->middleware(['auth', 'verified'])->only('home');
+        $this->content = $content;
     }
 
     /**
@@ -24,7 +28,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $content = $this->content->where('headline', 'welcome')->firstOrFail();
+        $welcome = json_decode($content->web_contents);
+        return view('welcome', compact('welcome'));
     }
 
     /**
@@ -44,7 +50,9 @@ class HomeController extends Controller
      */
     public function about()
     {
-        return view('frontend.about_us');
+        $content = $this->content->where('headline', 'about_us')->firstOrFail();
+        $about = json_decode($content->web_contents);
+        return view('frontend.about_us', compact('about'));
     }
 
     /**
@@ -54,7 +62,9 @@ class HomeController extends Controller
      */
     public function privacyPolicy()
     {
-        return view('frontend.privacy_policy');
+        $content = $this->content->where('headline', 'privacy_policy')->firstOrFail();
+        $privacy = json_decode($content->web_contents);
+        return view('frontend.privacy_policy', compact('privacy'));
     }
 
     /**
@@ -64,6 +74,8 @@ class HomeController extends Controller
      */
     public function termsOfUse()
     {
-        return view('frontend.terms_of_use');
+        $content = $this->content->where('headline', 'terms_of_use')->firstOrFail();
+        $terms = json_decode($content->web_contents);
+        return view('frontend.terms_of_use', compact('terms'));
     }
 }

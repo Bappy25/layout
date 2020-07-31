@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="{{ $welcome->keywords }}"/>
+    <meta name="description" content="{{ substr($welcome->description, 0, 20).'...' }}">
 
     <title>Laravel</title>
 

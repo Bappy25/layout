@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 
 @section('title')
-MDB Admin Panel
+Welcome to Admin Panel
 @endsection
 
 @section('content')
