@@ -133,6 +133,16 @@ About Us
 
         tinymce.suffix = ".min";
         tinyMCE.baseURL = '../../plugins/tinymce';
+
+            // Prevent Leave
+        window.addEventListener('beforeunload', function(e) {
+          var myPageIsDirty = tinymce.activeEditor.isDirty()
+          if(myPageIsDirty) {
+            e.preventDefault(); //per the standard
+            e.returnValue = ''; //required for Chrome
+          }
+        });
+
 </script>
 
 @endsection
