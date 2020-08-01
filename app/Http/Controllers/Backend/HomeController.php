@@ -24,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        \Log::info('Req=HomeController@index called!');
+
         return view('backend.home');
     }
 }

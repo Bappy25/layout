@@ -18,7 +18,7 @@ class CreateNewsTable extends Migration
             $table->string('title');
             $table->string('tags')->nullable();
             $table->string('image_path')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->json('viewers')->nullable();
             $table->bigInteger('admin_id')->unsigned();

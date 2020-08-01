@@ -28,6 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        \Log::info('Req=HomeController@index called!');
+
         $content = $this->content->where('headline', 'welcome')->firstOrFail();
         $welcome = json_decode($content->web_contents);
         return view('welcome', compact('welcome'));
@@ -40,6 +42,8 @@ class HomeController extends Controller
      */
     public function home()
     {
+        \Log::info('Req=HomeController@home called!');
+
         return view('frontend.home');
     }
 
@@ -50,6 +54,8 @@ class HomeController extends Controller
      */
     public function about()
     {
+        \Log::info('Req=HomeController@about called!');
+
         $content = $this->content->where('headline', 'about_us')->firstOrFail();
         $about = json_decode($content->web_contents);
         return view('frontend.about_us', compact('about'));
@@ -62,6 +68,8 @@ class HomeController extends Controller
      */
     public function privacyPolicy()
     {
+        \Log::info('Req=HomeController@privacyPolicy called!');
+
         $content = $this->content->where('headline', 'privacy_policy')->firstOrFail();
         $privacy = json_decode($content->web_contents);
         return view('frontend.privacy_policy', compact('privacy'));
@@ -74,6 +82,8 @@ class HomeController extends Controller
      */
     public function termsOfUse()
     {
+        \Log::info('Req=HomeController@termsOfUse called!');
+        
         $content = $this->content->where('headline', 'terms_of_use')->firstOrFail();
         $terms = json_decode($content->web_contents);
         return view('frontend.terms_of_use', compact('terms'));

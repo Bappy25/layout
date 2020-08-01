@@ -32,42 +32,42 @@ All Administrators
             </div>
             <div class="body">
                 <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>NAME</th>
-                            <th>EMAIL</th>
-                            <th>CREATED AT</th>
-                            <th>ACTION</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>NAME</th>
-                            <th>EMAIL</th>
-                            <th>CREATED AT</th>
-                            <th>ACTION</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach ($admins as $admin)
-                        <tr>
-                            <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $admin->name }}</td>
-                            <td>{{ $admin->email }}</td>
-                            <td>{{ $admin->created_at->format('d/m/y, h:m a') }}</td>
-                            <td>
-                                {!! Form::open(['route' => ['back.admins.destroy', $admin->id], 'method'=>'delete']) !!}
-                                <a class="btn btn-warning" href="{{route('back.admins.edit', $admin->id)}}" title="Edit Administrator"><i class="material-icons">edit</i></a>
-                                {!! Form::button('<i class="material-icons">delete</i>', array('class' => 'btn btn-danger form_warning_sweet_alert', (Auth::guard('admin')->user()->id == $admin->id || $admin->first()->id == $admin->id ) ? 'disabled' : '', 'title'=>'Delete Administrator', 'text'=>'Once deleted the administrator cannot be restored', 'confirmButtonText'=>'Yes!', 'type'=>'submit')) !!}
-                                {!! Form::close() !!}
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>NAME</th>
+                                <th>EMAIL</th>
+                                <th>CREATED AT</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>NAME</th>
+                                <th>EMAIL</th>
+                                <th>CREATED AT</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach ($admins as $admin)
+                            <tr>
+                                <th scope="row">{{ $loop->iteration }}</th>
+                                <td>{{ $admin->name }}</td>
+                                <td>{{ $admin->email }}</td>
+                                <td>{{ $admin->created_at->format('d/m/y, h:m a') }}</td>
+                                <td>
+                                    {!! Form::open(['route' => ['back.admins.destroy', $admin->id], 'method'=>'delete']) !!}
+                                    <a class="btn btn-warning" href="{{route('back.admins.edit', $admin->id)}}" title="Edit Administrator"><i class="material-icons">edit</i></a>
+                                    {!! Form::button('<i class="material-icons">delete</i>', array('class' => 'btn btn-danger form_warning_sweet_alert', (Auth::guard('admin')->user()->id == $admin->id || $admin->first()->id == $admin->id ) ? 'disabled' : '', 'title'=>'Delete Administrator', 'text'=>'Once deleted the administrator cannot be restored', 'confirmButtonText'=>'Yes!', 'type'=>'submit')) !!}
+                                    {!! Form::close() !!}
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

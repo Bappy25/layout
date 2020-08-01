@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Log;
 use App\Models\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,8 @@ class NewsController extends Controller
      */
     public function index()
     { 
+        Log::info('Req=NewsController@index called');
+
         return view('backend.news.index');
     }
 
@@ -33,6 +36,7 @@ class NewsController extends Controller
      */
     public function create()
     {
+        Log::info('Req=NewsController@create called');
         return view('backend.news.create');
     }
 
@@ -44,7 +48,15 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $news = $this->news;
+        $news->title = $request->title;
+        $news->tags = $request->tags;
+        $news->admin_id = \Auth::guard('admin')->user()->id;
+        $news->save();
+        
+        Log::info('Req=NewsController@store Success=draft has been saved!');
+
+        return redirect()->route('back.news.edit', $news->id)->with('success', [ 'Success' => 'New user has been added!' ]);
     }
 
     /**
@@ -55,7 +67,7 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        Log::info('Req=NewsController@edit called news_id='.$id);
     }
 
     /**

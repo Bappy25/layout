@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label("Adress") !!}
+                    {!! Form::label("Address") !!}
                     <div class="form-line">
                         {!! Form::textarea("address", empty($user->user_detail->address) ? null : $user->user_detail->address, ['class'=>'form-control no-resize auto-growth '.($errors->has("address") ? "is-invalid" : ""), 'rows'=>1, 'autocomplete'=>'off']) !!}
                     </div>

@@ -39,4 +39,10 @@ class Admin extends Authenticatable
     protected $casts = [
     	'email_verified_at' => 'datetime',
     ];
+
+        // An admin has many newses
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
 }

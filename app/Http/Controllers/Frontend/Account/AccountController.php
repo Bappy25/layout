@@ -38,6 +38,7 @@ class AccountController extends Controller
     public function index()
     {
         Log::info('Req=AccountController@index called');
+        
 		$id = Auth::user()->id;
         $user = $this->user->findOrFail($id);
         return view('frontend.account.profile', compact('user'));
