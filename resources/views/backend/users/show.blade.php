@@ -198,7 +198,7 @@ All Users || {{ $user->name }}
             $('.avatar_update_button').prop('disabled', true);
           },
           uploadProgress: function() {
-            $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'>The Photo is being uploaded</h5><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>");
+            $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'>The photo is being uploaded</h5><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>");
           },
           success: function() {
             $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'><i class='fa fa-check-circle'></i> The photo has been uploaded</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        

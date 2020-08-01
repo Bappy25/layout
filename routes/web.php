@@ -112,6 +112,9 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 
 	// NewsController
 	Route::resource('news', 'NewsController', ['as' => 'back', 'except' => 'show']);
+	Route::group(['prefix' => 'news'], function(){
+		Route::put('{id}/update/image', 'NewsController@updateImage')->name('back.news.update.image');
+	});
 
 });
 

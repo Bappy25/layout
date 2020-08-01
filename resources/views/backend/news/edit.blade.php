@@ -40,11 +40,11 @@ All News || Edit News
             <div class="body">
 
                 <div id="aniimated-thumbnials">
-                    <a href="<?php echo file_exists($blog['image_path']) ? asset($blog['image_path']) : 'https://via.placeholder.com/300?text=Image+Missing'; ?>">
-                        <?php echo image($blog['image_path'], $blog['title'], ['class'=>'img-responsive thumbnail']); ?>
+                    <a href="{{ empty($news->image_path) ? 'https://via.placeholder.com/250?text=Image+Missing' : asset($news->image_path) }}">
+                        <img src="{{ empty($news->image_path) ? 'https://via.placeholder.com/250?text=Image+Missing' : asset($news->image_path) }}" alt="{{ $news->title }}" />
                     </a>
                 </div>
-                <button type="button" class="btn bg-red waves-effect m-t-15" data-toggle="modal" data-target="#image_update_modal">Update Article Image</button>
+                <button type="button" class="btn bg-red waves-effect m-t-15 m-b-15" data-toggle="modal" data-target="#image_update_modal">Update News Image</button>
 
                 {!! Form::model($news, ['method' => 'put', 'route' => ['back.news.update', $news->id], 'name'=>'check_edit', 'id' => 'save_news_draft']) !!}
 
@@ -88,35 +88,35 @@ All News || Edit News
 </div>
 <!-- #END# Edit News Form -->
 
+<!-- Update News Image -->
 <div class="modal fade" id="image_update_modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="defaultModalLabel">Update Article Image</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="post" id="image_update_form" action="<?php echo route('srms/blogs/update/image'); ?>" enctype="multipart/form-data">        
-                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                        <input type="hidden" name="id" value="<?php echo $blog['id']; ?>">
-                        <div class="thumbnail">
-                            <img src="http://via.placeholder.com/300x300?text=Preview+Selected+Image" alt="image update preview" class="img-responsive preview_input">
-                            <div class="caption">
-                                <div class="button-demo">
-                                    <label class="btn btn-primary waves-effect" data-toggle="tooltip" data-placement="bottom" title="Click here to select an image">
-                                        CHOOSE IMAGE <input type="file" name="image_path" accept="image/jpeg" class="input_image" style="display: none;" required/>
-                                    </label>
-                                </div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Update News Image</h4>
+            </div>
+            <div class="modal-body">
+                {!! Form::open([ 'method' => 'put', 'route' => ['back.news.update.image', $news->id], 'id'=>'image_update_form', 'enctype' => 'multipart/form-data']) !!}
+                    <div class="thumbnail">
+                        <img src="http://via.placeholder.com/300?text=Preview+Selected+Image" alt="avatar update preview" class="img-responsive preview_input">
+                        <div class="caption">
+                            <div class="button-demo">
+                                <label class="btn btn-primary waves-effect" data-toggle="tooltip" data-placement="bottom" title="Click here to select an image">
+                                    CHOOSE IMAGE {!! Form::file("image", ['class'=>'input_image', 'accept'=>'image/jpeg', 'style'=>'display: none;']) !!}
+                                </label>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-link waves-effect image_update_button" type="submit" form="image_update_form" disabled>SAVE CHANGES</button>
-                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                </div>
+                    </div>
+                {!! Form::close() !!}
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-link waves-effect image_update_button" type="submit" form="image_update_form" disabled>SAVE CHANGES</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
             </div>
         </div>
     </div>
+</div>
+<!-- #END# Update News Image -->
 
 @endsection
 
@@ -148,9 +148,43 @@ All News || Edit News
 
 <script type="text/javascript">
 
+        // Show news image preview
+    $('.input_image').change(function() {
+        readURL(this, $(this).index());
+        $('.image_update_button').prop('disabled', false);
+    });
+
+        //  Refresh preview on modal close
+    $('#image_update_modal').on('hidden.bs.modal', function (e) {
+        $('.preview_input').attr('src', 'http://via.placeholder.com/300?text=Preview+Selected+Image');
+        $('.input_image').empty().val('');
+        $('.image_update_button').prop('disabled', true);
+    });
+
     $(function () {
 
         autosize($('textarea.auto-growth'));
+
+          //  Jquery form for uploading news image and showing progress
+        (function() {
+            $('#image_update_form').ajaxForm({
+              beforeSend: function() {
+                $('.avatar_update_button').prop('disabled', true);
+              },
+              uploadProgress: function() {
+                $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'>The image is being uploaded</h5><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>");
+              },
+              success: function() {
+                $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'><i class='fa fa-check-circle'></i> The photo has been uploaded</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
+              },
+              error: function() {
+               $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-orange'><i class='fa fa-warning'></i> Problem while uploading image!</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
+              },
+              complete: function(xhr) {
+                location.reload();
+              }
+            }); 
+        })();
 
             // Save Draft
         $('#save_news_draft').ajaxForm({

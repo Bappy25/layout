@@ -78,6 +78,34 @@ class NewsController extends Controller
     }
 
     /**
+     * Update news image
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateImage(Request $request, $id)
+    {
+        $this->api->validator($request->all(), [
+            'image' => 'required|image|dimensions:min_width=100,min_height=200|max:1000'
+        ]);
+
+        try {
+            $news = $this->news->findOrFail($id);
+            $path = $this->uploadImage($request->file('image'), 'all_images/news_images/', 640, 360);
+            $news->image_path = $path;
+            $news->save();
+
+            \Log::info('Req=NewsController@updateImage Success=Image updated OK');
+
+            return $this->api->success('Image has been successfully updated!');
+            
+        }catch(\Exception $e){
+            return $this->api->fail($e->getMessage());
+        }
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
