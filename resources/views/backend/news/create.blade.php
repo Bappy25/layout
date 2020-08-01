@@ -6,6 +6,9 @@ Add New News
 
 @section('extra-css')
 
+<!-- Bootstrap Select Css -->
+{{ Html::style('plugins/bootstrap-select/css/bootstrap-select.css') }}
+
 <!-- Bootstrap Tagsinput Css -->
 {{ Html::style('plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}
 
@@ -39,10 +42,24 @@ Add New News
                     </div>
                 </div>
 
-                <div class="form-group">
-                    {!! Form::label("tags") !!}
-                    <div class="form-line">
-                        {!! Form::text("tags", null, ['class'=>'form-control', 'data-role' => 'tagsinput']) !!}
+                <div class="row clearfix">
+                    <div class="col-sm-4">
+                        <div class="form-group form-float">
+                            {!! Form::label("select_tag", 'Previously Added Tags') !!}
+                            <select class="form-control show-tick" name="select_tag" data-live-search="true">
+                            <?php foreach($tags as $tag){ ?>
+                                <option value="<?php echo $tag; ?>"><?php echo $tag; ?></option>  
+                            <?php } ?>      
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            {!! Form::label("tags") !!}
+                            <div class="form-line">
+                                {!! Form::text("tags", null, ['class'=>'form-control', 'data-role' => 'tagsinput']) !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -79,6 +96,10 @@ Add New News
     $(function () {
 
         autosize($('textarea.auto-growth'));
+
+        $('select_tag').on('change', function(e){
+            console.log(this.value, this.options[this.selectedIndex].value, $(this).find("option:selected").val());
+        });
 
     });
 

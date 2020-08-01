@@ -41,7 +41,9 @@ class NewsController extends Controller
     public function create()
     {
         Log::info('Req=NewsController@create called');
-        return view('backend.news.create');
+
+        $tags = $this->getNewsTags();
+        return view('backend.news.create', compact('tags'));
     }
 
     /**
@@ -122,11 +124,29 @@ class NewsController extends Controller
 
             \Log::info('Req=NewsController@update Success=News updated OK');
 
-            return $this->api->success('Draft has been updated!');
+            return $this->api->success('News has been updated!');
             
         }catch(\Exception $e){
             return $this->api->fail($e->getMessage());
         }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function publish(Request $request, $id)
+    {
+        $news = $this->news->findOrFail($id);
+        $news->status = 1;
+        $news->save();
+
+        \Log::info('Req=NewsController@publish Success=News published OK');
+
+        return redirect()->route('back.news.edit', $id)->with('success', [ 'Success' => 'News has been published!' ]);
     }
 
     /**
@@ -137,6 +157,10 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->news->findOrFail($id)->delete();
+
+        \Log::info('Req=NewsController@delete Success=News deleted OK');
+
+        return redirect()->route('back.news.index')->with('warning', array('News has been removed!'=>''));
     }
 }

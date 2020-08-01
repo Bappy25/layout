@@ -70,17 +70,25 @@ All News || Edit News
                 </div>
 
                 <div class="button-demo">
+                    @if($news->status == 0)
                     {!! Form::button('<i class="material-icons">save</i><span>Update Draft</span>', ['class'=>'btn bg-teal waves-effect sub_button', 'type' => 'submit']) !!}
-                    <button class="btn btn-primary waves-effect" type="submit">
+                    <button type="button" class="btn btn-primary waves-effect sub_button" onclick="publishNews()">
                         <i class="material-icons">publish</i>
                         <span>Publish News</span>
                     </button>
-                    <button class="btn btn-danger waves-effect" type="submit">
+                    @else
+                    {!! Form::button('<i class="material-icons">save</i><span>Update News</span>', ['class'=>'btn btn-primary waves-effect sub_button', 'type' => 'submit']) !!}
+                    @endif
+                    <button type="submit" class="btn btn-danger waves-effect sub_button" onclick="deleteNews()">
                         <i class="material-icons">delete</i>
                         <span>Delete News</span>
                     </button>
                 </div>
 
+                {!! Form::close() !!}
+                {!! Form::open(['route' => ['back.news.publish', $news->id], 'method'=>'put', 'id' => 'publish-news-form']) !!}
+                {!! Form::close() !!}
+                {!! Form::open(['route' => ['back.news.destroy', $news->id], 'method'=>'delete', 'id' => 'delete-news-form']) !!}
                 {!! Form::close() !!}
             </div>
         </div>
@@ -290,6 +298,44 @@ All News || Edit News
             $(this).removeClass("is-invalid");
             $(this).parent().removeClass("error focused");
             $(this).parent().next('label').remove();
+        });
+    }
+
+    function publishNews(){
+        event.preventDefault();
+        swal({
+            title: 'Are you sure you want to publish this news',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#2196F3",
+            confirmButtonText: 'Yes, publish news.',
+            cancelButtonText: 'Cancel',
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                document.getElementById('publish-news-form').submit();
+            }
+        });
+    }
+
+    function deleteNews(){
+        event.preventDefault();
+        swal({
+            title: 'Are you sure you want to delete this news',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#d9534f",
+            confirmButtonText: 'Yes, delete news.',
+            cancelButtonText: 'Cancel',
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                document.getElementById('delete-news-form').submit();
+            }
         });
     }
 
