@@ -22,8 +22,8 @@ class NewsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    { 
+        return view('backend.news.index');
     }
 
     /**
@@ -33,7 +33,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.news.create');
     }
 
     /**
