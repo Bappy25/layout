@@ -8,6 +8,8 @@ class News extends Model
 {
     protected $table = "news";
 
+    protected $fillable = ['title', 'tags', 'description'];
+
     public function scopeSearch($query, $search='')
     {
         if (empty($search)) {

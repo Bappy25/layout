@@ -91,20 +91,21 @@ class UserController extends Controller
      */
     public function updateImage(Request $request, $id)
     {
-        Log::info('Req=UserController@getFormLink called');
 
         $this->api->validator($request->all(), [
             'image' => 'required|image|dimensions:min_width=100,min_height=200|max:1000'
         ]);
 
         try {
-
             $user = $this->detail->where('user_id', $id)->firstOrFail();
             $path = $this->uploadImage($request->file('image'), 'all_images/user_images/', 300, 300);
             $user->avatar = $path;
             $user->save();
-            return $this->api->success('Image has been successfully updated!');
 
+            \Log::info('Req=UserController@updateImage Success=Image updated OK');
+
+            return $this->api->success('Image has been successfully updated!');
+            
         }catch(\Exception $e){
             return $this->api->fail($e->getMessage());
         }

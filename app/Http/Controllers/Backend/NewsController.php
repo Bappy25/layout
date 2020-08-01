@@ -4,16 +4,20 @@ namespace App\Http\Controllers\Backend;
 
 use Log;
 use App\Models\News;
+use App\Helpers\ApiHelper;
 use Illuminate\Http\Request;
+use App\Http\Requests\NewsRequest;
 use App\Http\Controllers\Controller;
 
 class NewsController extends Controller
 {
+    protected $api;
     protected $news;
 
-    function __construct(News $news)
+    function __construct(News $news, ApiHelper $api)
     {
         $this->middleware('auth.back');
+        $this->api = $api;
         $this->news = $news;
     }
 
@@ -53,10 +57,10 @@ class NewsController extends Controller
         $news->tags = $request->tags;
         $news->admin_id = \Auth::guard('admin')->user()->id;
         $news->save();
-        
-        Log::info('Req=NewsController@store Success=draft has been saved!');
 
-        return redirect()->route('back.news.edit', $news->id)->with('success', [ 'Success' => 'New user has been added!' ]);
+        Log::info('Req=NewsController@store Success=news has been added!');
+
+        return redirect()->route('back.news.edit', $news->id)->with('success', [ 'Success' => 'Draft has been saved!' ]);
     }
 
     /**
@@ -68,6 +72,9 @@ class NewsController extends Controller
     public function edit($id)
     {
         Log::info('Req=NewsController@edit called news_id='.$id);
+
+        $news = $this->news->findOrFail($id);
+        return view('backend.news.edit', compact('news'));
     }
 
     /**
@@ -77,9 +84,21 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NewsRequest $request, $id)
     {
-        //
+        try {
+
+            $news = $this->news->findOrFail($id);
+            $input = $request->all();
+            $news->update($input);
+
+            \Log::info('Req=NewsController@update Success=News updated OK');
+
+            return $this->api->success('Draft has been updated!');
+            
+        }catch(\Exception $e){
+            return $this->api->fail($e->getMessage());
+        }
     }
 
     /**

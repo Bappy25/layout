@@ -46,7 +46,7 @@ Add New News
                     </div>
                 </div>
 
-                {!! Form::button('<span>Next</span><i class="material-icons">skip_next</i>', ['class'=>'btn bg-green waves-effect draft', 'type' => 'submit']) !!}
+                {!! Form::button('<span>Next</span><i class="material-icons">skip_next</i>', ['class'=>'btn bg-green waves-effect', 'type' => 'submit']) !!}
 
                 {!! Form::close() !!}
             </div>
