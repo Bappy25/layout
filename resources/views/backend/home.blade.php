@@ -39,7 +39,7 @@ Welcome to Admin Panel
 
 @section('custom-script')
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 @endsection

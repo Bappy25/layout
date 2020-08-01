@@ -171,8 +171,9 @@ All Users || {{ $user->name }}
 
 @section('custom-script')
 
-<!-- Demo Js -->
 {{Html::script('js/backend/pages/medias/image-gallery.js')}}
+
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 <script>

@@ -84,7 +84,7 @@ All Users
 
 @section('custom-script')
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 @endsection

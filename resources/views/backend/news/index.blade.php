@@ -13,7 +13,7 @@ All News
     </ol>
 </div>
 
-<!-- Admins Table -->
+<!-- All News Table -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -28,12 +28,12 @@ All News
         </div>
     </div>
 </div>
-<!-- #END# Admins Table -->
+<!-- #END# All News Table -->
 @endsection
 
 @section('custom-script')
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 @endsection

@@ -20,7 +20,7 @@ About Us
     </ol>
 </div>
 
-<!-- Admins Table -->
+<!-- About Us -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -57,7 +57,7 @@ About Us
         </div>
     </div>
 </div>
-<!-- #END# Admins Table -->
+<!-- #END# About Us -->
 @endsection
 
 @section('extra-script')
@@ -72,7 +72,7 @@ About Us
 
 @section('custom-script')
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 <script type="text/javascript">

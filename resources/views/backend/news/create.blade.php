@@ -20,7 +20,7 @@ Add New News
     </ol>
 </div>
 
-<!-- Admins Table -->
+<!-- Add New News -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -53,7 +53,7 @@ Add New News
         </div>
     </div>
 </div>
-<!-- #END# Admins Table -->
+<!-- #END# Add New News -->
 @endsection
 
 @section('extra-script')
@@ -71,7 +71,7 @@ Add New News
 
 @section('custom-script')
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 <script type="text/javascript">

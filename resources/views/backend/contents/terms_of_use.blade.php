@@ -20,7 +20,7 @@ Terms Of Use
     </ol>
 </div>
 
-<!-- Admins Table -->
+<!-- Terms Of Use -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -57,7 +57,7 @@ Terms Of Use
         </div>
     </div>
 </div>
-<!-- #END# Admins Table -->
+<!-- #END# Terms Of Use -->
 @endsection
 
 @section('extra-script')
@@ -72,7 +72,7 @@ Terms Of Use
 
 @section('custom-script')
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 <script type="text/javascript">

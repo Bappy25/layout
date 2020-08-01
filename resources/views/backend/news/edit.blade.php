@@ -6,6 +6,9 @@ All News || Edit News
 
 @section('extra-css')
 
+<!-- Light Gallery Plugin Css -->
+{{ Html::style('plugins/light-gallery/css/lightgallery.css') }}
+
 <!-- Bootstrap Tagsinput Css -->
 {{ Html::style('plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}
 
@@ -21,7 +24,7 @@ All News || Edit News
     </ol>
 </div>
 
-<!-- Admins Table -->
+<!--  Edit News Form -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -35,6 +38,14 @@ All News || Edit News
                 </h2>
             </div>
             <div class="body">
+
+                <div id="aniimated-thumbnials">
+                    <a href="<?php echo file_exists($blog['image_path']) ? asset($blog['image_path']) : 'https://via.placeholder.com/300?text=Image+Missing'; ?>">
+                        <?php echo image($blog['image_path'], $blog['title'], ['class'=>'img-responsive thumbnail']); ?>
+                    </a>
+                </div>
+                <button type="button" class="btn bg-red waves-effect m-t-15" data-toggle="modal" data-target="#image_update_modal">Update Article Image</button>
+
                 {!! Form::model($news, ['method' => 'put', 'route' => ['back.news.update', $news->id], 'name'=>'check_edit', 'id' => 'save_news_draft']) !!}
 
                 <div class="form-group">
@@ -75,10 +86,44 @@ All News || Edit News
         </div>
     </div>
 </div>
-<!-- #END# Admins Table -->
+<!-- #END# Edit News Form -->
+
+<div class="modal fade" id="image_update_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Update Article Image</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="image_update_form" action="<?php echo route('srms/blogs/update/image'); ?>" enctype="multipart/form-data">        
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                        <input type="hidden" name="id" value="<?php echo $blog['id']; ?>">
+                        <div class="thumbnail">
+                            <img src="http://via.placeholder.com/300x300?text=Preview+Selected+Image" alt="image update preview" class="img-responsive preview_input">
+                            <div class="caption">
+                                <div class="button-demo">
+                                    <label class="btn btn-primary waves-effect" data-toggle="tooltip" data-placement="bottom" title="Click here to select an image">
+                                        CHOOSE IMAGE <input type="file" name="image_path" accept="image/jpeg" class="input_image" style="display: none;" required/>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-link waves-effect image_update_button" type="submit" form="image_update_form" disabled>SAVE CHANGES</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('extra-script')
+
+<!-- Light Gallery Plugin Js -->
+{{Html::script('plugins/light-gallery/js/lightgallery-all.js')}}
 
 <!-- Autosize Js -->
 {{Html::script('plugins/autosize/autosize.js')}}
@@ -96,7 +141,9 @@ All News || Edit News
 
 @section('custom-script')
 
-<!-- Demo Js -->
+{{Html::script('js/backend/pages/medias/image-gallery.js')}}
+
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 <script type="text/javascript">

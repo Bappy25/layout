@@ -95,7 +95,7 @@ All Administrators
 
 {{Html::script('js/backend/pages/tables/jquery-datatable.js')}}
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 @endsection
