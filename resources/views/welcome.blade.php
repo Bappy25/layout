@@ -3,8 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @if(!empty($welcome))
     <meta name="keywords" content="{{ $welcome->keywords }}"/>
     <meta name="description" content="{{ substr($welcome->description, 0, 20).'...' }}">
+    @endif
 
     <title>Laravel</title>
 
@@ -87,6 +89,9 @@
             @endif
             
             @endif
+            <a href="{{ route('about_us') }}">About</a>
+            <a href="{{ route('terms_of_use') }}">Privacy Policy</a>
+            <a href="{{ route('privacy_policy') }}">Terms of Use</a>
         </div>
         @endif
 

@@ -4,6 +4,8 @@
 Privacy Policy || 
 @endsection
 
+@if(!empty($privacy))
+
 @section('meta')
 
 @include('frontend.layouts.partials.meta', ['keywords' => $privacy->keywords, 'description' => strip_tags($privacy->details), 'author' => config('app.name'), 'title' => 'Privacy Policy', 'type' => 'Site Info', 'image' => asset('favicon.png')])
@@ -20,3 +22,5 @@ Privacy Policy ||
   
 </div>
 @endsection
+
+@endif

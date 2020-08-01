@@ -4,6 +4,8 @@
 About Us || 
 @endsection
 
+@if(!empty($about))
+
 @section('meta')
 
 @include('frontend.layouts.partials.meta', ['keywords' => $about->keywords, 'description' => strip_tags($about->details), 'author' => config('app.name'), 'title' => 'About Us', 'type' => 'Site Info', 'image' => asset('favicon.png')])
@@ -20,3 +22,5 @@ About Us ||
   
 </div>
 @endsection
+
+@endif

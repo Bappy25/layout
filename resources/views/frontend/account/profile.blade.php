@@ -40,8 +40,8 @@
                             <p><strong>Address:</strong> {{ empty($user->user_detail->address) ? '' : $user->user_detail->address }}</p>
                         </div>
                     </div>
-                    <a href="{{ route('account.edit') }}" class="btn btn-warning btn-sm my-3">Update Information</a>
                     <button type="button" class="btn btn-secondary btn-sm my-3" data-toggle="modal" data-target="#updateimage">Update Profile Picture</button>
+                    <a href="{{ route('account.edit') }}" class="btn btn-warning btn-sm my-3">Update Information</a>
                 </div>
             </div>
         </div>

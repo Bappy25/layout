@@ -110,6 +110,9 @@ Route::group(['prefix' => 'back', 'namespace' => 'Backend'], function(){
 		Route::put('{id}', 'ContentController@update')->name('back.contents.update');
 	});
 
+	// NewsController
+	Route::resource('news', 'NewsController', ['as' => 'back', 'except' => 'show']);
+
 });
 
 // General routes

@@ -17,17 +17,17 @@ $footer = json_decode($content->web_contents);
 
           <!-- Content -->
           <h5 class="text-uppercase">{{ config('app.name', 'Laravel') }}</h5>
-          <p>{{ $footer->slogan }}</p>
+          <p>{{ empty($footer->slogan) ? null : $footer->slogan }}</p>
           <!-- Facebook -->
-          <a class="fb-ic" href="{{ $footer->facebook }}">
+          <a class="fb-ic" href="{{ empty($footer->facebook) ? null : $footer->facebook }}">
             <i class="fab fa-facebook-f fa-lg mr-md-5 mr-3 fa-2x"> </i>
           </a>
           <!-- Twitter -->
-          <a class="tw-ic" href="{{ $footer->twitter }}">
+          <a class="tw-ic" href="{{ empty($footer->twitter) ? null : $footer->twitter }}">
             <i class="fab fa-twitter fa-lg mr-md-5 mr-3 fa-2x"> </i>
           </a>
           <!--Youtube-->
-          <a class="yt-ic" href="{{ $footer->youtube }}">
+          <a class="yt-ic" href="{{ empty($footer->youtube) ? null : $footer->youtube }}">
             <i class="fab fa-youtube fa-lg fa-2x"> </i>
           </a>
 
@@ -66,9 +66,9 @@ $footer = json_decode($content->web_contents);
           <!-- Links -->
           <h5 class="text-uppercase">Contact</h5>
 
-          <p><i class="fas fa-envelope pr-2"></i>{{ $footer->email }}</p>
-          <p><i class="fas fa-phone pr-2"></i>{{ $footer->contact }}</p>
-          <p><i class="fas fa-location-arrow pr-2"></i>{{ $footer->address }}</p>
+          <p><i class="fas fa-envelope pr-2"></i>{{ empty($footer->email) ? null : $footer->email }}</p>
+          <p><i class="fas fa-phone pr-2"></i>{{ empty($footer->contact) ? null : $footer->contact }}</p>
+          <p><i class="fas fa-location-arrow pr-2"></i>{{ empty($footer->address) ? null : $footer->address }}</p>
 
         </div>
         <!-- Grid column -->

@@ -4,6 +4,8 @@
 Terms of Use || 
 @endsection
 
+@if(!empty($terms))
+
 @section('meta')
 
 @include('frontend.layouts.partials.meta', ['keywords' => $terms->keywords, 'description' => strip_tags($terms->details), 'author' => config('app.name'), 'title' => 'Terms of Use', 'type' => 'Site Info', 'image' => asset('favicon.png')])
@@ -20,3 +22,5 @@ Terms of Use ||
  
 </div>
 @endsection
+
+@endif

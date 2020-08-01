@@ -16,12 +16,16 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Seeded the users!');
 
             // Seed the user details
+        $this->call(UserDetailsSeeder::class);
+        $this->command->info('Seeded the user details!');
+
+            // Seed the admins
         $this->call(AdminsSeeder::class);
         $this->command->info('Seeded the administrators!');
 
-            // Seed the user details
-        $this->call(UserDetailsSeeder::class);
-        $this->command->info('Seeded the user details!');
+            // Seed the news
+        $this->call(NewsSeeder::class);
+        $this->command->info('Seeded the news!');
 
             // Seed the message subjects
         $this->call(MessageSubjectsTableSeeder::class);
