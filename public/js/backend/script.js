@@ -30,7 +30,7 @@ $(document).ready(function(){
 
     //  Sweet alert for warning
 
-    $('.form_warning_sweet_alert').on('click',function(e){
+    $(document).on('click', '.form_warning_sweet_alert', function(e){
       e.preventDefault();
       var form = $(this).parents('form');
       var title = $(this).attr('title');

@@ -4,6 +4,13 @@
 All Administrators
 @endsection
 
+@section('extra-css')
+
+<!-- Bootstrap Tagsinput Css -->
+{{ Html::style('plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}
+
+@endsection
+
 @section('content')
 
 <div class="block-header">
@@ -23,25 +30,9 @@ All Administrators
                     <small>Here is the list of all administrators</small>
                 </h2>
             </div>
-            <div class="body table-responsive">
-                <div class="row">
-                    <div class="col-md-2">
-                        <a href="{{ URL::current() }}" class="btn btn-primary waves-effect">
-                            <i class="material-icons">refresh</i>
-                            <span>Refresh</span>
-                        </a>
-                    </div>
-                    <div class="col-md-2 pull-right">
-                        {!! Form::open(['url' => route('back.admins.index'), 'method'=>'get']) !!}
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {!! Form::text("search", $search, ['class'=>'form-control', 'placeholder'=>'Search']) !!}
-                                </div>
-                            </div>
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-                <table class="table">
+            <div class="body">
+                <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -51,6 +42,15 @@ All Administrators
                             <th>ACTION</th>
                         </tr>
                     </thead>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>CREATED AT</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </tfoot>
                     <tbody>
                         @foreach ($admins as $admin)
                         <tr>
@@ -68,7 +68,7 @@ All Administrators
                         @endforeach
                     </tbody>
                 </table>
-                {{ $admins->links() }}
+                </div>
             </div>
         </div>
     </div>
@@ -76,7 +76,24 @@ All Administrators
 <!-- #END# Admins Table -->
 @endsection
 
+@section('extra-script')
+
+<!-- Jquery DataTable Plugin Js -->
+{{Html::script('plugins/jquery-datatable/jquery.dataTables.js')}}
+{{Html::script('plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js')}}
+{{Html::script('plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js')}}
+{{Html::script('plugins/jquery-datatable/extensions/export/buttons.flash.min.js')}}
+{{Html::script('plugins/jquery-datatable/extensions/export/jszip.min.js')}}
+{{Html::script('plugins/jquery-datatable/extensions/export/pdfmake.min.js')}}
+{{Html::script('plugins/jquery-datatable/extensions/export/vfs_fonts.js')}}
+{{Html::script('plugins/jquery-datatable/extensions/export/buttons.html5.min.js')}}
+{{Html::script('plugins/jquery-datatable/extensions/export/buttons.html5.min.js')}}
+
+@endsection
+
 @section('custom-script')
+
+{{Html::script('js/backend/pages/tables/jquery-datatable.js')}}
 
 <!-- Demo Js -->
 {{Html::script('js/backend/script.js')}}

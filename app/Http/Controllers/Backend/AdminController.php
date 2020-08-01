@@ -25,13 +25,12 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         Log::info('Req=AdminController@index called');
 
-        $search = $request->search;
-        $admins = $this->admin->search($search)->orderBy('created_at', 'desc')->paginate(10);
-        return view('backend.admins.index', compact('admins', 'search'));
+        $admins = $this->admin->all();
+        return view('backend.admins.index', compact('admins'));
     }
 
     /**
