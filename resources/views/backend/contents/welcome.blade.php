@@ -145,7 +145,7 @@ Front Page
 
 <script type="text/javascript">
 
-        // Initialize Date Input Mask
+    // Initialize Date Input Mask
     var $demoMaskedInput = $('.demo-masked-input');
 
     $(function () {

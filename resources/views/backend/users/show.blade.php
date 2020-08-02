@@ -178,7 +178,7 @@ All Users || {{ $user->name }}
 
 <script>
 
-        //  Show profile image preview
+    //  Show profile image preview
     $('.input_image').change(function() {
         readURL(this, $(this).index());
         $('.avatar_update_button').prop('disabled', false);
@@ -191,7 +191,7 @@ All Users || {{ $user->name }}
         $('.avatar_update_button').prop('disabled', true);
     });
 
-      //  Jquery form for uploading profile image and showing progress
+    //  Jquery form for uploading profile image and showing progress
     (function() {
         $('#avatar_update_form').ajaxForm({
           beforeSend: function() {

@@ -134,7 +134,7 @@ Terms Of Use
         tinymce.suffix = ".min";
         tinyMCE.baseURL = '../../plugins/tinymce';
 
-            // Prevent Leave
+        // Prevent Leave
         window.addEventListener('beforeunload', function(e) {
           var myPageIsDirty = tinymce.activeEditor.isDirty()
           if(myPageIsDirty) {
