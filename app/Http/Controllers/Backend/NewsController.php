@@ -30,8 +30,9 @@ class NewsController extends Controller
     { 
         Log::info('Req=NewsController@index called');
 
-        return view('backend.news.index');
-    }
+        $all_news = $this->news->all();
+        return view('backend.news.index', compact('all_news'));
+    } 
 
     /**
      * Show the form for creating a new resource.
