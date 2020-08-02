@@ -43,7 +43,7 @@ class NewsController extends Controller
     {
         Log::info('Req=NewsController@create called');
 
-        $tags = $this->getNewsTags();
+        $tags = $this->news->allTags();
         return view('backend.news.create', compact('tags'));
     }
 
@@ -76,7 +76,7 @@ class NewsController extends Controller
     {
         Log::info('Req=NewsController@edit called news_id='.$id);
 
-        $tags = $this->getNewsTags();
+        $tags = $this->news->allTags();
         $news = $this->news->findOrFail($id);
         return view('backend.news.edit', compact('news', 'tags'));
     }

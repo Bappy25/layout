@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\News;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('frontend.news.menu', function($view){
+            $view->with('archives', News::archives())->with('tags', News::allTags());
+        });
     }
 }

@@ -42,6 +42,17 @@ class News extends Model
     {
         return static::selectRaw('year(created_at) year, monthname(created_at) month')->where('status', '<>', 0)->orderByRaw('min(created_at) desc')->groupBy('year', 'month')->get();
     }
+
+    public static function allTags()
+    {
+        $all_tags = '';
+        $get_tags = static::select('tags')->where('status', '<>', 0)->get()->toArray();
+        for($i=0; $i<count($get_tags); $i++){
+            $all_tags .= $get_tags[$i]['tags'].',';
+        }
+        $all_tags = explode(',', $all_tags);
+        return array_filter(array_unique($all_tags));
+    }
     	
     	// Each news belongs to a admin
 	public function admin()

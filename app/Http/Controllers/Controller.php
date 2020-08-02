@@ -59,17 +59,6 @@ class Controller extends BaseController
         }
     }
 
-    protected function getNewsTags(){
-        $news = new \App\Models\News;
-        $all_tags = '';
-        $get_tags = $news->select('tags')->where('status', '<>', 0)->get()->toArray();
-        for($i=0; $i<count($get_tags); $i++){
-            $all_tags .= $get_tags[$i]['tags'].',';
-        }
-        $all_tags = explode(',', $all_tags);
-        return array_filter(array_unique($all_tags));
-    }
-
     /**
      * Upload contents images.
      *

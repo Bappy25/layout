@@ -14,7 +14,7 @@
 @endforeach
 <h3>Archive</h3>
 @php $parameters = request()->input(); @endphp
-@foreach($archive as $state)
-@php $parameters['month'] = $state->month; $parameters['year'] = $state->year;  @endphp
-<a href="{{ route('news.index', $parameters) }}">{{ $state->month.' '.$state->year }}</a>
+@foreach($archives as $archive)
+@php $parameters['month'] = $archive->month; $parameters['year'] = $archive->year;  @endphp
+<a href="{{ route('news.index', $parameters) }}">{{ $archive->month.' '.$archive->year }}</a>
 @endforeach

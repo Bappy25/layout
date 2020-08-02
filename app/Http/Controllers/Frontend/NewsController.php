@@ -25,9 +25,7 @@ class NewsController extends Controller
     { 
         Log::info('Req=NewsController@index called');
         $all_news = $this->news->search($request->search)->filter(request(['month', 'year']))->where('status', '<>', 0)->orderBy('created_at', 'desc')->paginate(5);
-        $archive = $this->news->archives();
-        $tags = $this->getNewsTags();
-        return view('frontend.news.index', compact('all_news', 'archive', 'tags'));
+        return view('frontend.news.index', compact('all_news'));
     } 
 
     /**
@@ -47,9 +45,6 @@ class NewsController extends Controller
         array_push($viewers, \Request::ip());
         $news->viewers = json_encode(array_unique($viewers));
         $news->save();
-
-        $archive = $this->news->archives();
-        $tags = $this->getNewsTags();
-        return view('frontend.news.show', compact('news', 'archive', 'tags'));
+        return view('frontend.news.show', compact('news'));
     }
 }

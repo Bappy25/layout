@@ -5,7 +5,7 @@ News ||
 @endsection
 
 @section('meta')
-@include('frontend.layouts.partials.meta', ['keywords' => implode($tags, ','), 'description' => strip_tags($all_news->first()->description), 'author' => $all_news->first()->admin->name, 'title' => 'News', 'type' => 'Blog', 'image' => asset($all_news->first()->image_path)])
+@include('frontend.layouts.partials.meta', ['keywords' => implode(',', \App\Models\News::allTags()), 'description' => strip_tags($all_news->first()->description), 'author' => $all_news->first()->admin->name, 'title' => 'News', 'type' => 'Blog', 'image' => asset($all_news->first()->image_path)])
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@ News ||
             {{ $all_news->links() }}
         </div>
         <div class="col-sm-4">
-            @include('frontend.news.menu', [$archive, $tags])
+            @include('frontend.news.menu')
         </div>
     </div>
 </div>
