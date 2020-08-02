@@ -9,6 +9,9 @@ All News || Edit News
 <!-- Light Gallery Plugin Css -->
 {{ Html::style('plugins/light-gallery/css/lightgallery.css') }}
 
+<!-- Bootstrap Select Css -->
+{{ Html::style('plugins/bootstrap-select/css/bootstrap-select.css') }}
+
 <!-- Bootstrap Tagsinput Css -->
 {{ Html::style('plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}
 
@@ -55,10 +58,21 @@ All News || Edit News
                     </div>
                 </div>
 
-                <div class="form-group">
-                    {!! Form::label("tags") !!}
-                    <div class="form-line">
-                        {!! Form::text("tags", null, ['class'=>'form-control', 'data-role' => 'tagsinput']) !!}
+                <div class="row clearfix">
+                    <div class="col-sm-3">
+                        <div class="form-group form-float">
+                            {!! Form::label("select_tag", 'Previously Added Tags') !!}
+                            {!! Form::select('select_tag', $tags, null, [ 'class' => 'form-control show-tick', 'data-live-search' => 'true']); !!}
+                            <div class="help-info">Add one of the previously added tags</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            {!! Form::label("tags") !!}
+                            <div class="form-line">
+                                {!! Form::text("tags", null, ['class'=>'form-control', 'data-role' => 'tagsinput']) !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -156,13 +170,13 @@ All News || Edit News
 
 <script type="text/javascript">
 
-        // Show news image preview
+    // Show news image preview
     $('.input_image').change(function() {
         readURL(this, $(this).index());
         $('.image_update_button').prop('disabled', false);
     });
 
-        //  Refresh preview on modal close
+    //  Refresh preview on modal close
     $('#image_update_modal').on('hidden.bs.modal', function (e) {
         $('.preview_input').attr('src', 'http://via.placeholder.com/300?text=Preview+Selected+Image');
         $('.input_image').empty().val('');
@@ -173,28 +187,32 @@ All News || Edit News
 
         autosize($('textarea.auto-growth'));
 
-          //  Jquery form for uploading news image and showing progress
-        (function() {
-            $('#image_update_form').ajaxForm({
-              beforeSend: function() {
-                $('.avatar_update_button').prop('disabled', true);
-              },
-              uploadProgress: function() {
-                $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'>The image is being uploaded</h5><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>");
-              },
-              success: function() {
-                $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'><i class='fa fa-check-circle'></i> The photo has been uploaded</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
-              },
-              error: function() {
-               $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-orange'><i class='fa fa-warning'></i> Problem while uploading image!</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
-              },
-              complete: function(xhr) {
-                location.reload();
-              }
-            }); 
-        })();
+        // Update tags on select change
+        $('[name="select_tag"]').on('changed.bs.select', function(e){
+            $('[name="tags"]').tagsinput('add', $(this).find(":selected").text());
+            $('[name="tags"]').tagsinput('refresh');
+        });
 
-            // Save Draft
+        //  Jquery form for uploading news image and showing progress
+        $('#image_update_form').ajaxForm({
+          beforeSend: function() {
+            $('.avatar_update_button').prop('disabled', true);
+          },
+          uploadProgress: function() {
+            $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'>The image is being uploaded</h5><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>");
+          },
+          success: function() {
+            $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'><i class='fa fa-check-circle'></i> The photo has been uploaded</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
+          },
+          error: function() {
+           $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-orange'><i class='fa fa-warning'></i> Problem while uploading image!</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
+          },
+          complete: function(xhr) {
+            location.reload();
+          }
+        }); 
+
+        // Save Draft
         $('#save_news_draft').ajaxForm({
           beforeSend: function() {
             $('.sub_button').prop('disabled', true);
@@ -284,7 +302,7 @@ All News || Edit News
     tinymce.suffix = ".min";
     tinyMCE.baseURL = '../../../plugins/tinymce';
 
-        // Prevent Leave
+    // Prevent Leave
     window.addEventListener('beforeunload', function(e) {
       var myPageIsDirty = tinymce.activeEditor.isDirty()
       if(myPageIsDirty) {

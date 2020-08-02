@@ -43,17 +43,14 @@ Add New News
                 </div>
 
                 <div class="row clearfix">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group form-float">
                             {!! Form::label("select_tag", 'Previously Added Tags') !!}
-                            <select class="form-control show-tick" name="select_tag" data-live-search="true">
-                            <?php foreach($tags as $tag){ ?>
-                                <option value="<?php echo $tag; ?>"><?php echo $tag; ?></option>  
-                            <?php } ?>      
-                            </select>
+                            {!! Form::select('select_tag', $tags, null, [ 'class' => 'form-control show-tick', 'data-live-search' => 'true']); !!}
+                            <div class="help-info">Add one of the previously added tags</div>
                         </div>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-9">
                         <div class="form-group">
                             {!! Form::label("tags") !!}
                             <div class="form-line">
@@ -97,8 +94,10 @@ Add New News
 
         autosize($('textarea.auto-growth'));
 
-        $('select_tag').on('change', function(e){
-            console.log(this.value, this.options[this.selectedIndex].value, $(this).find("option:selected").val());
+        // Update tags on select change
+        $('[name="select_tag"]').on('changed.bs.select', function(e){
+            $('[name="tags"]').tagsinput('add', $(this).find(":selected").text());
+            $('[name="tags"]').tagsinput('refresh');
         });
 
     });

@@ -75,8 +75,9 @@ class NewsController extends Controller
     {
         Log::info('Req=NewsController@edit called news_id='.$id);
 
+        $tags = $this->getNewsTags();
         $news = $this->news->findOrFail($id);
-        return view('backend.news.edit', compact('news'));
+        return view('backend.news.edit', compact('news', 'tags'));
     }
 
     /**
