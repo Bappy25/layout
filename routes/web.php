@@ -19,7 +19,7 @@ Route::group(['namespace' => 'Frontend'], function(){
 	Route::get('terms_of_use', 'HomeController@termsOfUse')->name('terms_of_use');
 	Route::get('privacy_policy', 'HomeController@privacyPolicy')->name('privacy_policy');
 
-		// Social media signin
+	// Social media signin
 	Route::get('google/redirect', 'Auth\LoginController@redirectToGoogleProvider')->name('google.redirect');
 	Route::get('google/callback', 'Auth\LoginController@handleGoogleProviderCallback')->name('google.callback');
 	Route::get('facebook/redirect', 'Auth\LoginController@redirectToFacebookProvider')->name('facebook.redirect');
@@ -28,6 +28,10 @@ Route::group(['namespace' => 'Frontend'], function(){
 	Auth::routes(['verify' => true]);
 
 	Route::get('home', 'HomeController@home')->name('home');
+
+	// News Routes
+	Route::get('news', 'NewsController@index')->name('news.index');
+	Route::get('news/{id}', 'NewsController@show')->name('news.show');
 
 	Route::group(['prefix' => 'account', 'namespace' => 'Account'], function(){
 

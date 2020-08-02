@@ -89,6 +89,7 @@
             @endif
             
             @endif
+            <a href="{{ route('news.index') }}">News</a>
             <a href="{{ route('about_us') }}">About</a>
             <a href="{{ route('terms_of_use') }}">Privacy Policy</a>
             <a href="{{ route('privacy_policy') }}">Terms of Use</a>

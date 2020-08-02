@@ -11,10 +11,13 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 @auth
-                <li class="nav-item">
+                <li class="nav-item {{ Route::is('home')? 'active':'' }}">
                     <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                 </li>
                 @endguest
+                <li class="nav-item {{ Route::is('news*')? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('news.index') }}">{{ __('News') }}</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

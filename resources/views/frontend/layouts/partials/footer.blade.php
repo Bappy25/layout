@@ -44,7 +44,7 @@ $footer = json_decode($content->web_contents);
 
           <ul class="list-unstyled">
             <li>
-              <a href="{{ route('welcome') }}">Front Page</a>
+              <a href="{{ route('news.index') }}">News</a>
             </li>
             <li>
               <a href="{{ route('about_us') }}">About Us</a>
