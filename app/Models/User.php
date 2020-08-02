@@ -61,9 +61,20 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-        // each user has a user detail
+    // each user has a user detail
     public function user_detail()
     {
         return $this->hasOne(UserDetail::class);
+    }
+
+    // A User perticipated in many messages subjects
+    public function message_subjects() {
+        return $this->belongsToMany(MessageSubject::class, 'message_participants');
+    }
+
+    // A User viewed many messages
+    public function viewed()
+    {
+        return $this->hasMany(MessageViewer::class);
     }
 }

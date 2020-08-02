@@ -30,6 +30,22 @@ a.link-unstyled:hover {
   text-decoration: none;
 }
 
+.dropdown-menu-wide {
+  width: 300px !important;
+}
+
+#all_new_messages{
+  max-height: 50vh; 
+  overflow: scroll;
+  overflow-x: hidden;
+} 
+
+#all_new_notifications{
+  max-height: 50vh; 
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
 /* ========== Scroll To Top ========== */
 
 #scrollToTopButton { 

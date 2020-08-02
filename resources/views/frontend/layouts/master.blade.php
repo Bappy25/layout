@@ -63,61 +63,7 @@
     @yield('extra-script')
 
     <!-- System-wide custom script -->
-    <script type="text/javascript">
-
-        $( window ).resize(function() {
-
-            // Align footer on windows resize
-            footerAlign();
-
-        });
-
-        $(document).ready(function(){
-
-            // Align footer on windows resize
-            footerAlign();
-
-            // Set when the loading screen will stop
-            setTimeout(function(){ 
-              $('.page-loader-wrapper').fadeOut(); 
-            }, 50);
-
-            // hide button to scroll to top  
-            $("#scrollToTopButton").hide();
-          
-            //  Check to see if the window is top if not then display button
-            $(window).scroll(function(){
-              if ($(this).scrollTop() > 200) {
-                $("#scrollToTopButton").fadeIn();
-              } else {
-                $("#scrollToTopButton").fadeOut();
-              }
-            });
-
-            //  Click event to scroll to top
-            $("#scrollToTopButton").click(function(){
-              $('html, body').animate({scrollTop : 0},800);
-              return false;
-            });
-
-            // Declare Popover
-            $(function () {
-              $('[data-toggle="popover"]').popover()
-            });
-
-        });
-
-        // Function for aligning footer
-        function footerAlign() {
-            $('footer').css('display', 'block');
-            $('footer').css('height', 'auto');
-            var footerHeight = $('footer').outerHeight();
-            $('body').css('padding-bottom', footerHeight);
-            $('footer').css('height', footerHeight);
-        }
-
-    </script>
-    <!-- #System-wide custom script -->
+    {{Html::script('js/frontend/script.js')}}
 
     @yield('custom-script')
 

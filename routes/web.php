@@ -53,8 +53,8 @@ Route::group(['namespace' => 'Frontend'], function(){
 		// Message Routes
 		Route::resource('messages', 'MessageController', ['except' => ['create']]);
 		Route::group(['prefix' => 'messages'], function(){
-			Route::get('newmessages', 'MessageController@newMessages')->name('messages.new');
-			Route::get('newmessages/count', 'MessageController@newMessagesCount')->name('messages.new.count');
+			Route::get('new/get', 'MessageController@newMessages')->name('messages.new');
+			Route::get('new/count', 'MessageController@newMessagesCount')->name('messages.new.count');
 			Route::get('create/{username}', 'MessageController@create')->name('messages.create');
 			Route::post('addSubject', 'MessageController@addMessageSubject')->name('messages.add.subject');
 			Route::post('status', 'MessageController@getStatus')->name('messages.get.status');

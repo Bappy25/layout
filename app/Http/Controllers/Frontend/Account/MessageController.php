@@ -81,13 +81,16 @@ class MessageController extends Controller
 
     public function newMessages()
     {
+        Log::info('test');
         try {
             $unreadMessages = $this->unreadMessages();
+        Log::info('test');
             if(count($unreadMessages) > 0){
-                $unreadMessages = array_values(array_sort($unreadMessages, function ($value) {
+                $unreadMessages = array_values(\Arr::sort($unreadMessages, function ($value) {
                     return $value['date'];
                 }));            
             }
+        Log::info($unreadMessages);
             return json_encode(['status'=>200, 'messages'=> array_reverse($unreadMessages)]);
         }
         catch (\Exception $e) {
@@ -249,6 +252,7 @@ class MessageController extends Controller
         }
         catch (\Exception $e) {
             return ['status'=>401, 'reason'=>$e->getMessage()];
+        }
     }
 
     /**
