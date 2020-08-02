@@ -38,6 +38,7 @@ All News
                                 <th>#</th>
                                 <th>TITLE</th>
                                 <th>AUTHOR</th>
+                                <th>VIEWS</th>
                                 <th>STATUS</th>
                                 <th>CREATED AT</th>
                                 <th>ACTION</th>
@@ -50,6 +51,7 @@ All News
                                 <th>#</th>
                                 <th>TITLE</th>
                                 <th>AUTHOR</th>
+                                <th>VIEWS</th>
                                 <th>STATUS</th>
                                 <th>CREATED AT</th>
                                 <th>ACTION</th>
@@ -63,6 +65,7 @@ All News
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>{{ $news->title }}</td>
                                 <td>{{ $news->admin->name }}</td>
+                                <td>{{ count((array)json_decode($news->viewers)) }}</td>
                                 <td>@if($news->status == 0) <span class="label label-warning">Saved to draft!</span> @else <span class="label label-info">Published!</span> @endif</td>
                                 <td>{{ $news->created_at->format('d/m/y, h:m a') }}</td>
                                 <td>

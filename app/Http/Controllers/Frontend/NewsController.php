@@ -41,6 +41,13 @@ class NewsController extends Controller
         Log::info('Req=NewsController@show called news_id='.$id);
 
         $news = $this->news->findOrFail($id);
+
+        // Save viewers
+        $viewers = (array) json_decode($news->viewers, true);
+        array_push($viewers, \Request::ip());
+        $news->viewers = json_encode(array_unique($viewers));
+        $news->save();
+
         $archive = $this->news->archives();
         $tags = $this->getNewsTags();
         return view('frontend.news.show', compact('news', 'archive', 'tags'));

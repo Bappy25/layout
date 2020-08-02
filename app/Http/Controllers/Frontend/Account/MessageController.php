@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend\Account;
 
 use DB;
+use Log;
 use Auth;
 use Validator;
 use App\Models\User;
 use App\Models\Message;
+use App\Helpers\ApiHelper;
 use Illuminate\Http\Request;
 use App\Models\MessageViewer;
 use App\Models\MessageSubject;
@@ -14,15 +16,17 @@ use App\Http\Controllers\Controller;
 
 class MessageController extends Controller
 {
+    protected $api;
     protected $user;
     protected $view;
     protected $message;
     protected $subject;
 
-    public function __construct(Message $message, MessageSubject $subject, MessageViewer $view, User $user)
+    public function __construct(Message $message, MessageSubject $subject, MessageViewer $view, User $user, ApiHelper $api)
     {
         $this->middleware('auth');
         $this->middleware('messaging.belongs')->only('show', 'editSubject');
+        $this->api = $api;
         $this->user = $user;
         $this->view = $view;
         $this->message = $message;
