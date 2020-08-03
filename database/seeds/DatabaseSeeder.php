@@ -19,13 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UserDetailsSeeder::class);
         $this->command->info('Seeded the user details!');
 
-            // Seed the admins
-        $this->call(AdminsSeeder::class);
-        $this->command->info('Seeded the administrators!');
-
-            // Seed the news
-        $this->call(NewsSeeder::class);
-        $this->command->info('Seeded the news!');
+            // Seed the notifications
+        $this->call(NotificationSeeder::class);
+        $this->command->info('Seeded the notifications!');
 
             // Seed the message subjects
         $this->call(MessageSubjectsTableSeeder::class);
@@ -38,5 +34,13 @@ class DatabaseSeeder extends Seeder
             // Seed the message participants
         $this->call(MessageParticipantsTableSeeder::class);
         $this->command->info('Seeded the message participants!');
+
+            // Seed the admins
+        $this->call(AdminsSeeder::class);
+        $this->command->info('Seeded the administrators!');
+
+            // Seed the news
+        $this->call(NewsSeeder::class);
+        $this->command->info('Seeded the news!');
     }
 }

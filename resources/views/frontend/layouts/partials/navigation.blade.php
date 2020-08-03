@@ -43,7 +43,7 @@
                         <p class="text-center h6">Notifications</p>
                         <div class="dropdown-divider"></div>
                         <!-- Remember me -->
-                        <div class="form-check my-3" id="markasread" data-url="{{ route('notifications.mark.read') }}" style="display: none;">
+                        <div class="form-check ml-3 my-3" id="markasread" data-url="{{ route('notifications.mark.read') }}" style="display: none;">
                             <input type="checkbox" class="form-check-input" name="condition" id="marknotificationasread">
                             <label class="form-check-label" for="marknotificationasread">Mark All Notifications As Read</label>
                         </div>
@@ -70,9 +70,18 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('account.index') }}"><i class="fas fa-user mr-2"></i>{{ Auth::user()->name }}</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a class="dropdown-item" href="javascript:void(0);" onclick="logout();">
                             <i class="fas fa-sign-out-alt mr-2"></i>{{ __('Logout') }}
                         </a>
+                        <script type="text/javascript">
+                            // Function for logging out
+                            function logout(){
+                                event.preventDefault();
+                                if ( confirm("Are you sure you want to logout?") == true ){
+                                    document.getElementById("logout-form").submit();
+                                }
+                            }
+                        </script>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>

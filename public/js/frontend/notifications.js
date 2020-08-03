@@ -20,18 +20,18 @@ $(document).ready(function(){
             beforeSend: function(){
                 $("#all_new_notifications").empty().append('<div class="text-center my-5"><i class="fa fa-spinner fa-spin"></i></div>');
             },
-            success:function(data){
-                if(data.status == 200){
+            success:function(response){
+                if(response.result == true){
                     $("#all_new_notifications").empty();
-                    $("#new_notification_number").empty().append(data.notifications.length);
-                    if(data.notifications.length > 0){
+                    $("#new_notification_number").empty().append(response.data.length);
+                    if(response.data.length > 0){
                         $("#markasread").show();
                         $('#marknotificationasread').prop('disabled', false).prop('checked', false); 
                         html = '<div class="mx-3 my-3">';
-                        if(data.notifications.length > 30){
+                        if(response.data.length > 30){
                             html += 'You have more notifications! To read all notifications please click <a href="/notifications">here</a>!<hr>';
                         }
-                        $.each(data.notifications, function( index, value ) {
+                        $.each(response.data, function( index, value ) {
                             html += '<a href="'+value.link+'" class="link-unstyled"><h6>'+value.text+'</h6></a><hr>';
                         }); 
                         html += '</div>';
@@ -42,7 +42,7 @@ $(document).ready(function(){
                     }
                 }
                 else{
-                    $("#all_new_notifications").empty().append('<div class="text-center my-5"><h5 class="font-weight-bold text-warning">Error: '+data.status+', '+data.reason+'</h5></div>');
+                    console.log(response); 
                 }
             }
         });
@@ -62,11 +62,16 @@ $(document).ready(function(){
                 beforeSend: function(){
                     $("#marknotificationasread").prop('disabled', true);
                 },
-                success:function(){
-                    $("#markasread").hide();
-                    $("#new_notification_number").empty().append('0');
-                    $("#new_notification_number").closest('.nav-link').removeClass('text-success');
-                    showNotification("Success!", "The notifications are marked as read", "#", "success", "bottom", "left", 20, 20, 'animated fadeInDown', 'animated fadeOutUp'); 
+                success:function(response){
+                    if(response.result == true){
+                        $("#markasread").hide();
+                        $("#new_notification_number").empty().append('0');
+                        $("#new_notification_number").closest('.nav-link').removeClass('text-success');
+                        alert(response.message);
+                    }
+                    else{
+                        console.log(response);
+                    }
                 }
             });
         }
@@ -130,10 +135,10 @@ function numberOfNewNotifications() {
         beforeSend: function(){
             $("#new_notification_number").empty().append('<i class="fas fa-spinner fa-spin"></i>');
         },
-        success:function(data){
-            if(data.status == 200){
-                $("#new_notification_number").empty().append(data.count);
-                if(data.count == 0){
+        success:function(response){
+            if(response.result == true){
+                $("#new_notification_number").empty().append(response.message);
+                if(response.message == 0){
                     $("#new_notification_number").closest('.nav-link').removeClass('text-warning');
                 }
                 else{
@@ -141,7 +146,7 @@ function numberOfNewNotifications() {
                 }
             }
             else{ 
-                $("#new_notification_number").empty();
+                console.log(response); 
             }
         }
     });
