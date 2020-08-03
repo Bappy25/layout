@@ -1,48 +1,10 @@
-$( window ).resize(function() {
-
-    // Align footer on windows resize
-    footerAlign();
-
-});
-
 $(document).ready(function(){
-
-    // Align footer on windows resize
-    footerAlign();
 
     // Get number of new notifications
     numberOfNewNotifications();
     
     // Get number of new messages
     numberOfNewMessages();
-
-    // Set when the loading screen will stop
-    setTimeout(function(){ 
-        $('.page-loader-wrapper').fadeOut(); 
-    }, 50);
-
-    // hide button to scroll to top  
-    $("#scrollToTopButton").hide();
-
-    //  Check to see if the window is top if not then display button
-    $(window).scroll(function(){
-        if ($(this).scrollTop() > 200) {
-            $("#scrollToTopButton").fadeIn();
-        } else {
-            $("#scrollToTopButton").fadeOut();
-        }
-    });
-
-    //  Click event to scroll to top
-    $("#scrollToTopButton").click(function(){
-        $('html, body').animate({scrollTop : 0},800);
-        return false;
-    });
-
-    // Declare Popover
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-    });
 
     // Dropdown for new notifications
     $('#notifications_navigation_menu').on('show.bs.dropdown', function () {
@@ -124,14 +86,14 @@ $(document).ready(function(){
             beforeSend: function(){
                 $("#all_new_messages").empty().append('<div class="text-center my-5"><i class="fas fa-spinner fa-spin"></i></div>');
             },
-            success:function(data){
-                if(data.status == 200){
+            success:function(response){
+                if(response.result == true){
                     $("#all_new_messages").empty();
-                    $("#new_messages_number").empty().append(data.messages.length);
-                    if(data.messages.length > 0){
+                    $("#new_messages_number").empty().append(response.data.length);
+                    if(response.data.length > 0){
                         $("#new_messages_number").closest('.nav-link').addClass('text-warning');
                         html = '<div class="mx-3 my-3">';
-                        $.each(data.messages, function( index, value ) {
+                        $.each(response.data, function( index, value ) {
                             html += '<a href="'+value.link+'" class="link-unstyled"><h6>'+value.message+'</h6>';
                             html += '<small><strong><i class="fas fa-user mr-2"></i>'+value.user+'</strong><br>';
                             html += '<i class="fas fa-clock mr-2"></i>'+value.date+'</small></a><hr>';
@@ -145,25 +107,16 @@ $(document).ready(function(){
                     }
                 }
                 else{
-                    $("#all_new_messages").empty().append('<div class="text-center my-5"><h5 class="font-weight-bold text-warning">Error: '+data.status+', '+data.reason+'</h5></div>');
+                    console.log(response);  
                 }
             }
         });
+
     });
 
 });
 
-// Function for aligning footer
-function footerAlign() {
-    $('footer').css('display', 'block');
-    $('footer').css('height', 'auto');
-    var footerHeight = $('footer').outerHeight();
-    $('body').css('padding-bottom', footerHeight);
-    $('footer').css('height', footerHeight);
-}
-
 // Function for getting new notifications number
-
 function numberOfNewNotifications() {
     $.ajaxSetup({
         headers: {
@@ -195,7 +148,6 @@ function numberOfNewNotifications() {
 }
 
 // Function for getting new messages number
-
 function numberOfNewMessages(){
     $.ajaxSetup({
         headers: {
@@ -209,10 +161,10 @@ function numberOfNewMessages(){
         beforeSend: function(){
             $("#new_messages_number").empty().append('<i class="fas fa-spinner fa-spin"></i>');
         },
-        success:function(data){
-            if(data.status == 200){
-                $("#new_messages_number").empty().append(data.count);
-                if(data.count == 0){
+        success:function(response){
+            if(response.result == true){
+                $("#new_messages_number").empty().append(response.message);
+                if(response.message == 0){
                     $("#new_messages_number").closest('.nav-link').removeClass('text-warning');
                 }
                 else{
@@ -220,7 +172,7 @@ function numberOfNewMessages(){
                 }
             }
             else{ 
-                $("#new_messages_number").empty();
+                console.log(response); 
             }
         }
     });

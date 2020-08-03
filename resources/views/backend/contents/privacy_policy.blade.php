@@ -103,21 +103,21 @@ Privacy Policy
                 xhr.open('POST', '/add_content_image');
               
                 xhr.onload = function() {
-                    var json;
+                    var response;
                 
                     if (xhr.status != 200) {
                         failure('HTTP Error: ' + xhr.status);
                         return;
                     }
                 
-                    json = JSON.parse(xhr.responseText);
+                    response = JSON.parse(xhr.responseText);
                 
-                    if (!json || typeof json.data.path != 'string') {
+                    if (!response || typeof response.data.path != 'string') {
                         failure('Invalid JSON: ' + xhr.responseText);
                         return;
                     }
                 
-                    success(window.location.origin+'/'+json.data.path);
+                    success(window.location.origin+'/'+response.data.path);
                 };
               
                 formData = new FormData();

@@ -100,11 +100,12 @@ class NewsController extends Controller
             $news->image_path = $path;
             $news->save();
 
-            \Log::info('Req=NewsController@updateImage Success=Image updated OK');
+            Log::info('Req=NewsController@updateImage Success=Image updated OK');
 
             return $this->api->success('Image has been successfully updated!');
             
         }catch(\Exception $e){
+            Log::error('Error caught msg='.$e->getMessage());
             return $this->api->fail($e->getMessage());
         }
     }
@@ -124,11 +125,12 @@ class NewsController extends Controller
             $input = $request->all();
             $news->update($input);
 
-            \Log::info('Req=NewsController@update Success=News updated OK');
+            Log::info('Req=NewsController@update Success=News updated OK');
 
             return $this->api->success('News has been updated!');
             
         }catch(\Exception $e){
+            Log::error('Error caught msg='.$e->getMessage());
             return $this->api->fail($e->getMessage());
         }
     }
@@ -146,7 +148,7 @@ class NewsController extends Controller
         $news->status = 1;
         $news->save();
 
-        \Log::info('Req=NewsController@publish Success=News published OK');
+        Log::info('Req=NewsController@publish Success=News published OK');
 
         return redirect()->route('back.news.edit', $id)->with('success', [ 'Success' => 'News has been published!' ]);
     }
@@ -161,7 +163,7 @@ class NewsController extends Controller
     {
         $this->news->findOrFail($id)->delete();
 
-        \Log::info('Req=NewsController@delete Success=News deleted OK');
+        Log::info('Req=NewsController@delete Success=News deleted OK news_id='.$id);
 
         return redirect()->route('back.news.index')->with('warning', array('News has been removed!'=>''));
     }

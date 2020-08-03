@@ -218,16 +218,16 @@ All News || Edit News
             $('.sub_button').prop('disabled', true);
           },
           complete: function(xhr) {
-            data = JSON.parse(xhr.responseText);
-            if(data.result == true){
-                removeAlerts();
-                showNotification(data.message, "", "#", "success", "bottom", "right", 20, 20, 'animated fadeInDown', 'animated fadeOutUp');
+            response = JSON.parse(xhr.responseText);
+            if(response.result == true){
+                removeErrorAlerts();
+                showNotification(response.message, "", "#", "success", "bottom", "right", 20, 20, 'animated fadeInDown', 'animated fadeOutUp');
             }
             else{
-                removeAlerts();
-                showNotification(data.message, "", "#", "danger", "bottom", "right", 20, 20, 'animated fadeInDown', 'animated fadeOutUp');
-                if(!jQuery.isEmptyObject(data.details)){
-                    $.each(data.details, function( index, value ) {  
+                removeErrorAlerts();
+                showNotification(response.message, "", "#", "danger", "bottom", "right", 20, 20, 'animated fadeInDown', 'animated fadeOutUp');
+                if(!jQuery.isEmptyObject(response.details)){
+                    $.each(response.details, function( index, value ) {  
                         $("[name='"+index+"']").addClass("is-invalid");
                         $("[name='"+index+"']").parent().addClass("error focused");
                         $("[name='"+index+"']").parent().after('<label class="error" for="name">'+value+'</label>');
@@ -271,21 +271,21 @@ All News || Edit News
             xhr.open('POST', '/add_content_image');
           
             xhr.onload = function() {
-                var json;
+                var response;
             
                 if (xhr.status != 200) {
                     failure('HTTP Error: ' + xhr.status);
                     return;
                 }
             
-                json = JSON.parse(xhr.responseText);
+                response = JSON.parse(xhr.responseText);
             
-                if (!json || typeof json.data.path != 'string') {
+                if (!response || typeof response.data.path != 'string') {
                     failure('Invalid JSON: ' + xhr.responseText);
                     return;
                 }
             
-                success(window.location.origin+'/'+json.data.path);
+                success(window.location.origin+'/'+response.data.path);
             };
           
             formData = new FormData();
@@ -311,7 +311,7 @@ All News || Edit News
       }
     });
 
-    function removeAlerts(){
+    function removeErrorAlerts(){
         $.each($('input,select,textarea', '#save_news_draft'),function(k){
             $(this).removeClass("is-invalid");
             $(this).parent().removeClass("error focused");

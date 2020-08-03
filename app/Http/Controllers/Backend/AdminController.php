@@ -57,7 +57,7 @@ class AdminController extends Controller
         $input['password'] = bcrypt($request->password);
         $this->admin->create($input);
 
-        \Log::info('Req=AdminController@store Success=Admin added OK');
+        Log::info('Req=AdminController@store Success=Admin added OK');
 
         return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
     }
@@ -107,7 +107,7 @@ class AdminController extends Controller
         }
         $admin->update($input);
 
-        \Log::info('Req=AdminController@update Success=Admin updated OK');
+        Log::info('Req=AdminController@update Success=Admin updated OK');
 
         return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'Admin has been updated!' ]);
     }
@@ -122,7 +122,7 @@ class AdminController extends Controller
     {
         $this->admin->findOrFail($id)->delete();
 
-        \Log::info('Req=AdminController@delete Success=Admin deleted OK');
+        Log::info('Req=AdminController@delete Success=Admin deleted OK admin_id='.$id);
 
         return redirect()->route('back.admins.index')->with('warning', array('Admin has been removed!'=>''));
     }

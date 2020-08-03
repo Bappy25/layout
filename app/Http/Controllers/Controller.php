@@ -6,7 +6,6 @@ use Storage;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Content;
-use App\Helpers\ApiHelper;
 use App\Notifications\UserNotification;
 use App\Notifications\AdminNotification;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -67,15 +66,17 @@ class Controller extends BaseController
      */
     public function addContentImage(\Illuminate\Http\Request $request)
     {
-        \Log::info('Req=Controller@addContentImage called');
-
-        $api = new ApiHelper;
+        $api = new \App\Helpers\ApiHelper;
         
         try {
             $path = $this->uploadImage($request->file('upload_image'), 'all_images/content_images/', 400, 400);
+
+            \Log::info('Req=Controller@addContentImage image added');
+
             return $api->success('Image added successfully!', ['path' => $path]);
 
         }catch(\Exception $e){
+            \Log::error('Error caught msg='.$e->getMessage());
             return $api->fail($e->getMessage());
         }
     }
