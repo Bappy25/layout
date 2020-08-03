@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\User;
 use App\Models\Content;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -40,11 +41,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function home()
+    public function home(Request $request)
     {
         \Log::info('Req=HomeController@home called!');
 
-        return view('frontend.home');
+        $users = User::search($request->search)->where('email_verified_at', '<>', null)->where('id', '<>', \Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
+        return view('frontend.home', compact('users'));
     }
 
     /**

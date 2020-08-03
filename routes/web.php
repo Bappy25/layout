@@ -51,7 +51,7 @@ Route::group(['namespace' => 'Frontend'], function(){
 		});
 
 		// Message Routes
-		Route::resource('messages', 'MessageController', ['except' => ['create']]);
+		Route::resource('messages', 'MessageController', ['except' => 'create']);
 		Route::group(['prefix' => 'messages'], function(){
 			Route::get('new/get', 'MessageController@newMessages')->name('messages.new');
 			Route::get('new/count', 'MessageController@newMessagesCount')->name('messages.new.count');

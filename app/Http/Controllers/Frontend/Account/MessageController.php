@@ -140,7 +140,7 @@ class MessageController extends Controller
         Log::info('Req=MessageController@create called');
 
         $recipient = $this->user->where('username', $username)->first();
-        return view('frontend.account.messaging.create', compact('recipient'));
+        return view('frontend.account.messaging.form', compact('recipient'));
     }
 
     /**
@@ -201,12 +201,12 @@ class MessageController extends Controller
     {
         Log::info('Req=MessageController@show called message_subject_id='.$id);
 
-        $subject = $this->subject->findOrFail($id);
+        /*$subject = $this->subject->findOrFail($id);
         $messages = $this->message->where('message_subject_id', '=', $id)->orderBy('created_at', 'desc')->paginate(10);
         if($messages->onFirstPage() && $messages->isNotEmpty() && !$messages->first()->viewers->contains('user_id', Auth::user()->id)){
             $this->saveViewer($messages->first()->id, Auth::user()->id);
         }
-        return view('frontend.account.messaging.show', compact('subject', 'messages'));
+        return view('frontend.account.messaging.show', compact('subject', 'messages'));*/
     }
 
     /**

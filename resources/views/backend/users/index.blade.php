@@ -24,7 +24,7 @@ All Users
                 </h2>
             </div>
             <div class="body table-responsive">
-                <div class="row">
+                <div class="row-clearfix">
                     <div class="col-md-2">
                         <a href="{{ URL::current() }}" class="btn btn-primary waves-effect">
                             <i class="material-icons">refresh</i>
