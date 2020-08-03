@@ -29,7 +29,7 @@ class NotificationController extends Controller
 
         $user = $this->user->find(Auth::user()->id);
         $notifications = $user->notifications()->paginate(15);
-        return view('front.account.notifications', compact('user', 'notifications'));
+        return view('frontend.account.notifications', compact('user', 'notifications'));
     }
 
     public function countNotifications()

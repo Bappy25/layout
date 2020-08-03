@@ -58,7 +58,7 @@ $(document).ready(function(){
             });
             $.ajax({
                 url: $("#markasread").data('url'),
-                type: 'GET',
+                type: 'PUT',
                 beforeSend: function(){
                     $("#marknotificationasread").prop('disabled', true);
                 },
@@ -66,7 +66,6 @@ $(document).ready(function(){
                     if(response.result == true){
                         $("#markasread").hide();
                         $("#new_notification_number").empty().append('0');
-                        $("#new_notification_number").closest('.nav-link').removeClass('text-success');
                         alert(response.message);
                     }
                     else{

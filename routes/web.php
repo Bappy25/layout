@@ -46,7 +46,7 @@ Route::group(['namespace' => 'Frontend'], function(){
 			Route::get('/', 'NotificationController@allNotifications')->name('notifications.index');
 			Route::get('new', 'NotificationController@newNotifications')->name('notifications.new');
 			Route::get('new/count', 'NotificationController@countNotifications')->name('notifications.new.count');
-			Route::get('mark/read', 'NotificationController@markNotificationsAsRead')->name('notifications.mark.read');
+			Route::put('mark/read', 'NotificationController@markNotificationsAsRead')->name('notifications.mark.read');
 
 		});
 
