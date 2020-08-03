@@ -86,11 +86,52 @@
 		height: 300,
 		menubar: false,
 		plugins: [
-		'advlist autolink lists link image charmap print preview anchor textcolor',
+		'advlist autolink lists link image charmap print preview anchor',
 		'searchreplace visualblocks code fullscreen',
-		'insertdatetime media table paste code help wordcount'
+		'insertdatetime media table paste code help wordcount',
+		'emoticons template textpattern imagetools',
 		],
-		toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+		toolbar: 'undo redo | image code | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+		
+		image_advtab: true,
+
+		images_upload_url: '/add_content_image',
+
+		images_upload_handler: function (blobInfo, success, failure) {
+
+			var xhr, formData;
+
+			xhr = new XMLHttpRequest();
+			xhr.withCredentials = false;
+
+			xhr.open('POST', '/add_content_image');
+
+			xhr.onload = function() {
+				var response;
+
+				if (xhr.status != 200) {
+					failure('HTTP Error: ' + xhr.status);
+					return;
+				}
+
+				response = JSON.parse(xhr.responseText);
+
+				if (!response || typeof response.data.path != 'string') {
+					failure('Invalid JSON: ' + xhr.responseText);
+					return;
+				}
+
+				success(window.location.origin+'/'+response.data.path);
+			};
+
+			formData = new FormData();
+			formData.append('upload_image', blobInfo.blob(), blobInfo.filename());
+			formData.append('folder','editors');
+			formData.append('size','500');
+			formData.append('_token', $('meta[name=csrf-token]').attr('content'));
+
+			xhr.send(formData);
+		},
 		content_css: [
 		'//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
 		'//www.tiny.cloud/css/codepen.min.css'
