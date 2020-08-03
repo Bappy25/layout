@@ -40,6 +40,7 @@ $factory->define(App\Models\News::class, function (Faker $faker) {
         'title' => $faker->catchPhrase($maxNbChars = 5),
         'tags' => "news,generated,for,testing,via,factory",
         'description' => join("\n\n", $faker->paragraphs(mt_rand(3, 6))),
+        'status' => 1,
         'admin_id' => $faker->randomElement($adminIds),
     ];
 });

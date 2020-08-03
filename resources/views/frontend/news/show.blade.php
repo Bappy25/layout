@@ -5,7 +5,7 @@ News || {{ $news->title }}
 @endsection
 
 @section('meta')
-@include('frontend.layouts.partials.meta', ['keywords' => implode($tags, ','), 'description' => strip_tags($news->description), 'author' => $news->admin->name, 'title' => 'News', 'type' => 'Blog', 'image' => asset($news->image_path)])
+@include('frontend.layouts.partials.meta', ['keywords' => $news->tags, 'description' => strip_tags($news->description), 'author' => $news->admin->name, 'title' => 'News', 'type' => 'Blog', 'image' => asset($news->image_path)])
 @endsection
 
 @section('extra-css')
@@ -27,7 +27,7 @@ News || {{ $news->title }}
             <div id="social_share" class="my-3"></div>
         </div>
         <div class="col-sm-4">
-            @include('frontend.news.menu', [$archive, $tags])
+            @include('frontend.news.menu')
         </div>
     </div>
 </div>

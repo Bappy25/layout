@@ -127,7 +127,7 @@ class MessageController extends Controller
         $messages = $user->message_subjects()->withCount(['messages as latest_message' => function($query) {
             $query->select(DB::raw('max(messages.created_at)'));
         }])->search($keyword)->orderByDesc('latest_message')->paginate(15);
-        return view('front.account.messaging.index', compact('messages', 'keyword'));
+        return view('frontend.account.messaging.index', compact('messages', 'keyword'));
     }
 
     /**
@@ -140,7 +140,7 @@ class MessageController extends Controller
         Log::info('Req=MessageController@create called');
 
         $recipient = $this->user->where('username', $username)->first();
-        return view('front.account.messaging.create', compact('recipient'));
+        return view('frontend.account.messaging.create', compact('recipient'));
     }
 
     /**
@@ -206,7 +206,7 @@ class MessageController extends Controller
         if($messages->onFirstPage() && $messages->isNotEmpty() && !$messages->first()->viewers->contains('user_id', Auth::user()->id)){
             $this->saveViewer($messages->first()->id, Auth::user()->id);
         }
-        return view('front.account.messaging.show', compact('subject', 'messages'));
+        return view('frontend.account.messaging.show', compact('subject', 'messages'));
     }
 
     /**
