@@ -40,13 +40,9 @@ class Admin extends Authenticatable
     	'email_verified_at' => 'datetime',
     ];
 
-    public function scopeSearch($query, $search='')
+        // An admin has many newses
+    public function news()
     {
-        if (empty($search)) {
-            return $query;
-        } else {      
-            return $query->WhereRaw("name LIKE ? ", '%' . $search . '%')
-                         ->orWhere('email', 'LIKE', '%' . $search . '%');
-        }
+        return $this->hasMany(News::class);
     }
 }

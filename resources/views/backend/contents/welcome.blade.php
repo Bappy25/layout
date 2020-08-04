@@ -20,7 +20,7 @@ Front Page
     </ol>
 </div>
 
-<!-- Admins Table -->
+<!-- Front Page -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -119,7 +119,7 @@ Front Page
         </div>
     </div>
 </div>
-<!-- #END# Admins Table -->
+<!-- #END# Front Page -->
 @endsection
 
 @section('extra-script')
@@ -140,12 +140,12 @@ Front Page
 
 @section('custom-script')
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 <script type="text/javascript">
 
-        // Initialize Date Input Mask
+    // Initialize Date Input Mask
     var $demoMaskedInput = $('.demo-masked-input');
 
     $(function () {

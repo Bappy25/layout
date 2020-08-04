@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend\Account;
 
 use DB;
+use Log;
 use Auth;
 use Validator;
 use App\Models\User;
 use App\Models\Message;
+use App\Helpers\ApiHelper;
 use Illuminate\Http\Request;
 use App\Models\MessageViewer;
 use App\Models\MessageSubject;
@@ -14,15 +16,17 @@ use App\Http\Controllers\Controller;
 
 class MessageController extends Controller
 {
+    protected $api;
     protected $user;
     protected $view;
     protected $message;
     protected $subject;
 
-    public function __construct(Message $message, MessageSubject $subject, MessageViewer $view, User $user)
+    public function __construct(Message $message, MessageSubject $subject, MessageViewer $view, User $user, ApiHelper $api)
     {
         $this->middleware('auth');
         $this->middleware('messaging.belongs')->only('show', 'editSubject');
+        $this->api = $api;
         $this->user = $user;
         $this->view = $view;
         $this->message = $message;
@@ -64,30 +68,48 @@ class MessageController extends Controller
         return $unreadMessages;
     }
 
+    /**
+     * Display new message count.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function newMessagesCount()
     {
         try {
-            $unreadMessages = $this->unreadMessages();
-            return json_encode(['status'=>200, 'count'=> count($unreadMessages)]);
+            $count = count($this->unreadMessages());
+
+            Log::info('Req=MessageController@newMessagesCount message count='.$count);
+
+            return $this->api->success($count);
         }
         catch (\Exception $e) {
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            Log::error('Error caught msg='.$e->getMessage());
+            return $this->api->fail($e->getMessage());
         }
     }
 
+    /**
+     * Display a listing of new messages.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function newMessages()
     {
         try {
             $unreadMessages = $this->unreadMessages();
             if(count($unreadMessages) > 0){
-                $unreadMessages = array_values(array_sort($unreadMessages, function ($value) {
+                $unreadMessages = array_values(\Arr::sort($unreadMessages, function ($value) {
                     return $value['date'];
                 }));            
             }
-            return json_encode(['status'=>200, 'messages'=> array_reverse($unreadMessages)]);
+
+            Log::info('Req=MessageController@newMessages list generated');
+
+            return $this->api->success('New message list generated!', array_reverse($unreadMessages));
         }
         catch (\Exception $e) {
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            Log::error('Error caught msg='.$e->getMessage());
+            return $this->api->fail($e->getMessage());
         }
     }
     
@@ -98,12 +120,14 @@ class MessageController extends Controller
      */
     public function index(Request $request)
     {
+        Log::info('Req=MessageController@index called');
+
         $keyword = $request->search;
         $user = $this->user->find(Auth::user()->id);
         $messages = $user->message_subjects()->withCount(['messages as latest_message' => function($query) {
             $query->select(DB::raw('max(messages.created_at)'));
         }])->search($keyword)->orderByDesc('latest_message')->paginate(15);
-        return view('front.account.messaging.index', compact('messages', 'keyword'));
+        return view('frontend.account.messaging.index', compact('messages', 'keyword'));
     }
 
     /**
@@ -113,8 +137,10 @@ class MessageController extends Controller
      */
     public function create($username)
     {
+        Log::info('Req=MessageController@create called');
+
         $recipient = $this->user->where('username', $username)->first();
-        return view('front.account.messaging.create', compact('recipient'));
+        return view('frontend.account.messaging.form', compact('recipient'));
     }
 
     /**
@@ -140,6 +166,9 @@ class MessageController extends Controller
         $message->save();
         $subject->participants()->attach(Auth::user()->id);
         $subject->participants()->attach($request->receipent);
+
+        Log::info('Req=MessageController@addMessageSubject message subject added OK');
+
         return redirect()->route('messages.show', $subject->id)->with('success', array('Success'=>'Your message has been added!'));
     }
 
@@ -156,6 +185,9 @@ class MessageController extends Controller
         ]);
         $input = $request->all();
         $this->message->create($input);
+
+        Log::info('Req=MessageController@store message added OK');
+
         return redirect()->route('messages.show', $request->message_subject_id)->with('success', array('Success'=>'Your message has been added!'));
     }
 
@@ -167,16 +199,18 @@ class MessageController extends Controller
      */
     public function show($id)
     {
+        Log::info('Req=MessageController@show called message_subject_id='.$id);
+
         $subject = $this->subject->findOrFail($id);
         $messages = $this->message->where('message_subject_id', '=', $id)->orderBy('created_at', 'desc')->paginate(10);
         if($messages->onFirstPage() && $messages->isNotEmpty() && !$messages->first()->viewers->contains('user_id', Auth::user()->id)){
             $this->saveViewer($messages->first()->id, Auth::user()->id);
         }
-        return view('front.account.messaging.show', compact('subject', 'messages'));
+        return view('frontend.account.messaging.show', compact('subject', 'messages'));
     }
 
     /**
-     * Display user profile.
+     * Get status.
      *
      * @return \Illuminate\Http\Response
      */
@@ -188,43 +222,62 @@ class MessageController extends Controller
             if($total > $request->total){
                 $status = 1;
             }
-            return json_encode(['status'=> $status, 'total' => $total]);
+
+            Log::info('Req=MessageController@getStatus status found subject_id='.$request->subject_id);
+
+            return $this->api->success('Status found!', ['status'=> $status, 'total' => $total]);
         }
         catch (\Exception $e) {
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            Log::error('Error caught msg='.$e->getMessage());
+            return $this->api->fail($e->getMessage());
         }
     }  
 
+    /**
+     * Edit subjet.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function editSubject($id)
     {
         try {
             $subject = $this->subject->findOrFail($id);
-            return json_encode(['status'=>200, 'subject'=> $subject->subject]);
+
+            Log::info('Req=MessageController@editSubject subject found subject_id='.$id);
+
+            return $this->api->success($subject->subject);
         }
         catch (\Exception $e) {
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            Log::error('Error caught msg='.$e->getMessage());
+            return $this->api->fail($e->getMessage());
         }
     }
 
+    /**
+     * Update subject.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function updateSubject(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
+    {        
+        $error_response = $this->api->validator($request->all(), [
             'subject' => 'required|string|max:5000'
         ]);
+        if ($error_response) return $error_response;
 
-        if ($validator->fails()) {
-          return response()->json(['status'=>422, 'messages'=>$validator->messages()->toArray()]);
-          }
-
-          try {
+        try {
             $input = $request->all();
             $subject = $this->subject->findOrFail($id);
             $subject->update($input);
-            return json_encode(['status'=>200, 'subject'=> $request->subject]);
+
+            Log::info('Req=MessageController@updateSubject subject updated OK subject_id='.$id);
+
+            return $this->api->success($request->subject);
 
         }
         catch (\Exception $e) {
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            Log::error('Error caught msg='.$e->getMessage());
+            return $this->api->fail($e->getMessage());
         }
     }
 
@@ -241,10 +294,15 @@ class MessageController extends Controller
             if(!$message->message_subject->participants->contains(Auth::user()->id)){
                 throw new \Exception("You cannot access this conversation!");
             }
-            return json_encode(['status'=>200, 'message'=> $message->message_text]);
+
+            Log::info('Req=MessageController@edit message found message_id='.$id);
+
+            return $this->api->success($message->message_text);
         }
         catch (\Exception $e) {
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            Log::error('Error caught msg='.$e->getMessage());
+            return $this->api->fail($e->getMessage());
+        }
     }
 
     /**
@@ -256,25 +314,31 @@ class MessageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+        $error_response = $this->api->validator($request->all(), [
             'message_text' => 'required|string|max:5000'
         ]);
-
-        if ($validator->fails()) {
-          return response()->json(['status'=>422, 'messages'=>$validator->messages()->toArray()]);
-        }
+        if ($error_response) return $error_response;
 
         try {
             $input = $request->all();
             $message = $this->message->findOrFail($id);
             $message->update($input);
-            return json_encode(['status'=>200, 'id'=> $message->id, 'message'=> $request->message_text, 'user' => $message->user->name, 'avatar' => $message->user->user_detail->avatar, 'created_at' => date('l d F Y, h:i A', strtotime($message->created_at))]);
+
+            Log::info('Req=MessageController@update message updated OK message_id='.$id);
+
+            return $this->api->success($message->message_text, ['id'=> $message->id, 'user' => $message->user->name, 'avatar' => $message->user->user_detail->avatar, 'created_at' => date('l d F Y, h:i A', strtotime($message->created_at))]);
         }
         catch (\Exception $e) {
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            Log::error('Error caught msg='.$e->getMessage());
+            return $this->api->fail($e->getMessage());
         }
     }
 
+    /**
+     * Get intended list.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getUserList(Request $request)
     {
         try {
@@ -291,18 +355,31 @@ class MessageController extends Controller
                 foreach($usersList as $user){
                     $list[] = array('subject_id'=>$request->id, 'user_id'=>$user->id, 'name'=> $user->name, 'avatar'=> $user->user_detail->avatar);
                 }
-                return json_encode(['status'=>200, 'users'=> $list]);
+
+                Log::info('Req=MessageController@getUserList user list genereted subject_id='.$request->id);
+
+                return $this->api->success('user list genereted', $list);
             }
         }
         catch (\Exception $e) {
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            Log::error('Error caught msg='.$e->getMessage());
+            return $this->api->fail($e->getMessage());
         }
     }
 
+    
+    /**
+     * add participant.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function addParticipant(Request $request)
     {
         $subject = $this->subject->findOrFail($request->id);
         $subject->participants()->attach($request->user);
+
+        Log::info('Req=MessageController@addParticipant participant added OK subject_id='.$request->id);
+
         return redirect()->route('messages.show', $request->id)->with('success', array('Success'=>'The user has been added to this conversation!')); 
     }
 
@@ -316,6 +393,9 @@ class MessageController extends Controller
     {
         $user = $this->user->findOrFail(Auth::user()->id);
         $user->message_subjects()->detach($id);
+
+        Log::info('Req=MessageController@removeReceipent participant removed OK subject_id='.$request->id);
+
         return redirect()->route('messages.index')->with('success', array('Success'=>'You have removed yourself from the conversation!')); 
     }
 
@@ -329,6 +409,9 @@ class MessageController extends Controller
     {
         $message = $this->message->findOrFail($id);
         $message->delete();
+
+        Log::info('Req=MessageController@destroy message deleted OK message_id='.$id);
+
         return redirect()->route('messages.show', $message->message_subject->id)->with('success', array('Success'=>'The message has been removed!'));
     }
 }

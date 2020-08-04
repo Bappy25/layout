@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use Log;
-use Auth;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests\AdminRequest;
@@ -25,13 +24,12 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         Log::info('Req=AdminController@index called');
 
-        $search = $request->search;
-        $admins = $this->admin->search($search)->orderBy('created_at', 'desc')->paginate(10);
-        return view('backend.admins.index', compact('admins', 'search'));
+        $admins = $this->admin->all();
+        return view('backend.admins.index', compact('admins'));
     }
 
     /**
@@ -59,7 +57,7 @@ class AdminController extends Controller
         $input['password'] = bcrypt($request->password);
         $this->admin->create($input);
 
-        \Log::info('Req=AdminController@store Success=Admin added OK');
+        Log::info('Req=AdminController@store Success=Admin added OK');
 
         return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'New admin has been added!' ]);
     }
@@ -109,7 +107,7 @@ class AdminController extends Controller
         }
         $admin->update($input);
 
-        \Log::info('Req=AdminController@update Success=Admin updated OK');
+        Log::info('Req=AdminController@update Success=Admin updated OK');
 
         return redirect()->route('back.admins.index')->with('success', [ 'Success' => 'Admin has been updated!' ]);
     }
@@ -124,7 +122,7 @@ class AdminController extends Controller
     {
         $this->admin->findOrFail($id)->delete();
 
-        \Log::info('Req=AdminController@delete Success=Admin deleted OK');
+        Log::info('Req=AdminController@delete Success=Admin deleted OK admin_id='.$id);
 
         return redirect()->route('back.admins.index')->with('warning', array('Admin has been removed!'=>''));
     }

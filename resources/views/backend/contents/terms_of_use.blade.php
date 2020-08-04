@@ -20,7 +20,7 @@ Terms Of Use
     </ol>
 </div>
 
-<!-- Admins Table -->
+<!-- Terms Of Use -->
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -57,7 +57,7 @@ Terms Of Use
         </div>
     </div>
 </div>
-<!-- #END# Admins Table -->
+<!-- #END# Terms Of Use -->
 @endsection
 
 @section('extra-script')
@@ -72,7 +72,7 @@ Terms Of Use
 
 @section('custom-script')
 
-<!-- Demo Js -->
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 <script type="text/javascript">
@@ -103,21 +103,21 @@ Terms Of Use
                 xhr.open('POST', '/add_content_image');
               
                 xhr.onload = function() {
-                    var json;
+                    var response;
                 
                     if (xhr.status != 200) {
                         failure('HTTP Error: ' + xhr.status);
                         return;
                     }
                 
-                    json = JSON.parse(xhr.responseText);
+                    response = JSON.parse(xhr.responseText);
                 
-                    if (!json || typeof json.data.path != 'string') {
+                    if (!response || typeof response.data.path != 'string') {
                         failure('Invalid JSON: ' + xhr.responseText);
                         return;
                     }
                 
-                    success(window.location.origin+'/'+json.data.path);
+                    success(window.location.origin+'/'+response.data.path);
                 };
               
                 formData = new FormData();
@@ -134,7 +134,7 @@ Terms Of Use
         tinymce.suffix = ".min";
         tinyMCE.baseURL = '../../plugins/tinymce';
 
-            // Prevent Leave
+        // Prevent Leave
         window.addEventListener('beforeunload', function(e) {
           var myPageIsDirty = tinymce.activeEditor.isDirty()
           if(myPageIsDirty) {

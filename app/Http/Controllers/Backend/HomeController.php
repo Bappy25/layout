@@ -24,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('backend.home');
+        \Log::info('Req=HomeController@index called!');
+
+        $users = \App\Models\User::all()->count();
+        $admins = \App\Models\Admin::all()->count();
+        $news = \App\Models\News::where('status', '<>', 0)->count();
+        $unpublished_news = \App\Models\News::where('status', 0)->count();
+        return view('backend.home', compact('users', 'admins', 'news', 'unpublished_news'));
     }
 }

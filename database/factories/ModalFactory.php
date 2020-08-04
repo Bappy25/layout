@@ -31,3 +31,16 @@ $factory->define(App\Models\Admin::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+$factory->define(App\Models\News::class, function (Faker $faker) {
+
+    $adminIds = App\Models\Admin::all()->pluck('id')->toArray();
+
+    return [
+        'title' => $faker->catchPhrase($maxNbChars = 5),
+        'tags' => "news,generated,for,testing,via,factory",
+        'description' => join("\n\n", $faker->paragraphs(mt_rand(3, 6))),
+        'status' => 1,
+        'admin_id' => $faker->randomElement($adminIds),
+    ];
+});

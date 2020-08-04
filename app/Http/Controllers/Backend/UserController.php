@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use Log;
-use Auth;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Helpers\ApiHelper;
@@ -66,7 +65,7 @@ class UserController extends Controller
         $input['user_id'] = $this->user->create($input)->id;
         $this->detail->create($input);
 
-        \Log::info('Req=UserController@store Success=User added OK');
+        Log::info('Req=UserController@store Success=User added OK');
 
         return redirect()->route('back.users.show', $input['user_id'])->with('success', [ 'Success' => 'New user has been added!' ]);
     }
@@ -92,21 +91,23 @@ class UserController extends Controller
      */
     public function updateImage(Request $request, $id)
     {
-        Log::info('Req=UserController@getFormLink called');
-
-        $this->api->validator($request->all(), [
+        $error_response = $this->api->validator($request->all(), [
             'image' => 'required|image|dimensions:min_width=100,min_height=200|max:1000'
         ]);
+        if ($error_response) return $error_response;
 
         try {
-
             $user = $this->detail->where('user_id', $id)->firstOrFail();
             $path = $this->uploadImage($request->file('image'), 'all_images/user_images/', 300, 300);
             $user->avatar = $path;
             $user->save();
-            return $this->api->success('Image has been successfully updated!');
 
+            Log::info('Req=UserController@updateImage Success=Image updated OK');
+
+            return $this->api->success('Image has been successfully updated!');
+            
         }catch(\Exception $e){
+            Log::error('Error caught msg='.$e->getMessage());
             return $this->api->fail($e->getMessage());
         }
         
@@ -147,7 +148,7 @@ class UserController extends Controller
         $user->update($input);
         $detail->update($input);   
 
-        \Log::info('Req=UserController@update Success=User updated OK');
+        Log::info('Req=UserController@update Success=User updated OK');
 
         return redirect()->route('back.users.show', $id)->with('success', [ 'Success' => 'User has been updated!' ]);
     }
@@ -162,7 +163,7 @@ class UserController extends Controller
     {
         $this->user->findOrFail($id)->delete();
 
-        \Log::info('Req=UserController@delete Success=User deleted OK');
+        Log::info('Req=UserController@delete Success=User deleted OK user_id='.$id);
 
         return redirect()->route('back.users.index')->with('warning', array('User has been removed!'=>''));
     }

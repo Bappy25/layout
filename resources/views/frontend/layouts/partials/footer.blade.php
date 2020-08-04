@@ -1,3 +1,7 @@
+@php
+$content = App\Models\Content::where('headline', 'welcome')->firstOrFail();
+$footer = json_decode($content->web_contents);
+@endphp
 <footer class="font-small grey lighten-5 pt-4">
 
   <div class="container">
@@ -12,8 +16,20 @@
         <div class="col-md-6 mt-md-0 mt-3">
 
           <!-- Content -->
-          <h5 class="text-uppercase">Footer Content</h5>
-          <p>Here you can use rows and columns to organize your footer content.</p>
+          <h5 class="text-uppercase">{{ config('app.name', 'Laravel') }}</h5>
+          <p>{{ empty($footer->slogan) ? null : $footer->slogan }}</p>
+          <!-- Facebook -->
+          <a class="fb-ic" href="{{ empty($footer->facebook) ? null : $footer->facebook }}">
+            <i class="fab fa-facebook-f fa-lg mr-md-5 mr-3 fa-2x"> </i>
+          </a>
+          <!-- Twitter -->
+          <a class="tw-ic" href="{{ empty($footer->twitter) ? null : $footer->twitter }}">
+            <i class="fab fa-twitter fa-lg mr-md-5 mr-3 fa-2x"> </i>
+          </a>
+          <!--Youtube-->
+          <a class="yt-ic" href="{{ empty($footer->youtube) ? null : $footer->youtube }}">
+            <i class="fab fa-youtube fa-lg fa-2x"> </i>
+          </a>
 
         </div>
         <!-- Grid column -->
@@ -28,7 +44,7 @@
 
           <ul class="list-unstyled">
             <li>
-              <a href="{{ route('welcome') }}">Front Page</a>
+              <a href="{{ route('news.index') }}">News</a>
             </li>
             <li>
               <a href="{{ route('about_us') }}">About Us</a>
@@ -48,22 +64,11 @@
         <div class="col-md-3 mb-md-0 mb-3">
 
           <!-- Links -->
-          <h5 class="text-uppercase">Links</h5>
+          <h5 class="text-uppercase">Contact</h5>
 
-          <ul class="list-unstyled">
-            <li>
-              <a href="javascript:void(0);">Link 1</a>
-            </li>
-            <li>
-              <a href="javascript:void(0);">Link 2</a>
-            </li>
-            <li>
-              <a href="javascript:void(0);">Link 3</a>
-            </li>
-            <li>
-              <a href="javascript:void(0);">Link 4</a>
-            </li>
-          </ul>
+          <p><i class="fas fa-envelope pr-2"></i>{{ empty($footer->email) ? null : $footer->email }}</p>
+          <p><i class="fas fa-phone pr-2"></i>{{ empty($footer->contact) ? null : $footer->contact }}</p>
+          <p><i class="fas fa-location-arrow pr-2"></i>{{ empty($footer->address) ? null : $footer->address }}</p>
 
         </div>
         <!-- Grid column -->

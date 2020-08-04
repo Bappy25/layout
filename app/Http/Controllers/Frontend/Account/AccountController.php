@@ -38,6 +38,7 @@ class AccountController extends Controller
     public function index()
     {
         Log::info('Req=AccountController@index called');
+        
 		$id = Auth::user()->id;
         $user = $this->user->findOrFail($id);
         return view('frontend.account.profile', compact('user'));
@@ -50,11 +51,10 @@ class AccountController extends Controller
      */
     public function updateImage(Request $request)
     {
-        Log::info('Req=AccountController@updateImage called');
-
-        $this->api->validator($request->all(), [
+        $error_response = $this->api->validator($request->all(), [
             'image' => 'required|image|dimensions:min_width=100,min_height=200|max:1000'
         ]);
+        if ($error_response) return $error_response;
 
         try {
 			$id = Auth::user()->id;
@@ -62,6 +62,9 @@ class AccountController extends Controller
             $path = $this->uploadImage($request->file('image'), 'all_images/user_images/', 300, 300);
             $user->avatar = $path;
             $user->save();
+
+            Log::info('Req=AccountController@updateImage image update OK');
+
             return $this->api->success('Image has been successfully updated!');
 
         }catch(\Exception $e){
@@ -107,7 +110,7 @@ class AccountController extends Controller
         $user->update($input);
         $detail->update($input);   
 
-        \Log::info('Req=AccountController@update Success=User updated OK');
+        Log::info('Req=AccountController@update Success=User updated OK');
 
         return redirect()->route('account.index', $id)->with('success', [ 'Success' => 'User has been updated!' ]);
     }

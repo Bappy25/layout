@@ -11,10 +11,13 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 @auth
-                <li class="nav-item">
+                <li class="nav-item {{ Route::is('home')? 'active':'' }}">
                     <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                 </li>
-                @endguest
+                @endauth
+                <li class="nav-item {{ Route::is('news*')? 'active':'' }}">
+                    <a class="nav-link" href="{{ route('news.index') }}">{{ __('News') }}</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -30,15 +33,55 @@
                 </li>
                 @endif
                 @else
+                <li class="nav-item dropdown" id="notifications_navigation_menu">
+                    <a class="nav-link" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-bell mr-1"></i>
+                      <span id="new_notification_number" data-url="{{ route('notifications.new.count') }}"></span>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-wide dropdown-success">
+                        <p class="text-center h6">Notifications</p>
+                        <div class="dropdown-divider"></div>
+                        <!-- Remember me -->
+                        <div class="form-check ml-3 my-3" id="markasread" data-url="{{ route('notifications.mark.read') }}" style="display: none;">
+                            <input type="checkbox" class="form-check-input" name="condition" id="marknotificationasread">
+                            <label class="form-check-label" for="marknotificationasread">Mark All Notifications As Read</label>
+                        </div>
+                        <div id="all_new_notifications" data-url="{{ route('notifications.new') }}"></div>
+                        <a class="dropdown-item text-center" href="{{ route('notifications.index') }}">View All Notifications</a>
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown" id="messages_navigation_menu">
+                    <a class="nav-link" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-envelope mr-1"></i>
+                      <span id="new_messages_number" data-url="{{ route('messages.new.count') }}"></span>
+                    </a>
+                    <!-- Messages Dropdown -->
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-wide dropdown-success">
+                      <p class="text-center h6">Messages</p>
+                      <div class="dropdown-divider"></div>
+                      <div id="all_new_messages" data-url="{{ route('messages.new') }}"></div>
+                      <a class="dropdown-item text-center" href="{{ route('messages.index') }}">Show All Messages</a>
+                    </div>
+                  </li>
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         <img src="{{ file_exists(Auth::user()->user_detail->avatar) ? asset(Auth::user()->user_detail->avatar) : 'http://via.placeholder.com/30x30' }}" class="img-fluid rounded-circle" alt="Responsive image" width="30" height="30">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('account.index') }}"><i class="fas fa-user mr-2"></i>{{ Auth::user()->name }}</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a class="dropdown-item" href="javascript:void(0);" onclick="logout();">
                             <i class="fas fa-sign-out-alt mr-2"></i>{{ __('Logout') }}
                         </a>
+                        <script type="text/javascript">
+                            // Function for logging out
+                            function logout(){
+                                event.preventDefault();
+                                if ( confirm("Are you sure you want to logout?") == true ){
+                                    document.getElementById("logout-form").submit();
+                                }
+                            }
+                        </script>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>

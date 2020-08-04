@@ -52,6 +52,20 @@
                     <span>Home</span>
                 </a>
             </li>
+            <li {{ Route::is('back.news*')? 'class=active':'' }}>
+                <a href="javascript:void(0);" class="menu-toggle">
+                    <i class="material-icons">rss_feed</i>
+                    <span>News</span>
+                </a>
+                <ul class="ml-menu">
+                    <li {{ Route::is('back.news.index') || Route::is('back.news.edit') ? 'class=active':'' }}>
+                        <a href="{{ route('back.news.index') }}">All News</a>
+                    </li>
+                    <li {{ Route::is('back.news.create') ? 'class=active':'' }}>
+                        <a href="{{ route('back.news.create') }}">Add New News</a>
+                    </li>
+                </ul>
+            </li>
             <li {{ Route::is('back.contents*')? 'class=active':'' }}>
                 <a href="javascript:void(0);" class="menu-toggle">
                     <i class="material-icons">language</i>

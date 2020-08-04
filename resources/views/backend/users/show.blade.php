@@ -25,16 +25,40 @@ All Users || {{ $user->name }}
 
 <!-- Show User -->
 <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
+    <div class="col-xs-12 col-sm-3">
+        <div class="card profile-card">
+            <div class="profile-header">&nbsp;</div>
+            <div class="profile-body">
+                <div class="image-area" id="aniimated-thumbnials">
+                    <a href="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" data-sub-html="{{ $user->name }}">
+                        <img src="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" alt="{{ $user->name }}" />
+                    </a>
+                </div>
+                <div class="content-area">
+                    <h3>{{ $user->name }}</h3>
+                    <p>{{ $user->username }}</p>
+                </div>
+            </div>
+            <div class="profile-footer">
+                <ul>
+                    <li>
+                        <span>Created At</span>
+                        <span>{{ $user->created_at->format('d/m/y, h:m a') }}</span>
+                    </li>
+                    <li>
+                        <span>Verified at</span>
+                        <span>{{ empty($user->email_verified_at) ? 'Not yet verified!' : $user->email_verified_at->format('d/m/y, h:m a') }}</span>
+                    </li>
+                </ul>
+                <button class="btn btn-primary btn-lg waves-effect btn-block" data-toggle="modal" data-target="#avatar_update_modal">UPDATE PROFILE PICTURE</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-9">
+        <div class="card card-about-me">
             <div class="header">
-                <h2>
-                    {{ $user->name }}
-                    <small>
-                        <strong>Created At:</strong> {{ $user->created_at->format('d/m/y, h:m a') }}
-                        <strong class="p-l-10">Verified at: </strong> {{ empty($user->email_verified_at) ? 'Not yet verified!' : $user->email_verified_at->format('d/m/y, h:m a') }}
-                    </small>
-                </h2>
+                <h2>User Details</h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -50,18 +74,53 @@ All Users || {{ $user->name }}
                 </ul>
             </div>
             <div class="body">
-                <div id="aniimated-thumbnials">
-                    <a href="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" data-sub-html="{{ $user->name }}">
-                        <img class="img-responsive thumbnail" src="{{ empty($user->user_detail->avatar) ? 'https://via.placeholder.com/150?text=Image+Missing' : asset($user->user_detail->avatar) }}" alt="{{ $user->name }}">
-                    </a>
-                </div>
-                <button type="button" class="btn bg-red waves-effect m-b-15" data-toggle="modal" data-target="#avatar_update_modal">Update Profile Picture</button>
-                <p><strong>Username:</strong> {{ $user->username }}</p>
-                <p><strong>Email:</strong> {{ $user->email }}</p>
-                <p><strong>Date of Birth:</strong> {{ empty($user->user_detail->dob) ? '' : $user->user_detail->dob->format('d/m/y') }}</p>
-                <p><strong>Contact:</strong> {{ empty($user->user_detail->contact) ? '' : $user->user_detail->contact }}</p>
-                <p><strong>Gender:</strong> {{ config('genders.'.$user->user_detail->gender) }}</p>
-                <p><strong>Address:</strong> {{ empty($user->user_detail->address) ? '' : $user->user_detail->address }}</p>
+                <ul>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">event</i>
+                            Date of Birth
+                        </div>
+                        <div class="content">
+                            {{ empty($user->user_detail->dob) ? '' : $user->user_detail->dob->format('d/m/y') }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">sentiment_satisfied</i>
+                            Gender
+                        </div>
+                        <div class="content">
+                            {{ config('genders.'.$user->user_detail->gender) }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">email</i>
+                            Email
+                        </div>
+                        <div class="content">
+                            {{ $user->email }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">call</i>
+                            Contact
+                        </div>
+                        <div class="content">
+                            {{ empty($user->user_detail->contact) ? '' : $user->user_detail->contact }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="title">
+                            <i class="material-icons">location_on</i>
+                            Address
+                        </div>
+                        <div class="content">
+                            {{ empty($user->user_detail->address) ? '' : $user->user_detail->address }}
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -112,13 +171,14 @@ All Users || {{ $user->name }}
 
 @section('custom-script')
 
-<!-- Demo Js -->
 {{Html::script('js/backend/pages/medias/image-gallery.js')}}
+
+<!-- Backend Script -->
 {{Html::script('js/backend/script.js')}}
 
 <script>
 
-        //  Show profile image preview
+    //  Show profile image preview
     $('.input_image').change(function() {
         readURL(this, $(this).index());
         $('.avatar_update_button').prop('disabled', false);
@@ -131,14 +191,14 @@ All Users || {{ $user->name }}
         $('.avatar_update_button').prop('disabled', true);
     });
 
-      //  Jquery form for uploading profile image and showing progress
+    //  Jquery form for uploading profile image and showing progress
     (function() {
         $('#avatar_update_form').ajaxForm({
           beforeSend: function() {
             $('.avatar_update_button').prop('disabled', true);
           },
           uploadProgress: function() {
-            $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'>The Photo is being uploaded</h5><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>");
+            $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'>The photo is being uploaded</h5><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>");
           },
           success: function() {
             $(".modal-content").empty().append("<div class='modal-body text-center'><h5 class='col-cyan'><i class='fa fa-check-circle'></i> The photo has been uploaded</h5><p>Please wait till return message..</p><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 100%'></div></div></div>").fadeIn("slow");        
