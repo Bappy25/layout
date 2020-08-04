@@ -233,6 +233,11 @@ class MessageController extends Controller
         }
     }  
 
+    /**
+     * Edit subjet.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function editSubject($id)
     {
         try {
@@ -248,6 +253,11 @@ class MessageController extends Controller
         }
     }
 
+    /**
+     * Update subject.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function updateSubject(Request $request, $id)
     {        
         $error_response = $this->api->validator($request->all(), [
@@ -324,6 +334,11 @@ class MessageController extends Controller
         }
     }
 
+    /**
+     * Get intended list.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getUserList(Request $request)
     {
         try {
@@ -352,6 +367,12 @@ class MessageController extends Controller
         }
     }
 
+    
+    /**
+     * add participant.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function addParticipant(Request $request)
     {
         $subject = $this->subject->findOrFail($request->id);
