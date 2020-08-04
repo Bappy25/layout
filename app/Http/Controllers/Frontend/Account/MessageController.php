@@ -210,7 +210,7 @@ class MessageController extends Controller
     }
 
     /**
-     * Display user profile.
+     * Get status.
      *
      * @return \Illuminate\Http\Response
      */
@@ -225,11 +225,11 @@ class MessageController extends Controller
 
             Log::info('Req=MessageController@getStatus status found subject_id='.$request->subject_id);
 
-            return json_encode(['status'=> $status, 'total' => $total]);
+            return $this->api->success('Status found!', ['status'=> $status, 'total' => $total]);
         }
         catch (\Exception $e) {
             Log::error('Error caught msg='.$e->getMessage());
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            return $this->api->fail($e->getMessage());
         }
     }  
 
@@ -240,23 +240,20 @@ class MessageController extends Controller
 
             Log::info('Req=MessageController@editSubject subject found subject_id='.$id);
 
-            return json_encode(['status'=>200, 'subject'=> $subject->subject]);
+            return $this->api->success($subject->subject);
         }
         catch (\Exception $e) {
             Log::error('Error caught msg='.$e->getMessage());
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            return $this->api->fail($e->getMessage());
         }
     }
 
     public function updateSubject(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
+    {        
+        $error_response = $this->api->validator($request->all(), [
             'subject' => 'required|string|max:5000'
         ]);
-
-        if ($validator->fails()) {
-          return response()->json(['status'=>422, 'messages'=>$validator->messages()->toArray()]);
-        }
+        if ($error_response) return $error_response;
 
         try {
             $input = $request->all();
@@ -265,12 +262,12 @@ class MessageController extends Controller
 
             Log::info('Req=MessageController@updateSubject subject updated OK subject_id='.$id);
 
-            return json_encode(['status'=>200, 'subject'=> $request->subject]);
+            return $this->api->success($request->subject);
 
         }
         catch (\Exception $e) {
             Log::error('Error caught msg='.$e->getMessage());
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            return $this->api->fail($e->getMessage());
         }
     }
 

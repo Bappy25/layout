@@ -17,7 +17,7 @@ class MessagingAccess
      */
     public function handle($request, Closure $next)
     {
-        $id = $request->route('message');
+        $id = empty($request->route('message')) ? $request->route('id') : $request->route('message');
 
         $user = User::findOrFail(Auth::user()->id);
 

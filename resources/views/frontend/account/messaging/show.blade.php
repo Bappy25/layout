@@ -184,8 +184,8 @@
 	setTinyMce();
 
 	// Show User Status
-	getUserStatus();
-	setInterval(getUserStatus, 60000);
+	/*getUserStatus();
+	setInterval(getUserStatus, 60000);*/
 
 	// Show Message Status
 	setInterval(getMessageStatus, 10000);
@@ -226,12 +226,11 @@
 							html += '<h6 class="mb-1"><img src="'+checkImage(value.avatar)+'" class="img-fluid user-image img-thumbnail mr-2" alt="'+value.name+'">'+value.name;
 							html += '<button type="submit" class="btn btn-primary btn-sm btn-rounded mx-1 my-2 form_warning_sweet_alert" title="Are you sure?" text="You are going to add '+value.name+' this user to this conversation!" confirmButtonText="Yes, add this user!" type="submit"><i class="fas fa-check"></i></button></h6></form></div>';
 							$("#user_search_result").append(html).hide().fadeIn(200+(index*10)); 
-							setSwal();                          
 						}); 
 					}
 					else{
 						$('#user_search_result').css('visibility','hidden').empty();
-						swal("Error: "+data.status, data.reason, "error");   
+						console.log(response);
 					}
 				}
 			});
@@ -255,13 +254,13 @@
 				url: url,
 				type: 'GET',
 				dataType: 'JSON',
-				success:function(data){
-					if(data.status == 200){
-						$('#message_subject').html('<div class="form-group"><textarea class="auto-growth form-control" name="subject">'+data.subject+'</textarea></div>').fadeIn('slow');
+				success:function(response){
+					if(response.result == true){
+						$('#message_subject').html('<div class="form-group"><textarea class="auto-growth form-control" name="subject">'+response.message+'</textarea></div>').fadeIn('slow');
 						setAutoSize();
 					}
 					else{
-						swal("Error: "+data.status, data.reason, "error");   
+						console.log(response);
 					}
 				}
 			});	
@@ -280,19 +279,19 @@
 					'subject': $("#message_subject :input").val()
 				},
 				dataType: 'JSON',
-				success:function(data){
-					if(data.status == 200){
-						$('#message_subject').html(data.subject).fadeIn('slow');
+				success:function(response){
+					if(response.result == true){
+						$('#message_subject').html(response.message).fadeIn('slow');
 						$('#edit_subject_button').removeClass("btn-primary").addClass("btn-secondary ml-5").html('<i class="fas fa-edit"></i>');
 					}
-					else if(data.status == 422){
-						$.each(data.messages, function( index, value ){
-							$("#message_subject :input").addClass('is-invalid');
-							$("#message_subject :input").after('<span class="invalid-feedback" role="alert"><strong>'+value+'</strong></span>');
-						}); 
-					}
 					else{
-						swal("Error: "+data.status, data.reason, "error");   
+						console.log(response);
+						if(response.code === 4001){
+							$.each(response.details, function( index, value ){
+								$("#message_subject :input").addClass('is-invalid');
+								$("#message_subject :input").after('<span class="invalid-feedback" role="alert"><strong>'+value+'</strong></span>');
+							});
+						}
 					}
 				}
 			});
@@ -315,7 +314,7 @@
 			beforeSend: function(){
 				div.removeClass( "bg-info text-white" ).html("<center><h1><i class='fas fa-spinner fa-spin'></i></h1></center>");
 			},
-			success:function(data){
+			success:function(response){
 				if(data.status == 200){
 					div.hide().html('<textarea class="tinymce" name="message_text">'+data.message+'</textarea><button class="btn btn-primary my-3 save_message"><i class="fas fa-check pr-2"></i>Update</button>').fadeIn('slow');
 					setTinyMce();
@@ -375,7 +374,7 @@
 
 });
 
-function getUserStatus(){
+/*function getUserStatus(){
 
 	$('.get_online_status').each(function(i, obj) {
 		
@@ -401,7 +400,7 @@ function getUserStatus(){
 
 	});
 
-}
+}*/
 
 function getMessageStatus(){
 
@@ -418,10 +417,13 @@ function getMessageStatus(){
 			'subject_id': $('#message_info').data('subject_id')
 		},
 		dataType: 'JSON',
-		success:function(data){
-			if(data.status === 1){
-				$('#message_info').data('total', data.total);
-				showNotification('New message has been added', 'click here to refresh!', window.location.href, "info", "top", "right", 20, 30, 'animated fadeInDown', 'animated fadeOutUp', '_self');
+		success:function(response){
+			if(response.result === true && response.data.status === 1){
+				$('#message_info').data('total', response.data.total);
+				alert(response.message);
+			}
+			else{
+				console.log(response);
 			}
 		}
 	});
