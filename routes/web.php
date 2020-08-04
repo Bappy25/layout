@@ -30,9 +30,9 @@ Route::group(['namespace' => 'Frontend'], function(){
 	Route::get('home', 'HomeController@home')->name('home');
 
 	// User routes
-	Route::group(['prefix' => 'user'], function(){
-		Route::get('{username}', 'UserController@profile')->name('user.profile');
-		Route::post('status', 'UserController@getStatus')->name('user.status');
+	Route::group(['prefix' => 'users'], function(){
+		Route::get('{username}', 'UserController@profile')->name('users.profile');
+		Route::post('status', 'UserController@getStatus')->name('users.status');
 	});
 
 	// News Routes

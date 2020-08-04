@@ -184,8 +184,8 @@
 	setTinyMce();
 
 	// Show User Status
-	/*getUserStatus();
-	setInterval(getUserStatus, 60000);*/
+	getUserStatus();
+	setInterval(getUserStatus, 60000);
 
 	// Show Message Status
 	setInterval(getMessageStatus, 10000);
@@ -374,7 +374,7 @@
 
 });
 
-/*function getUserStatus(){
+function getUserStatus(){
 
 	$('.get_online_status').each(function(i, obj) {
 		
@@ -390,9 +390,9 @@
 			type: 'post',
 			data: {'username': get_status.data('username')},
 			dataType: 'JSON',
-			success:function(data){
+			success:function(response){
 				get_status.empty();
-				if(data.status === 1){
+				if(response.message === 1){
 					get_status.text('online');
 				}
 			}
@@ -400,7 +400,7 @@
 
 	});
 
-}*/
+}
 
 function getMessageStatus(){
 

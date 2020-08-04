@@ -24,6 +24,7 @@
                     @foreach ($users as $user)
                     <h2>{{ $user->name }} <small>{{ $user->username }}</small></h2>
                     <p><a href="mailto:{{ $user->email }}" class="nav-link text-muted">{{ $user->email }}</a></p>
+                    <a href="{{ route('users.profile', $user->username) }}" class="btn btn-primary mb-3"><i class="fas fa-user mr-2"></i>Show User</a>
                     <a href="{{ route('messages.create', $user->username) }}" class="btn btn-success mb-3"><i class="fas fa-envelope mr-2"></i>Message User</a>
                     <hr>
                     @endforeach
