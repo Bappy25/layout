@@ -287,11 +287,11 @@ class MessageController extends Controller
 
             Log::info('Req=MessageController@edit message found message_id='.$id);
 
-            return json_encode(['status'=>200, 'message'=> $message->message_text]);
+            return $this->api->success($message->message_text);
         }
         catch (\Exception $e) {
             Log::error('Error caught msg='.$e->getMessage());
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            return $this->api->fail($e->getMessage());
         }
     }
 
@@ -304,13 +304,10 @@ class MessageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
+        $error_response = $this->api->validator($request->all(), [
             'message_text' => 'required|string|max:5000'
         ]);
-
-        if ($validator->fails()) {
-          return response()->json(['status'=>422, 'messages'=>$validator->messages()->toArray()]);
-        }
+        if ($error_response) return $error_response;
 
         try {
             $input = $request->all();
@@ -319,11 +316,11 @@ class MessageController extends Controller
 
             Log::info('Req=MessageController@update message updated OK message_id='.$id);
 
-            return json_encode(['status'=>200, 'id'=> $message->id, 'message'=> $request->message_text, 'user' => $message->user->name, 'avatar' => $message->user->user_detail->avatar, 'created_at' => date('l d F Y, h:i A', strtotime($message->created_at))]);
+            return $this->api->success($message->message_text, ['id'=> $message->id, 'user' => $message->user->name, 'avatar' => $message->user->user_detail->avatar, 'created_at' => date('l d F Y, h:i A', strtotime($message->created_at))]);
         }
         catch (\Exception $e) {
             Log::error('Error caught msg='.$e->getMessage());
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            return $this->api->fail($e->getMessage());
         }
     }
 
@@ -346,12 +343,12 @@ class MessageController extends Controller
 
                 Log::info('Req=MessageController@getUserList user list genereted subject_id='.$request->id);
 
-                return json_encode(['status'=>200, 'users'=> $list]);
+                return $this->api->success('user list genereted', $list);
             }
         }
         catch (\Exception $e) {
             Log::error('Error caught msg='.$e->getMessage());
-            return ['status'=>401, 'reason'=>$e->getMessage()];
+            return $this->api->fail($e->getMessage());
         }
     }
 

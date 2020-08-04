@@ -90,9 +90,10 @@ class NewsController extends Controller
      */
     public function updateImage(Request $request, $id)
     {
-        $this->api->validator($request->all(), [
+        $error_response = $this->api->validator($request->all(), [
             'image' => 'required|image|dimensions:min_width=100,min_height=200|max:1000'
         ]);
+        if ($error_response) return $error_response;
 
         try {
             $news = $this->news->findOrFail($id);

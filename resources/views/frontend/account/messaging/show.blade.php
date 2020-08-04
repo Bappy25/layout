@@ -214,10 +214,10 @@
 				beforeSend: function() {
 					$("#user_search_result").css('visibility','visible').append('<div class="list-group-item text-center"><i class="fas fa-spinner fa-spin my-3"></i></div>');
 				},
-				success:function(data){
-					if(data.status == 200){
+				success:function(response){
+					if(response.result == true){
 						$("#user_search_result").empty();
-						$.each(data.users, function( index, value ) {
+						$.each(response.data, function( index, value ) {
 							html = '<div class="list-group-item list-group-item-action flex-column align-items-start">';
 							html += '<form method="post" action="/account/messages/users/add">';
 							html += '<input type="hidden" name="_token" value="'+$('meta[name=csrf-token]').attr('content')+'">';
@@ -286,7 +286,7 @@
 					}
 					else{
 						console.log(response);
-						if(response.code === 4001){
+						if(!jQuery.isEmptyObject(response.details)){
 							$.each(response.details, function( index, value ){
 								$("#message_subject :input").addClass('is-invalid');
 								$("#message_subject :input").after('<span class="invalid-feedback" role="alert"><strong>'+value+'</strong></span>');
@@ -315,14 +315,14 @@
 				div.removeClass( "bg-info text-white" ).html("<center><h1><i class='fas fa-spinner fa-spin'></i></h1></center>");
 			},
 			success:function(response){
-				if(data.status == 200){
-					div.hide().html('<textarea class="tinymce" name="message_text">'+data.message+'</textarea><button class="btn btn-primary my-3 save_message"><i class="fas fa-check pr-2"></i>Update</button>').fadeIn('slow');
+				if(response.result == true){
+					div.hide().html('<textarea class="tinymce" name="message_text">'+response.message+'</textarea><button class="btn btn-primary my-3 save_message"><i class="fas fa-check pr-2"></i>Update</button>').fadeIn('slow');
 					setTinyMce();
 					$(".message_options").hide();
 					$(".add_message").hide();
 				}
 				else{
-					swal("Error: "+data.status, data.reason, "error");   
+					console.log(response);
 				}
 			}
 		});
@@ -343,31 +343,31 @@
 				'message_text': tinyMCE.activeEditor.getContent()
 			},
 			dataType: 'JSON',
-			success:function(data){
-				if(data.status == 200){
+			success:function(response){
+				if(response.result == true){
 					html = '<div class="row"><div class="col-sm-1">';
-					html += '<img src="'+checkImage(data.avatar)+'" class="rounded-circle message-user-avatar" width="50px" height="50px"></div>';
-					html += '<div class="col-sm-11"><h5 class="text-light">'+data.user+'</h5>';
-					html += '<h6 class="text-white-50">'+data.created_at+'</h6></div></div>'+data.message;
-					html += '<form method="POST" action="/account/messages/'+data.id+'" accept-charset="UTF-8"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="'+$('meta[name=csrf-token]').attr('content')+'">';
+					html += '<img src="'+checkImage(response.data.avatar)+'" class="rounded-circle message-user-avatar" width="50px" height="50px"></div>';
+					html += '<div class="col-sm-11"><h5 class="text-light">'+response.data.user+'</h5>';
+					html += '<h6 class="text-white-50">'+response.data.created_at+'</h6></div></div>'+response.message;
+					html += '<form method="POST" action="/account/messages/'+response.data.id+'" accept-charset="UTF-8"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="'+$('meta[name=csrf-token]').attr('content')+'">';
 					html += '<button type="button" class="btn btn-outline-light btn-squared edit_message_button message_options mr-1"><i class="fas fa-edit" aria-hidden="true"></i></button>';
 					html += '<button class="btn btn-outline-light btn-squared form_warning_sweet_alert message_options" title="Are you sure" text="Your message will be lost!" confirmButtonText="Yes, delete the message!" type="submit"><i class="fas fa-trash" aria-hidden="true"></i></button></form>'; 
 					div.addClass( "bg-info text-white" ).html(html);
-					setSwal();
 					$(".message_options").show();
 					$(".add_message").show();
 				}
-				else if(data.status == 422){
-					$.each(data.messages, function( index, value ){
-						div.find('.tinymce').after('<p class="text-danger small"><strong>'+value+'</strong></p>');  
-					}); 
-				}
 				else{
-					swal("Error: "+data.status, data.reason, "error");   
+					console.log(response);
+					if(!jQuery.isEmptyObject(response.details)){
+						$.each(response.details, function( index, value ){
+							div.find('.tinymce').after('<p class="text-danger small"><strong>'+value+'</strong></p>');  
+						}); 
+					}
+					
 				}
 			},
 			error: function(request, status, error){
-				swal("Error", request.responseText, "error");  
+				console.log(request.responseText);
 			}
 		});
 	});
