@@ -44,7 +44,7 @@ Route::group(['namespace' => 'Frontend'], function(){
 		// Account Routes
 		Route::get('/', 'AccountController@index')->name('account.index');
 		Route::get('edit', 'AccountController@edit')->name('account.edit');
-		Route::put('{id}/update', 'AccountController@update')->name('account.update');
+		Route::put('update', 'AccountController@update')->name('account.update');
 		Route::put('update/image', 'AccountController@updateImage')->name('account.update.image');
 
 		// Notification Routes

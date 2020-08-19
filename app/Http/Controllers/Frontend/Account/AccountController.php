@@ -95,7 +95,7 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserRequest $request)
     {
 		$id = Auth::user()->id;
         $user = $this->user->findOrFail($id);
@@ -106,12 +106,15 @@ class AccountController extends Controller
         if($request->password){
             $input['password'] = bcrypt($request->password);
         }
+        else{
+            unset($input['password']);
+        }
 
         $user->update($input);
         $detail->update($input);   
 
         Log::info('Req=AccountController@update Success=User updated OK');
 
-        return redirect()->route('account.index', $id)->with('success', [ 'Success' => 'User has been updated!' ]);
+        return redirect()->route('account.index')->with('success', [ 'Success' => 'User has been updated!' ]);
     }
 }
